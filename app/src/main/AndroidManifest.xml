@@ -188,6 +188,17 @@
             android:name=".service.MqService"
             android:process=":michael"
             />
+
+        <receiver android:name=".receiver.SimpleWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.wm.remusic.metachanged"/>
+                <action android:name="com.wm.remusi.change_music"/>
+                <action android:name="com.wm.remusic.progress"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_info" />
+        </receiver>
         <receiver android:name=".receiver.MediaButtonIntentReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />

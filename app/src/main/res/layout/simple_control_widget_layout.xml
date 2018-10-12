@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_00090"
+    >
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/widget_image"
+        android:src="@drawable/logo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_15"
+            android:textColor="@color/white"
+            android:text="@string/故事排行"
+            />
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:id="@+id/widget_control"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:src="@drawable/widget_pre_selector"
+                android:id="@+id/widget_pre"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:src="@drawable/widget_play_selector"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/widget_play"
+                android:layout_width="43dp"
+                android:layout_height="43dp" />
+            <ImageView
+                android:layout_weight="1"
+                android:src="@drawable/widget_next_selector"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/widget_next"
+                android:layout_width="36dp"
+                android:layout_height="36dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

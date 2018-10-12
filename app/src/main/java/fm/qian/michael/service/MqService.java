@@ -142,7 +142,7 @@ public class MqService extends Service {
     private ComponentName mMediaButtonReceiverComponent;
     private boolean mIsSending = false;//发送进度
     private boolean isSendking = false;//正在快进
-    private boolean isFirstLoad = true;//第一次播放
+    private boolean isFirstLoad = true;//跟新数据
     private boolean mIsTrackPrepared = false;//是否准备完成
     private boolean isCom =false;//播放完成
 
@@ -172,6 +172,7 @@ public class MqService extends Service {
     private int PlayOnclickNum = -1;//直接播放第几个
 
     private boolean isPlayNow = false;//完成当前播放任务后停止
+
 
     //private boolean isTermination = false;//强行终止异步操作
     @Nullable
@@ -733,10 +734,12 @@ public class MqService extends Service {
             closeNotification();//广播结束
         }else if (Intent.ACTION_SCREEN_OFF.equals(action) ){
 
-            Intent lockscreen = new Intent(this, LockActivity.class);
-            lockscreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(lockscreen);
-
+            if(!mIsLocked && !isFirstLoad){
+                mIsLocked = true;
+                Intent lockscreen = new Intent(this, LockActivity.class);
+                lockscreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(lockscreen);
+            }
 
         }else if(Intent.ACTION_USER_PRESENT.equals(action)){
 

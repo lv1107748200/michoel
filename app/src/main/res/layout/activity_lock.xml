@@ -1,17 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <View
+        android:id="@+id/statu_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <fm.qian.michael.widget.custom.SildingFinishLayout
+        android:id="@+id/lock_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_20"
+                >
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_20"
+                    android:maxLines="1"
+                    />
+
+                <TextView
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:id="@+id/tv_zhuozhe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_16"
+                    android:layout_marginBottom="@dimen/margin_20"
+                    />
+
+
+                <fm.qian.michael.widget.custom.SelectableRoundedImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@color/color_line_one"
+                    app:sriv_left_bottom_corner_radius="@dimen/radius"
+                    app:sriv_left_top_corner_radius="@dimen/radius"
+                    app:sriv_right_bottom_corner_radius="@dimen/radius"
+                    app:sriv_right_top_corner_radius="@dimen/radius"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_miaoshu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    />
+
+
+            </LinearLayout>
 
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/lock_control"
+                android:orientation="horizontal">
+                <ImageView
+                    android:src="@drawable/lock_btn_prev"
+                    android:id="@+id/lock_music_pre"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@drawable/selector_checked_one_one"
+                    android:id="@+id/lock_music_play"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+                <ImageView
+                    android:src="@drawable/lock_btn_next"
+                    android:id="@+id/lock_music_next"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            <fm.qian.michael.widget.custom.CustomTextView
+                android:layout_centerHorizontal="true"
+                android:text=">>> 滑动解锁"
+                android:textColor="@color/white_text"
+                android:textSize="20sp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/lock_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp" />
 
-        android:text="@string/故事排行"
-        />
+
+
+        </LinearLayout>
+
+
+    </fm.qian.michael.widget.custom.SildingFinishLayout>
+
 
 
 </LinearLayout>

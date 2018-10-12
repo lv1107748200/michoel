@@ -603,7 +603,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
         IntentFilter f = new IntentFilter();
         f.addAction(MqService.MUSIC_LODING);//音乐正在加载
         f.addAction(MqService.SEND_PROGRESS);//开始播放获取进度
-        f.addAction(MqService.PAUSE_ACTION_APP);//定时器发的暂停
+        f.addAction(MqService.PAUSE_ACTION_APP);//定时器发的刷新图标
 
         f.addAction(MqService.UPDATA_ID);//换歌了
         f.addAction(MqService.UPDATA_PAUSE);//暂停

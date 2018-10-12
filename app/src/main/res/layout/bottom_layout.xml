@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/buttom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingTop="@dimen/dp_10"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:id="@+id/add_layout"
+            style="@style/bottom_layout_style"
+            >
+            <ImageView
+                style="@style/image_make_style"
+                android:background="@drawable/add_p"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="添加"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/down_layout"
+            style="@style/bottom_layout_style"
+            >
+            <ImageView
+                style="@style/image_make_style"
+                android:background="@drawable/down"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/下载"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/play_layout"
+            style="@style/bottom_layout_style"
+            >
+            <ImageView
+                style="@style/image_make_style"
+                android:background="@drawable/p_p"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/播放"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/del_layout"
+            style="@style/bottom_layout_style"
+            android:visibility="gone"
+            >
+            <ImageView
+               style="@style/image_make_style"
+                android:background="@drawable/ic_make_del"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/删除"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</merge>

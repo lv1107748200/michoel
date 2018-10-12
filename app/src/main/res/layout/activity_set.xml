@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        />
+
+    <include layout="@layout/title_layout"/>
+
+    <fm.qian.michael.widget.custom.SelectableRoundedImageView
+        android:layout_marginTop="@dimen/margin_30"
+        android:id="@+id/item_image"
+        android:layout_width="@dimen/margin_70"
+        android:layout_height="@dimen/margin_70"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        android:background="@drawable/logo"
+        app:sriv_left_bottom_corner_radius="@dimen/radius"
+        app:sriv_left_top_corner_radius="@dimen/radius"
+        app:sriv_right_bottom_corner_radius="@dimen/radius"
+        app:sriv_right_top_corner_radius="@dimen/radius"
+        />
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/margin_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_11"
+        android:layout_marginRight="@dimen/margin_11"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/benbenhao_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="版本号"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <TextView
+                    android:id="@+id/tv_banbenhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_A3A"
+                    android:textSize="@dimen/size_12"
+                    android:text="v1.0.5"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"
+            />
+
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/out_login_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="退出登录"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            style="@style/view_line"
+            />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

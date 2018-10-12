@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <View
+        style="@style/view_line"
+        />
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:paddingTop="@dimen/dp_16"
+            android:paddingBottom="@dimen/dp_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:id="@+id/layout_editname"
+                style="@style/m_style_layout_four"
+                >
+                <ImageView
+                    android:background="@drawable/ic_chg_name"
+                    style="@style/image_make_style" />
+
+                <TextView
+                    style="@style/m_text_style_two"
+                    android:text="@string/更改名称"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_down"
+                style="@style/m_style_layout_four"
+                >
+                <ImageView
+                    android:background="@drawable/selector_checked_eight"
+                    style="@style/m_image_style_two" />
+
+                <TextView
+                    style="@style/m_text_style_two"
+                    android:text="@string/下载"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_mang"
+                style="@style/m_style_layout_four"
+                >
+                <ImageView
+                    style="@style/image_make_style"
+                    android:background="@drawable/ic_mag_vedio"
+                    />
+
+                <TextView
+                    style="@style/m_text_style_two"
+                    android:text="@string/管理故事"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_del"
+                style="@style/m_style_layout_four"
+                >
+                <ImageView
+                    style="@style/image_make_style"
+                    android:background="@drawable/ic_make_del"
+                    />
+
+                <TextView
+                    style="@style/m_text_style_two"
+                    android:text="@string/删除播单"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <include layout="@layout/sel_all_cancel_layout_bd"/>
+
+
+    </RelativeLayout>
+    <View
+        style="@style/view_line"
+        />
+
+</LinearLayout>

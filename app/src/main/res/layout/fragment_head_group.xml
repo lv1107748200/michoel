@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:background="@color/white"
+            app:srlFinishDuration="200"
+            app:srlEnableLastTime="true"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlTextSizeTitle="@dimen/size_14"
+            app:srlTextSizeTime="@dimen/margin_10"
+            app:srlTextTimeMarginTop="@dimen/margin_2"
+            app:srlDrawableArrowSize="@dimen/margin_20"
+            app:srlDrawableProgressSize="@dimen/margin_20"
+            app:srlDrawableMarginRight="@dimen/margin_20"
+            app:srlDrawableProgress="@drawable/ic_progress_hojder"
+            />
+
+        <android.support.v4.widget.NestedScrollView
+            style="@style/m_style_NS">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/item_margin_two"
+                    android:paddingBottom="@dimen/item_margin_two"
+                    android:paddingRight="@dimen/item_margin_four"
+                    android:paddingLeft="@dimen/item_margin_four"
+                    android:orientation="vertical"
+                    >
+                    <fm.qian.michael.widget.custom.SelectableRoundedImageView
+                        android:id="@+id/item_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin_150"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        app:sriv_left_bottom_corner_radius="@dimen/radius"
+                        app:sriv_left_top_corner_radius="@dimen/radius"
+                        app:sriv_right_bottom_corner_radius="@dimen/radius"
+                        app:sriv_right_top_corner_radius="@dimen/radius"
+                        />
+                    <TextView
+                        android:layout_marginTop="@dimen/item_margin_three"
+                        android:id="@+id/item_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center"
+                        />
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_list"
+                  style="@style/m_er_recycle_style"
+                    />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:srlClassicsSpinnerStyle="Translate"
+            />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+</LinearLayout>

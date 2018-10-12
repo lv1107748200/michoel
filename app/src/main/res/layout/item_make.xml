@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:paddingTop="@dimen/dp_19"
+        android:paddingBottom="@dimen/dp_15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_fav"
+           style="@style/m_style_layout_four"
+            >
+            <ImageView
+                style="@style/m_image_style_two"
+                android:background="@drawable/selector_checked_two"
+                />
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/收藏"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_down"
+            style="@style/m_style_layout_four"
+            >
+            <ImageView
+                android:background="@drawable/selector_checked_eight"
+                style="@style/m_image_style_two" />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/下载"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_share"
+            style="@style/m_style_layout_four"
+            >
+            <ImageView
+                style="@style/m_image_style_two"
+                android:background="@drawable/selector_checked_four"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/分享"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_select"
+            style="@style/m_style_layout_four"
+            >
+            <ImageView
+                style="@style/m_image_style_two"
+                android:background="@drawable/selector_checked_five"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/多选"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_orderdesc"
+            style="@style/m_style_layout_four"
+            >
+            <ImageView
+                android:id="@+id/img_orderdesc"
+                style="@style/m_image_style_two"
+                android:background="@drawable/selector_checked_three"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/排序"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <include layout="@layout/sel_all_cancel_layout"/>
+
+
+
+</RelativeLayout>

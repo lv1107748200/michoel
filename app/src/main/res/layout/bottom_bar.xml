@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin_50"
+    android:orientation="horizontal"
+    android:clipChildren="false"
+    android:background="@drawable/gradient_bc"
+>
+            <LinearLayout
+                android:id="@+id/safety_current_politics"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="@dimen/margin_22"
+                    android:layout_height="@dimen/margin_22"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/tv_safety_current_politics"
+                    android:textColor="@drawable/selector_tv_color_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/safety_current_politics"
+                    android:textSize="@dimen/size_16"
+                    />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/safety_knowledge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="@dimen/margin_22"
+                    android:layout_height="@dimen/margin_22"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/tv_safety_knowledge"
+                    android:textColor="@drawable/selector_tv_color_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/safety_knowledge"
+                    android:textSize="@dimen/size_16"
+                    />
+            </LinearLayout>
+
+</LinearLayout>

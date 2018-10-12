@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        />
+
+    <include layout="@layout/title_layout"/>
+
+    <include layout="@layout/item_user_me"/>
+
+    <!--<ViewStub-->
+        <!--android:id="@+id/viewstub_me"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:inflatedId="@+id/iv_me"-->
+        <!--android:layout="@layout/item_user_me"/>-->
+
+    <!--<ViewStub-->
+        <!--android:id="@+id/viewstub_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:inflatedId="@+id/iv_list"-->
+        <!--android:layout="@layout/item_user_list"/>-->
+
+
+
+</LinearLayout>

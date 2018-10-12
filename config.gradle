@@ -1,0 +1,72 @@
+
+ext {
+
+    projectVersion = '1.0'
+
+    externalAndroidBuildGradlePlugin = 'com.android.tools.build:gradle:3.1.3'
+
+    externalAndroidAppCompatV7 = 'com.android.support:appcompat-v7:27.1.1'
+    leanbackv17 = 'com.android.support:leanback-v17:27.1.1'
+    externalAndroidCardView = 'com.android.support:cardview-v7:27.1.1'
+    externalAndroidMultiDex = 'com.android.support:multidex:1.0.1'
+    externalAndroidRecyclerView = 'com.android.support:recyclerview-v7:27.1.1'
+    externalAndroidSupportV13 = 'com.android.support:support-v13:27.1.1'
+    externalAndroidSupportV4 = 'com.android.support:support-v4:27.1.1'
+    externalAndroidDesign = 'com.android.support:design:27.1.1'
+    externalAndroidConstraintLayout = 'com.android.support.constraint:constraint-layout:1.0.2'
+
+
+    externalAndroidTestEspressoCore = 'com.android.support.test.espresso:espresso-core:3.0.2'
+    externalAndroidTestRunner = 'com.android.support.test:runner:1.0.2'
+
+//    externalAndroidAsyncHttp = 'com.loopj.android:android-async-http:1.4.9'
+//    externalAutoFactory = 'com.google.auto.factory:auto-factory:1.0-beta2'
+    externalDagger = 'com.google.dagger:dagger:2.7'
+    externalDaggerCompiler = 'com.google.dagger:dagger-compiler:2.7'
+    externalJavaxAnnotationJsr250 = 'javax.annotation:jsr250-api:1.0'
+    externalGlassfishJavaxAnnotation = 'org.glassfish:javax.annotation:10.0-b28'
+    externalJakewhartonButterknifeCompiler = 'com.jakewharton:butterknife-compiler:8.7.0'
+    externalJakewhartonButterknife = "com.jakewharton:butterknife:8.7.0"
+
+    externalRetrofit2 = "com.squareup.retrofit2:retrofit:2.3.0"
+    externalRetrofit2converterJackson = "com.squareup.retrofit2:converter-jackson:2.3.0"
+    externalRetrofit2AdapterRxjava = "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
+    externalRxlifecycle2 = 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
+    externalRxjava2Rxandroid = 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    externalRxjava2Rxjava = 'io.reactivex.rxjava2:rxjava:2.1.3'
+
+
+    externalDexmakerDx = 'com.crittercism.dexmaker:dexmaker-dx:1.4'
+    externalDexmakerMockito = 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
+//    externalFastJson = 'com.alibaba:fastjson:1.2.5'
+    externalFastJsonForAndroid = 'com.alibaba:fastjson:1.1.68.android'
+
+    externalHamcrestLibrary = 'org.hamcrest:hamcrest-library:1.3'
+//    externalInject = 'javax.inject:javax.inject:1'
+
+    externalJSR305 = 'com.google.code.findbugs:jsr305:3.0.0'
+    externalMockito = 'org.mockito:mockito-core:1.10.19'
+    externalOrmLiteAndroid = 'com.j256.ormlite:ormlite-android:4.48'
+    externalGlide = 'com.github.bumptech.glide:glide:4.5.0'
+    externalGlideOkHttp = 'com.github.bumptech.glide:okhttp3-integration:1.4.0@aar'
+    externalOKHTTP = 'com.squareup.okhttp3:okhttp:3.8.1'
+    externalOKHTTPloggingInterceptor = "com.squareup.okhttp3:logging-interceptor:3.8.1"
+
+    externalGSON = 'com.google.code.gson:gson:2.8.0'
+    externalOKIO = 'com.squareup.okio:okio:1.6.0'
+    externaEventBus = 'org.greenrobot:eventbus:3.0.0'
+
+    externaNeenbedanktPluginsAndroidApt = 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+
+
+    externalPagerSlidingTabStrip = 'com.astuetz:pagerslidingtabstrip:1.0.1'
+
+    externalEasyPermissions = 'pub.devrel:easypermissions:0.2.1'
+
+    externalJunit = 'junit:junit:4.12'
+
+    externalCompileSdkVersion = 27
+    externalBuildToolsVersion = "26.0.2"
+    externalMinSdkVersion=19
+    externalTargetSdkVersion=27
+}

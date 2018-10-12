@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:layout_marginRight="@dimen/item_margin_two"
+        android:layout_marginLeft="@dimen/item_margin_two"
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <View
+        android:id="@+id/rc_view_line"
+        style="@style/view_line"
+        android:layout_marginRight="@dimen/margin_6"
+        android:layout_marginLeft="@dimen/margin_6"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <RelativeLayout
+            android:padding="@dimen/item_margin_two"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/layer_list_one"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="@dimen/margin_55"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_6"
+                    android:id="@+id/item_recycler_one"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/gs_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                >
+                <ImageView
+                    android:layout_width="@dimen/margin_44"
+                    android:layout_height="@dimen/margin_44"
+                    android:background="@drawable/rank"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text3"
+                    android:text="@string/故事排行"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:padding="@dimen/item_margin_two"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/layer_list_one"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="@dimen/margin_55"
+                    android:layout_marginLeft="@dimen/margin_8"
+                    android:layout_marginRight="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_6"
+                    android:id="@+id/item_recycler_two"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/zj_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                >
+                <ImageView
+                    android:layout_width="@dimen/margin_44"
+                    android:layout_height="@dimen/margin_44"
+                    android:background="@drawable/rank"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/Text3"
+                    android:text="@string/专辑排行"
+                    />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        />
+    <LinearLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="shareNames"
+        android:orientation="horizontal"
+        >
+        <LinearLayout
+            android:id="@+id/layout_lift"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center|left"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/margin_22"
+                android:layout_height="@dimen/margin_22"
+                android:layout_marginLeft="@dimen/title_margin"
+                android:background="@drawable/search_selected"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:paddingTop="@dimen/margin_10"
+            android:paddingBottom="@dimen/margin_10"
+            android:id="@+id/tv_title"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/钱儿频道"
+            android:gravity="center"
+            style="@style/Text1"
+            />
+        <LinearLayout
+            android:id="@+id/layout_right"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center|right"
+            >
+
+            <ImageView
+                android:id="@+id/play_image"
+                android:layout_width="@dimen/margin_22"
+                android:layout_height="@dimen/margin_22"
+                android:layout_marginRight="@dimen/title_margin"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <fm.qian.michael.widget.custom.XCViewPager
+            android:id="@+id/xViewPager_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+
+        </fm.qian.michael.widget.custom.XCViewPager>
+
+        <fm.qian.michael.widget.custom.BottomBarLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+        </fm.qian.michael.widget.custom.BottomBarLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

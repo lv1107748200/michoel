@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/back"
+    card_view:cardCornerRadius="@dimen/radius"
+    card_view:cardElevation="0dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:paddingTop="@dimen/margin_15"
+            android:paddingLeft="@dimen/margin_15"
+            android:paddingRight="@dimen/margin_15"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/set_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/昵称"
+                style="@style/Text3"
+                />
+            <View
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_marginBottom="@dimen/margin_10"
+                style="@style/view_line"
+                android:visibility="invisible"
+                />
+
+            <EditText
+                android:id="@+id/main_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/请输入昵称"
+                android:singleLine="true"
+                android:background="@drawable/loop_color_four"
+                android:textColorHint="@color/color_A3A"
+                style="@style/Text3"
+                android:gravity="center"
+                android:padding="@dimen/margin_8"
+                />
+
+            <LinearLayout
+                android:id="@+id/sex_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <LinearLayout
+                    android:id="@+id/nan_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    >
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/男"
+                        />
+                    <ImageView
+                        style="@style/image_sel_style"
+                        />
+                </LinearLayout>
+                <View
+                    style="@style/view_line"
+                    />
+                <LinearLayout
+                    android:id="@+id/nv_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/margin_10"
+                    >
+                    <TextView
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/女"
+                        />
+                    <ImageView
+                        style="@style/image_sel_style"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+            <View
+                android:layout_marginTop="@dimen/margin_10"
+                style="@style/view_line"
+                android:visibility="invisible"
+                />
+        </LinearLayout>
+
+
+        <View
+            android:layout_marginTop="@dimen/margin_10"
+            style="@style/view_line"
+            />
+
+
+        <LinearLayout
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_38"
+            android:orientation="horizontal"
+            >
+            <LinearLayout
+                android:id="@+id/layoutQX"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <TextView
+                    android:duplicateParentState="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/取消"
+                    style="@style/Text3"
+                    />
+            </LinearLayout>
+            <View
+                style="@style/view_line_v"
+                />
+            <LinearLayout
+                android:id="@+id/layoutQD"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                >
+                <TextView
+                    android:duplicateParentState="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/确认"
+                    style="@style/Text8"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>

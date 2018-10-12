@@ -1,0 +1,140 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion externalCompileSdkVersion
+    defaultConfig {
+        applicationId "fm.qian.michael"
+        minSdkVersion externalMinSdkVersion
+        targetSdkVersion externalTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters 'armeabi', 'armeabi-v7a', 'x86','x86_64'
+//        }
+    }
+    packagingOptions {
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/rxjava.properties'
+    }
+    signingConfigs {
+        release {
+            storeFile file('hrandroid.jks')
+            storePassword "hrandroid"
+            keyAlias "hrandroid"
+            keyPassword "hrandroid"
+        }
+        debug {
+            storeFile file('hrandroid.jks')
+            storePassword "hrandroid"
+            keyAlias "hrandroid"
+            keyPassword "hrandroid"
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为XXXX_v1.0_2016-01-15.apk
+                        def fileName =  "${variant.applicationId}-${variant.buildType.name}-v${variant.versionName}.apk"
+                        outputFileName = fileName
+                    }
+                }
+            }
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为XXXX_v1.0_2016-01-15.apk
+                        def fileName = "${variant.applicationId}-${variant.buildType.name}-v${variant.versionName}.apk"
+                        outputFileName = fileName
+                    }
+                }
+            }
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+
+        abortOnError false
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    sourceSets.main {
+        jni.srcDirs = []
+        jniLibs.srcDir "libs"
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a','x86_64'
+            universalApk true
+        }
+    }
+
+}
+def dbflow_version = "4.2.4"
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation externalAndroidAppCompatV7
+    implementation externalAndroidSupportV4
+    implementation externalAndroidRecyclerView
+    implementation externalAndroidConstraintLayout
+    implementation externalAndroidCardView
+    implementation externalAndroidDesign
+    testImplementation externalJunit
+    androidTestImplementation externalAndroidTestRunner
+    androidTestImplementation externalAndroidTestEspressoCore
+    annotationProcessor externalDaggerCompiler
+    annotationProcessor externalJakewhartonButterknifeCompiler
+    implementation externalDagger
+
+    api project(':bclibrary')
+    implementation project(':pictureselect2.2.3:picture_library')
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
+    implementation 'com.youth.banner:banner:1.4.10'
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
+    //最新版本
+    implementation 'com.contrarywind:Android-PickerView:4.1.6'
+    //时间选择器
+    //implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+    //    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.0-beta'
+    //    implementation 'com.shuyu:gsyVideoPlayer-x86:6.0.0-beta'
+    //    implementation 'com.shuyu:gsyVideoPlayer-x64:6.0.0-beta'
+    //    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.0-beta'
+    implementation 'com.liulishuo.filedownloader:library:1.7.5'
+    annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    implementation "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+
+    implementation "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+"//微信
+
+    implementation 'com.king.zxing:zxing-lite:1.0.2'
+}

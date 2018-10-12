@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/press_one"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/dp_11"
+        android:paddingLeft="@dimen/dp_11"
+        >
+
+        <TextView
+            android:id="@+id/item_tv_num"
+            android:layout_width="@dimen/dp_21"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@color/color_A3A"
+            android:textSize="@dimen/sp_12"
+            android:layout_marginRight="@dimen/dp_10"
+            android:visibility="gone"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/item_tv_play_image"
+            android:layout_width="@dimen/dp_21"
+            android:layout_height="@dimen/dp_21"
+            android:layout_marginRight="@dimen/dp_10"
+            android:background="@drawable/aal"
+            android:visibility="gone"
+            />
+
+        <fm.qian.michael.widget.RoundedImage.RoundedImageView
+            android:layout_marginRight="@dimen/dp_10"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:id="@+id/head_portrait"
+            android:background="@drawable/myicon"
+            android:scaleType="fitXY"
+            android:elevation="@dimen/dp_5"
+            app:corner_radius="@dimen/dp_50"
+            />
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:paddingTop="@dimen/dp_16"
+                android:layout_weight="1"
+                android:id="@+id/item_ming_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:maxLines="1"
+                android:textColor="@color/color_292"
+                android:textSize="@dimen/sp_12"
+                android:text="--"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="left|center"
+                android:paddingBottom="@dimen/dp_16"
+                >
+                <LinearLayout
+                    android:id="@+id/k_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        android:layout_width="@dimen/dp_10"
+                        android:layout_height="@dimen/dp_10"
+                        android:background="@drawable/bof0"
+                        />
+                    <TextView
+                        android:id="@+id/item_name_tv"
+                        style="@style/sel_text_style"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/k_two"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        style="@style/sel_img_style"
+                        android:background="@drawable/bof4"
+                        />
+                    <TextView
+                        android:id="@+id/item_time_tv"
+                        style="@style/sel_text_style"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/k_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+                    <ImageView
+                        style="@style/sel_img_style"
+                        android:background="@drawable/bof5"
+                        />
+                    <TextView
+                        android:id="@+id/item_peo_tv"
+                        style="@style/sel_text_style"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/k_four"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    >
+                    <ImageView
+                        android:background="@drawable/selector_checked_night"
+                        style="@style/sel_img_style" />
+                    <TextView
+                        android:id="@+id/item_down_tv"
+                        android:text="--"
+                        style="@style/sel_text_style" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/sel_image"
+            style="@style/image_sel_style_s"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/rc_view_line"
+        style="@style/view_line"
+        />
+
+</LinearLayout>

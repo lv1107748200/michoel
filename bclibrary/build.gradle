@@ -1,0 +1,71 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion externalCompileSdkVersion
+
+    defaultConfig {
+        minSdkVersion externalMinSdkVersion
+        targetSdkVersion externalTargetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation externalAndroidAppCompatV7
+    testImplementation externalJunit
+//    apt  externalDaggerCompiler
+//    api externalDagger
+    // provided externalJavaxAnnotationJsr250
+
+  //  apt externalJakewhartonButterknifeCompiler
+    compileOnly externalGlassfishJavaxAnnotation
+    api (externalJakewhartonButterknife){
+        exclude module: 'support-annotations', group: 'com.android.support'
+        exclude module: 'support-compat', group: 'com.android.support'
+    } // 资源注入
+
+    api externaEventBus
+    //
+    api (externalRxjava2Rxandroid) {
+        exclude module: 'rxjava2', group: 'io.reactivex'
+    }
+    api externalRxjava2Rxjava
+
+    api externalOKHTTP
+    api (externalOKHTTPloggingInterceptor){
+        exclude module: 'okhttp', group: 'com.squareup.okhttp3'
+    }
+    //restful网络框架
+    api (externalRetrofit2){
+        exclude module: 'okhttp', group: 'com.squareup.okhttp3'
+    }
+    api (externalRetrofit2converterJackson){
+        exclude module: 'retrofit', group: 'com.squareup.retrofit2'
+    }
+    api (externalRetrofit2AdapterRxjava){
+        exclude module: 'retrofit', group: 'com.squareup.retrofit2'
+        exclude module: 'rxjava2', group: 'io.reactivex'
+    }
+    api(externalRxlifecycle2) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    api externalAndroidMultiDex
+
+    api (externalGlide) {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+}

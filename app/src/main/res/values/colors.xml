@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#30b2ff</color>
+
+    <color name="black">#030303</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="white_translucent">#80FFFFFF</color>
+    <color name="line_color_one">#1afa29</color>
+    <color name="line_color_two">#1afa29</color>
+    <color name="loop_color_one">#1afa29</color>
+    <color name="loop_color_two">#1afa29</color>
+    <color name="b_c">#1afa29</color>
+    <color name="t_c">#FFFFFF</color>
+
+    <color name="color_4a9">#4a90e2</color>
+    <color name="color_aca">#acacac</color>
+    <color name="color_608">#608EFF</color>
+    <color name="color_30b">#30b2ff</color>
+    <color name="color_091">#091a43</color>
+    <color name="color_f3f">#f3f5f7</color>
+    <color name="color_618">#618dff</color>
+    <color name="color_060">#060606</color>
+    <color name="color_8d8">#8d8d8d</color>
+    <color name="color_ed6">#ed6280</color>
+    <color name="color_e5e">#e5e5e5</color>
+    <color name="color_b3b">#b3becc</color>
+    <color name="color_a7a">#a7a7a7</color>
+    <color name="color_d1c">#d1cdc8</color>
+    <color name="color_43A">#43A4FF</color>
+    <color name="color_4D9">#4D9CFF</color>
+    <color name="color_5f5">#5f5f5f</color>
+    <color name="color_d1d">#d1d1d1</color>
+    <color name="color_f5f">#f5f6f7</color>
+    <color name="color_ede">#edeff5</color>
+    <color name="color_838">#838383</color>
+    <color name="color_66d">#66d020</color>
+    <color name="color_f1f">#f1f1f1</color>
+    <color name="color_424">#424242</color>
+    <color name="color_9d9">#9d9d9d</color>
+    <color name="color_f5a">#f5a623</color>
+    <color name="color_d7e">#d7eeff</color>
+    <color name="color_167">#167df0</color>
+    <color name="color_404">#404040</color>
+    <color name="color_eae">#eaebec</color>
+    <color name="color_919">#919191</color>
+    <color name="color_6e7">#6e71d9</color>
+
+
+    <!--  重新添加的  -->
+
+    <color name="color_line">@color/color_E1E</color>
+    <color name="color_line_one">@color/color_F5F</color>
+
+    <color name="bar_grey">#393a3e</color>
+    <color name="color_F86">#F86E78</color>
+    <color name="color_A3A">#A3A6A7</color>
+    <color name="color_292">#292B2F</color>
+    <color name="color_333">#333333</color>
+    <color name="color_666">#666666</color>
+    <color name="color_999">#999999</color>
+    <color name="color_29230">#30292B2F</color>
+    <color name="color_29200">#00292B2F</color>
+    <color name="color_000">#000000</color>
+    <color name="color_636">#63686A</color>
+    <color name="color_E1E">#E1E1E1</color>
+    <color name="color_f9f">#F9FCFF</color>
+    <color name="color_F5F">#F5F5F5</color>
+    <color name="color_8a8">#8a8a8a</color>
+    <color name="color_50B">#50B674</color>
+
+    <color name="back">@color/white</color>
+    <color name="notification_bak">#47fafafa</color>
+    <color name="white_text">#fafafa</color>
+    <color name="bottom_text">#c1c0c0</color>
+
+
+</resources>

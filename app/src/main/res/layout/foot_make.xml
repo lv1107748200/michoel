@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/item_margin_two"
+    android:paddingTop="@dimen/item_margin_two">
+
+        <LinearLayout
+            android:id="@+id/add_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/margin_20"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_28"
+                android:layout_height="@dimen/margin_28"
+                android:background="@drawable/add_p"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="添加"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/down_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/margin_50"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_28"
+                android:layout_height="@dimen/margin_28"
+                android:background="@drawable/down"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/下载"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/play_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginLeft="@dimen/margin_50"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_28"
+                android:layout_height="@dimen/margin_28"
+                android:background="@drawable/p_p"
+                />
+
+            <TextView
+                style="@style/m_text_style_two"
+                android:text="@string/播放"
+                />
+
+        </LinearLayout>
+
+
+</LinearLayout>

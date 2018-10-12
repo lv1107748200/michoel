@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/item_margin_two"
+    android:paddingRight="@dimen/item_margin_two"
+    android:background="@drawable/press_one"
+    >
+    <LinearLayout
+        android:id="@+id/haolou_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center|left"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/item_margin_three"
+            >
+
+            <TextView
+                android:layout_marginTop="@dimen/margin_15"
+                android:layout_weight="1"
+                android:id="@+id/title_tv_news"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="-- --"
+                android:maxLines="2"
+                android:ellipsize="end"
+                style="@style/Text4"
+                />
+            <TextView
+                android:layout_marginBottom="@dimen/margin_15"
+                android:id="@+id/title_tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-- --"
+                android:maxLines="1"
+                style="@style/Text6"
+                />
+
+        </LinearLayout>
+
+        <fm.qian.michael.widget.custom.SelectableRoundedImageView
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:id="@+id/item_image"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:scaleType="fitXY"
+            android:src="@color/color_line_one"
+            android:layout_gravity="center"
+            app:sriv_left_bottom_corner_radius="@dimen/radius"
+            app:sriv_left_top_corner_radius="@dimen/radius"
+            app:sriv_right_bottom_corner_radius="@dimen/radius"
+            app:sriv_right_top_corner_radius="@dimen/radius"
+            />
+
+    </LinearLayout>
+
+    <View
+        style="@style/view_line"
+        />
+
+</LinearLayout>

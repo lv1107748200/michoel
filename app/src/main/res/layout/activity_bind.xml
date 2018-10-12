@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/login_laout"
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        />
+
+    <include layout="@layout/title_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/margin_15"
+        android:paddingLeft="@dimen/margin_15"
+        >
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_25"
+            android:textColor="@color/color_000"
+            android:text="@string/绑定手机"
+            />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_40">
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:id="@+id/user_layout"
+                android:background="@drawable/press_one"
+                >
+                <fm.qian.michael.widget.RoundedImage.RoundedImageView
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:layout_width="@dimen/margin_60"
+                    android:layout_height="@dimen/margin_60"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/head_portrait"
+                    android:background="@drawable/myicon"
+                    android:scaleType="fitXY"
+                    android:elevation="@dimen/radius"
+                    app:corner_radius="@dimen/margin_80"
+                    />
+                <LinearLayout
+                    android:layout_marginLeft="@dimen/margin_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical|left"
+                    >
+                    <TextView
+                        android:id="@+id/nickname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="用户名"
+                        style="@style/Text0"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:gravity="center_vertical|right"
+                    >
+
+                    <ImageView style="@style/m_style_image_one" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+                <LinearLayout
+                    android:id="@+id/liner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center|left"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="+86"
+                        android:textSize="@dimen/size_15"
+                        android:textColor="@color/color_292"
+                        android:layout_marginRight="@dimen/margin_21"
+                        />
+
+                    <View
+                        style="@style/view_line_v"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:layout_marginBottom="@dimen/margin_20"
+                     />
+
+                    <fm.qian.michael.widget.custom.ClearWriteEditText
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:id="@+id/de_login_phone"
+                        android:hint="@string/phone_number"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        style="@style/cw_et" />
+
+
+                </LinearLayout>
+
+                <View
+                    style="@style/view_line"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/liner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+
+
+                    <fm.qian.michael.widget.custom.ClearWriteEditText
+                        android:id="@+id/de_login_image"
+                        android:hint="请输入图形验证码"
+                        style="@style/cw_et" />
+
+                    
+                    <ImageView
+                        android:id="@+id/verification_code_img"
+                        android:layout_width="@dimen/margin_80"
+                        android:layout_height="@dimen/margin_40"
+                        android:scaleType="fitXY"
+                        />
+                    
+
+                </LinearLayout>
+
+            <View
+                style="@style/view_line"
+                />
+            <LinearLayout
+                android:id="@+id/liner3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+
+
+                <fm.qian.michael.widget.custom.ClearWriteEditText
+                    android:id="@+id/et_verification_code"
+                    android:hint="请输入短信验证码"
+                    style="@style/cw_et" />
+
+
+                <TextView
+                    android:text="@string/获取验证码"
+                    android:id="@+id/send_verification_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_F86"
+                    android:textSize="@dimen/size_15"
+                    />
+
+            </LinearLayout>
+
+            <View
+                style="@style/view_line"
+                />
+
+                <Button
+                    android:id="@+id/de_login_sign"
+                    android:textSize="@dimen/size_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_40"
+                    android:layout_marginLeft="@dimen/margin_85"
+                    android:layout_marginRight="@dimen/margin_85"
+                    android:layout_marginTop="@dimen/margin_25"
+                    android:background="@drawable/arc_bc_layout_five"
+                    android:text="@string/Login"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/help_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/two"
+                    android:textSize="@dimen/size_10"
+                    android:textColor="@color/color_A3A"
+                    android:gravity="center"
+                    android:layout_marginTop="@dimen/margin_10"
+                    />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/weixin_login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_28"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/margin_105"
+            android:layout_marginRight="@dimen/margin_105"
+            android:layout_marginBottom="@dimen/margin_50"
+            android:gravity="center"
+            android:background="@drawable/loop_color_three"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/margin_13"
+                android:layout_height="@dimen/margin_11"
+                android:scaleType="fitXY"
+                android:background="@drawable/wx"
+                />
+            <TextView
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/微信登陆"
+                style="@style/Text17"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margin_11"
+    android:paddingRight="@dimen/margin_11"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/user_layout"
+        android:background="@drawable/press_one"
+        >
+        <fm.qian.michael.widget.custom.SelectableRoundedImageView
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:id="@+id/item_image"
+            android:layout_width="@dimen/margin_70"
+            android:layout_height="@dimen/margin_70"
+            android:scaleType="fitXY"
+            android:layout_gravity="center"
+            app:sriv_left_bottom_corner_radius="@dimen/radius"
+            app:sriv_left_top_corner_radius="@dimen/radius"
+            app:sriv_right_bottom_corner_radius="@dimen/radius"
+            app:sriv_right_top_corner_radius="@dimen/radius"
+            />
+        <LinearLayout
+            android:layout_marginLeft="@dimen/margin_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical|left"
+            >
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="默认播单"
+                style="@style/Text10"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|right"
+            >
+            <TextView
+                android:id="@+id/number_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                style="@style/Text9"
+                android:layout_marginRight="@dimen/item_margin_one"
+                />
+            <ImageView
+                android:layout_width="@dimen/margin_11"
+                android:layout_height="@dimen/margin_11"
+                android:background="@drawable/myjt1"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        style="@style/view_line"
+        />
+
+</LinearLayout>

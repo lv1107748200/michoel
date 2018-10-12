@@ -1,0 +1,120 @@
+package fm.qian.michael.ui.activity;
+
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.view.View;
+import android.widget.TextView;
+
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import fm.qian.michael.R;
+import fm.qian.michael.base.activity.BaseIntensifyActivity;
+import fm.qian.michael.common.event.Event;
+import fm.qian.michael.net.base.BaseDataResponse;
+import fm.qian.michael.net.entry.response.Ver;
+import fm.qian.michael.net.http.HttpCallback;
+import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.ui.fragment.MyFragment;
+import fm.qian.michael.utils.NLog;
+import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.SPUtils;
+import fm.qian.michael.widget.custom.SelectableRoundedImageView;
+import fm.qian.michael.widget.single.UserInfoManger;
+
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
+
+/*
+ * lv   2018/9/26
+ */
+public class SetActivity extends BaseIntensifyActivity {
+
+
+    @BindView(R.id.tv_banbenhao)
+    TextView tv_banbenhao;
+    @BindView(R.id.item_image)
+    SelectableRoundedImageView item_image;
+    @OnClick({R.id.base_left_layout, R.id.base_right_layout,R.id.out_login_layout})
+    public  void  onClick(View view){
+        switch (view.getId()){
+            case R.id.base_left_layout:
+                finish();
+                break;
+            case R.id.base_right_layout:
+
+                break;
+            case R.id.out_login_layout:
+                setDelAlertDialog();
+                break;
+        }
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_set;
+    }
+
+    @Override
+    public void initView() {
+        super.initView();
+        setTitleTv("设置");
+
+        Ver();
+    }
+
+
+    private void Ver(){
+        baseService.ver(new HttpCallback<Ver, BaseDataResponse<Ver>>() {
+            @Override
+            public void onError(HttpException e) {
+                NLog.e(NLog.TAG,"onError");
+                NToast.shortToastBaseApp(e.getMsg());
+            }
+
+            @Override
+            public void onSuccess(Ver ver) {
+                //NLog.e(NLog.TAG,""+ver.getVer() + ver.getVerint());
+                tv_banbenhao.setText(ver.getVer());
+            }
+
+        },SetActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+    }
+
+    private void setDelAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("确认要退出吗？");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                UserInfoManger.getInstance().clear();//清空缓存
+                SPUtils.clearLogin();//清空本地数据
+
+                Intent intent = new Intent(SetActivity.this,MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+
+                EventBus.getDefault().post(new Event.MainActivityEvent(4));
+
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
+
+}

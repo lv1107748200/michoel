@@ -1,0 +1,3 @@
+include ':app', ':bclibrary'
+include ':pictureselect2.2.3:picture_library'
+include ':pictureselect2.2.3:ucrop'

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/back"
+    card_view:cardCornerRadius="@dimen/radius"
+    card_view:cardElevation="0dp"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            
+            <ImageView
+                android:layout_marginRight="@dimen/margin_13"
+                android:layout_marginTop="@dimen/margin_13"
+                android:id="@+id/del_image"
+                android:layout_width="@dimen/margin_9"
+                android:layout_height="@dimen/margin_9"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/cha_hao"
+                android:scaleType="fitXY"
+                />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/登陆"
+                style="@style/Text1"
+                />
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/weixin_login_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/margin_33"
+            android:layout_marginRight="@dimen/margin_33"
+            android:layout_marginTop="@dimen/margin_20"
+            android:gravity="center"
+            android:background="@drawable/arc_bc_layout_four"
+            >
+            
+            <ImageView
+                android:layout_width="@dimen/margin_24"
+                android:layout_height="@dimen/margin_18"
+                android:scaleType="fitXY"
+                android:background="@drawable/wx"
+                />
+            <TextView
+                android:layout_marginLeft="@dimen/margin_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/微信登陆"
+                style="@style/Text16"
+                />
+
+        </LinearLayout>
+        <TextView
+            android:layout_marginLeft="@dimen/margin_33"
+            android:layout_marginRight="@dimen/margin_33"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/one"
+            style="@style/Text7"
+            />
+
+        <LinearLayout
+            android:focusable="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/margin_23"
+            android:layout_marginTop="@dimen/margin_15"
+            >
+            <LinearLayout
+                android:id="@+id/layoutZC"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:paddingLeft="@dimen/margin_33"
+                >
+                <TextView
+                    android:duplicateParentState="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/注册"
+                    style="@style/Text3"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layoutDL"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|right"
+                android:paddingRight="@dimen/margin_33"
+                >
+                <TextView
+                    android:duplicateParentState="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/登陆"
+                    style="@style/Text3"
+                    />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</android.support.v7.widget.CardView>

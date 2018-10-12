@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="@dimen/margin_11"
+    android:paddingLeft="@dimen/margin_11"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:id="@+id/user_layout"
+        android:background="@drawable/press_one"
+        >
+        <fm.qian.michael.widget.RoundedImage.RoundedImageView
+            android:layout_marginBottom="@dimen/margin_5"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_width="@dimen/margin_80"
+            android:layout_height="@dimen/margin_80"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/head_portrait"
+            android:background="@drawable/myicon"
+            android:scaleType="fitXY"
+            android:elevation="@dimen/radius"
+            app:corner_radius="@dimen/margin_80"
+            />
+        <LinearLayout
+            android:layout_marginLeft="@dimen/margin_25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical|left"
+            >
+            <TextView
+                android:id="@+id/nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/点击登陆"
+                style="@style/Text0"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|right"
+            >
+
+            <ImageView style="@style/m_style_image_one" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/wodexinxi_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/我的信息"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/baobaoxinxi_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/宝宝信息"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/bdwx_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="绑定微信"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <TextView
+                    android:id="@+id/tv_bind_wx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_F86"
+                    android:textSize="@dimen/size_12"
+                    android:layout_marginRight="@dimen/margin_3"
+                    android:text="@string/未绑定"
+                    />
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/sczj_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/收藏的专辑"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/ygmzj_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/已购买专辑"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+        <LinearLayout
+            style="@style/m_style_layout_three"
+            android:id="@+id/sz_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设置"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line"
+            />
+
+        <TextView
+            android:paddingTop="@dimen/margin_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/我的播单"
+            style="@style/Text0"
+            />
+
+    </LinearLayout>
+
+
+
+
+</LinearLayout>

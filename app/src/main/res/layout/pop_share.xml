@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/white"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/l_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:background="@drawable/press_one"
+        android:padding="@dimen/margin_11"
+        android:layout_marginLeft="@dimen/margin_10"
+        >
+
+        <fm.qian.michael.widget.custom.SelectableRoundedImageView
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:scaleType="fitXY"
+            android:background="@drawable/wx_f_s"
+            app:sriv_left_bottom_corner_radius="@dimen/radius"
+            app:sriv_left_top_corner_radius="@dimen/radius"
+            app:sriv_right_bottom_corner_radius="@dimen/radius"
+            app:sriv_right_top_corner_radius="@dimen/radius"
+            />
+        <TextView
+            android:layout_marginTop="@dimen/item_margin_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_292"
+            android:textSize="@dimen/size_12"
+            android:text="联系人"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/q_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:padding="@dimen/margin_10"
+        android:background="@drawable/press_one"
+        >
+
+        <fm.qian.michael.widget.custom.SelectableRoundedImageView
+            android:layout_width="@dimen/margin_40"
+            android:layout_height="@dimen/margin_40"
+            android:scaleType="fitXY"
+            android:background="@drawable/wx_f_q"
+            app:sriv_left_bottom_corner_radius="@dimen/radius"
+            app:sriv_left_top_corner_radius="@dimen/radius"
+            app:sriv_right_bottom_corner_radius="@dimen/radius"
+            app:sriv_right_top_corner_radius="@dimen/radius"
+            />
+        <TextView
+            android:layout_marginTop="@dimen/item_margin_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/color_292"
+            android:textSize="@dimen/size_12"
+            android:text="朋友圈"
+            />
+
+    </LinearLayout>
+
+
+</LinearLayout>

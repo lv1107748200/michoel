@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_50"
+            android:background="@color/white"
+            app:srlFinishDuration="200"
+            app:srlEnableLastTime="true"
+            app:srlClassicsSpinnerStyle="FixedBehind"
+            app:srlTextSizeTitle="@dimen/size_14"
+            app:srlTextSizeTime="@dimen/margin_10"
+            app:srlTextTimeMarginTop="@dimen/margin_2"
+            app:srlDrawableArrowSize="@dimen/margin_20"
+            app:srlDrawableProgressSize="@dimen/margin_20"
+            app:srlDrawableMarginRight="@dimen/margin_20"
+            app:srlDrawableProgress="@drawable/ic_progress_hojder"
+            />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_list"
+            style="@style/m_er_recycle_style_w"
+            />
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:srlClassicsSpinnerStyle="Translate"
+            />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+
+</LinearLayout>

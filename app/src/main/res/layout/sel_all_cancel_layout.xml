@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:id="@+id/relayout_sel_cancel"
+        android:paddingTop="@dimen/dp_19"
+        android:paddingBottom="@dimen/dp_15"
+        android:paddingLeft="@dimen/dp_11"
+        android:paddingRight="@dimen/dp_11"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:id="@+id/sel_all_Layout"
+            android:layout_alignParentLeft="true"
+            android:layout_width="@dimen/margin_150"
+            android:layout_height="@dimen/dp_40"
+            android:gravity="center|left"
+            >
+
+            <ImageView
+                style="@style/image_sel_style_s" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/dp_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/全选"
+                android:textSize="@dimen/sp_15"
+                android:textColor="@color/color_292"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cancel_layout"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/margin_150"
+            android:layout_height="@dimen/dp_40"
+            android:gravity="center|right"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/取消"
+                android:textSize="@dimen/sp_15"
+                android:textColor="@color/color_292"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+</merge>

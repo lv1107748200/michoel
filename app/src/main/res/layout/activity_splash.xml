@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/margin_5"
+        android:id="@+id/tv_seconds"
+        android:layout_width="@dimen/margin_45"
+        android:layout_height="@dimen/margin_17"
+        android:gravity="center"
+        android:text="0s"
+        android:textSize="@dimen/size_10"
+        android:textColor="@color/white"
+        android:background="@drawable/arc_bc_tv_one"
+        android:layout_marginRight="@dimen/margin_15"
+        android:visibility="gone"
+        />
+    <include layout="@layout/item_splash_layout"/>
+
+</RelativeLayout>

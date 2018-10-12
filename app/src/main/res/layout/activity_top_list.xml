@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        />
+    <include layout="@layout/title_layout"/>
+
+    <net.lucode.hackware.magicindicator.MagicIndicator
+        android:layout_marginRight="@dimen/item_margin_two"
+        android:layout_marginLeft="@dimen/item_margin_two"
+        android:id="@+id/magic_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        style="@style/view_line"
+        />
+    <fm.qian.michael.widget.custom.XCViewPager
+        android:id="@+id/xViewPager_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+    </fm.qian.michael.widget.custom.XCViewPager>
+
+
+</LinearLayout>

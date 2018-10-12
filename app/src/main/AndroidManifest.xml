@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="fm.qian.michael">
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 获取机型信息权限 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- 查看 Wi-Fi 状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 查看网络状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 录音 -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- 控制振动器 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- 防止设备休眠 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <!-- 获取联系人信息，demo中演示发送通讯录消息 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.RECORD_VIDEO" />
+    <uses-permission android:name = "android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.READ_SETTINGS" />
+
+
+
+
+    <application
+        tools:replace="android:theme"
+        android:name=".base.BaseApplation"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/logo"
+        android:supportsRtl="true"
+        android:largeHeap="true"
+        android:theme="@style/MyTheme">
+        <!--引导-->
+        <activity android:name=".ui.activity.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <!--搜索-->
+        <activity android:name=".ui.activity.dim.SearchActivity"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="com.xxbm.michoel.ui.activity.SearchActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!--web-->
+        <activity android:name=".ui.activity.WebParticularsActivity"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            >
+        </activity>
+
+        <activity android:name=".ui.activity.WebTBSParticularsActivity"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            >
+        </activity>
+        <!--播放页-->
+        <activity
+            android:name=".ui.activity.dim.PlayActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <!--通用-->
+        <activity
+            android:name=".ui.activity.ComActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <!--用户信息-->
+        <activity
+            android:name=".ui.activity.UserAcrtivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <!--  -->
+        <activity
+            android:name=".ui.activity.dim.HeadGroupActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".ui.activity.dim.HeadGroupTopActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <!-- 播单管理 -->
+        <activity
+            android:name=".ui.activity.dim.PlayListMessageAtivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <!-- 榜单 -->
+        <activity
+            android:name=".ui.activity.dim.TopListActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <!-- 登陆 -->
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <!-- 设置 -->
+        <activity
+            android:name=".ui.activity.SetActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <!-- 设置 -->
+        <activity
+            android:name=".ui.activity.CustomCaptureActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            >
+        </activity>
+        <!-- 下载管理页面 -->
+        <activity
+            android:name=".ui.activity.dim.CollectionToBuyActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
+        <activity android:name=".ui.activity.LockActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
+            android:noHistory="true"
+            android:taskAffinity="fm.qian.michael.ui.activity.lockscreen"
+            android:theme="@style/LockScreenTheme"/>
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent"
+            />  
+
+        <service
+            android:name=".service.MqService"
+            android:process=":michael"
+            />
+        <receiver android:name=".receiver.MediaButtonIntentReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+            </intent-filter>
+        </receiver>
+
+
+        <!--网络广播-->
+        <receiver android:name=".widget.broadcast.NetworkConnectChangedReceiver">
+        </receiver>
+
+    </application>
+
+</manifest>

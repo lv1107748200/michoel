@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <!--<SeekBar-->
+        <!--android:id="@+id/musicSeekBar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:maxHeight="@dimen/margin_4"-->
+        <!--android:paddingStart="0dp"-->
+        <!--android:paddingEnd="0dp"-->
+        <!--android:paddingTop="0dp"-->
+        <!--android:paddingBottom="0dp"-->
+        <!--android:progressDrawable="@drawable/layer_list_three"-->
+        <!--android:thumb="@drawable/selected_radius_two"-->
+        <!--/>-->
+    <!--信息显示-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_9"
+        >
+        <TextView
+            android:id="@+id/time_lift_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text7"
+            android:text="00:00"
+            android:layout_alignParentLeft="true"
+            />
+
+        <TextView
+            android:id="@+id/time_right_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text7"
+            android:text="00:00"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+    <!--相关操作-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/margin_11"
+        android:paddingLeft="@dimen/margin_11"
+        android:paddingRight="@dimen/margin_11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/layout_play_type"
+                style="@style/m_image_style_one"
+                android:background="@drawable/xunhuan"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.8"
+            >
+            <ImageView
+                android:id="@+id/add_play_list"
+                android:layout_alignParentLeft="true"
+                style="@style/m_image_style_one"
+                android:background="@drawable/add_p"
+                />
+            <ImageView
+                android:id="@+id/down_image"
+                android:layout_centerInParent="true"
+                style="@style/m_image_style_one"
+                android:background="@drawable/down"
+                />
+            <ImageView
+                android:id="@+id/image_share"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/share"
+                style="@style/m_image_style_one" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/layout_play_list"
+                android:layout_alignParentRight="true"
+                style="@style/m_image_style_one"
+                android:background="@drawable/list"
+                />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <!--播放控制-->
+
+    <LinearLayout
+        android:layout_marginBottom="@dimen/margin_30"
+        android:layout_marginTop="@dimen/margin_30"
+        android:paddingLeft="@dimen/margin_20"
+        android:paddingRight="@dimen/margin_20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_up"
+         style="@style/m_style_layout_five"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_45"
+                android:layout_height="@dimen/margin_45"
+                android:background="@drawable/ajh"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_play"
+            style="@style/m_style_layout_five"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_55"
+                android:layout_height="@dimen/margin_55"
+                android:background="@drawable/selector_checked_six"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_down"
+            style="@style/m_style_layout_five"
+            >
+            <ImageView
+                android:layout_width="@dimen/margin_45"
+                android:layout_height="@dimen/margin_45"
+                android:background="@drawable/ajb"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/view_line_one"
+       />
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/margin_11"
+        android:layout_marginRight="@dimen/margin_11"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_70"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginTop="@dimen/item_margin_three"
+            android:id="@+id/item_ming_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:maxLines="1"
+            style="@style/Text3"
+            android:text="丢了礼物的小迅录"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left|center"
+            android:paddingBottom="@dimen/margin_12"
+            >
+            <LinearLayout
+                android:id="@+id/k_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_width="@dimen/margin_17"
+                    android:layout_height="@dimen/margin_17"
+                    android:background="@drawable/bof0"
+                    />
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:id="@+id/item_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="--"
+                    style="@style/Text6"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/k_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_marginLeft="@dimen/margin_6"
+                    android:layout_width="@dimen/margin_17"
+                    android:layout_height="@dimen/margin_17"
+                    android:background="@drawable/bof4"
+                    />
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:id="@+id/item_time_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="--"
+                    style="@style/Text6"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/k_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:layout_marginLeft="@dimen/margin_6"
+                    android:layout_width="@dimen/margin_17"
+                    android:layout_height="@dimen/margin_17"
+                    android:background="@drawable/bof5"
+                    />
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:id="@+id/item_peo_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="--"
+                    style="@style/Text6"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/k_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:visibility="gone"
+                >
+                <ImageView
+                    android:layout_marginLeft="@dimen/margin_6"
+                    android:layout_width="@dimen/margin_17"
+                    android:layout_height="@dimen/margin_17"
+                    android:background="@drawable/selector_checked_night"
+                    />
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_5"
+                    android:id="@+id/item_down_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="已下载"
+                    style="@style/Text6"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:paddingLeft="@dimen/margin_15"
+        android:paddingRight="@dimen/margin_15"
+        android:paddingBottom="@dimen/margin_15"
+        android:id="@+id/introduce_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Text12"
+        android:text="@string/what"
+        />
+
+
+</LinearLayout>

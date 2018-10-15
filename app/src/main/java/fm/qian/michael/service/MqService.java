@@ -339,7 +339,9 @@ public class MqService extends Service {
 
         pushAction(MUSIC_LODING);//正在加载
 
-        updateNotification("0");//第一次进来
+       // updateNotification("0");//第一次进来
+
+        mainPlayerHandler.sendEmptyMessage(REQNFTION);
 
     }
 

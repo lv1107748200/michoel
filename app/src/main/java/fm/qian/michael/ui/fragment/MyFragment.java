@@ -352,7 +352,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                 nickname.setText(userInfo.getNickname());
 
             }
-        },MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+        }.setContext(mFontext),MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
     }
 
 
@@ -407,7 +407,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                         }
 
                     }
-                },MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW)
+                }.setContext(mFontext),MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW)
 
         );
 

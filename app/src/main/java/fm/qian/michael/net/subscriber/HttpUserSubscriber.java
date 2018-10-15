@@ -1,20 +1,27 @@
 package fm.qian.michael.net.subscriber;
 
 
+import android.content.Intent;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import java.io.IOException;
 
+import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.base.BaseResponse;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.net.http.HttpUtils;
+import fm.qian.michael.ui.activity.LoginActivity;
 import fm.qian.michael.utils.NLog;
+import fm.qian.michael.utils.NToast;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+
+import static fm.qian.michael.common.GlobalVariable.THREE;
 
 
 /**
@@ -60,13 +67,25 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
             if(result instanceof  BaseDataResponse){
                 BaseDataResponse baseDataResponse = (BaseDataResponse) result;
 
+                int code = baseDataResponse.getCode();
 
-                if(baseDataResponse.getCode() == 1){
+                if(code == 1){
                     if (callback != null) {
                         callback.onSuccess(baseDataResponse.getData());
                         callback.onSuccessAll(result);
                     }
-                }else if(baseDataResponse.getCode() == -2){
+                }else if(code == -2){
+
+                    NToast.shortToastBaseApp("用户登录过期，需重新登陆");
+
+                    if(null != callback){
+                        if(callback.getContext() != null){
+                            Intent intent = new Intent();
+                            intent.setClass(callback.getContext(), LoginActivity.class);
+                            intent.putExtra(LoginActivity.LOGIN,THREE);
+                            callback.getContext().startActivity(intent);
+                        }
+                    }
 
                 }else {
                     if (callback != null) {

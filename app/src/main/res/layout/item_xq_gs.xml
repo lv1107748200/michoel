@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/xq_gs_layout"
+    >
+
+
+    <LinearLayout
+        android:id="@+id/xq_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="详情"
+            android:textColor="@drawable/selector_tv_color_one"
+            android:textSize="@dimen/size_14"
+            />
+
+        <View
+            android:layout_width="@dimen/margin_30"
+            android:layout_height="@dimen/margin_1"
+            android:background="@drawable/selector_line_color_one"
+            />
+
+
+    </LinearLayout>
+
+    <View style="@style/view_line_v"
+        android:layout_marginTop="@dimen/margin_4"
+        android:layout_marginBottom="@dimen/margin_4"
+      />
+
+    <LinearLayout
+        android:id="@+id/gs_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/故事"
+            android:textColor="@drawable/selector_tv_color_one"
+            android:textSize="@dimen/size_14"
+            />
+
+        <View
+            android:layout_width="@dimen/margin_30"
+            android:layout_height="@dimen/margin_1"
+            android:background="@drawable/selector_line_color_one"
+            />
+
+
+    </LinearLayout>
+
+</LinearLayout>

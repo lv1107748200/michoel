@@ -220,7 +220,7 @@ public class UserAcrtivity extends BaseIntensifyActivity {
                 }
 
             }
-        },UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this),UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
 
@@ -244,7 +244,7 @@ public class UserAcrtivity extends BaseIntensifyActivity {
                 getUserMessage();//设置之后
 
             }
-        },UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this),UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
     private void user_logo(UserInfo userInfo,String s){
@@ -265,7 +265,7 @@ public class UserAcrtivity extends BaseIntensifyActivity {
                 getUserMessage();
 
             }
-        },UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this),UserAcrtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
     //初始化 姓名 性别 设置

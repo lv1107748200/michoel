@@ -159,6 +159,12 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         setPermission();
         // setBroadcast(this);
 
+        if(MusicPlayerManger.isPlaying()){
+            GlideUtil.setGif(this, R.mipmap.playing,playImage);
+        }else {
+            GlideUtil.setGlideImage(this, R.drawable.pause,playImage);
+        }
+
     }
 
     @Override

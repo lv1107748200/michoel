@@ -16,24 +16,26 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/name_tv"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_15"
             android:textColor="@color/white"
-            android:text="@string/故事排行"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="故事"
             />
 
 
         <LinearLayout
             android:orientation="horizontal"
             android:id="@+id/widget_control"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView

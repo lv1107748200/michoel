@@ -48,6 +48,8 @@ import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.widget.dialog.LoadingDialog;
+import fm.qian.michael.widget.pop.CustomPopuWindConfig;
+import fm.qian.michael.widget.pop.PopInputWindow;
 import fm.qian.michael.widget.single.DownManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 
@@ -87,6 +89,8 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
             cancel_layout;
 
     private RelativeLayout relayout_sel_cancel;
+
+    private PopInputWindow popInputWindow;
 
     @OnClick({R.id.base_left_layout,
             R.id.base_right_layout
@@ -129,7 +133,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                         setUserInfoDelList( CommonUtils.setJoint(selList));
 
-                        deldelListFile();
+                        deldelListFile(selList);
                     }
                 }
 
@@ -141,6 +145,40 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.layout_editname:
+                if(!isLogin()){
+                    NToast.shortToastBaseApp(getString(R.string.需登陆));
+                    return;
+                }
+
+                if(null == popInputWindow){
+                    popInputWindow = new PopInputWindow(this,new  CustomPopuWindConfig.Builder(this)
+                            .setOutSideTouchable(true)
+                            .setFocusable(true)
+                            .setAnimation(R.style.popup_hint_anim)
+                            .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this) - com.hr.bclibrary.utils.DisplayUtils.dip2px(this,80)))
+                            .build() );
+
+                    popInputWindow.setPopInputWindowCallBack(new PopInputWindow.PopInputWindowCallBack() {
+                        @Override
+                        public void callBackInputText(String text) {
+
+
+                            if(!CheckUtil.isEmpty(text)){
+                                user_broadcast("update",text);
+                            }else {
+                                NToast.shortToastBaseApp("请输入名称");
+                            }
+
+
+                        }
+                    });
+                    popInputWindow.setMain_search("请输入播单名称");
+                    popInputWindow.setSet_add_tv_title("更改播单");
+
+                    popInputWindow.show(v);
+                }else {
+                    popInputWindow.show(v);
+                }
 
                 break;
             case R.id.layout_down:
@@ -517,12 +555,12 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
 
                     }
-                },PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY)
+                }.setContext(this),PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY)
 
         );
     }
 
-    private void user_broadcast(String act,String title){
+    private void user_broadcast(final String act, String title){
 
         UserInfo data = new UserInfo();
 
@@ -539,19 +577,28 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
             @Override
             public void onError(HttpException e) {
                 NToast.shortToastBaseApp(e.getMsg());
+
+                if(null != popInputWindow)
+                    popInputWindow.dismiss();
+
             }
 
             @Override
             public void onSuccessAll(BaseDataResponse k) {
 
+                if(null != popInputWindow)
+                    popInputWindow.dismiss();
                 NToast.shortToastBaseApp(k.getMsg());
+
+                deldelListFile(comAllList);
 
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ONE));
 
+                if("del".equals(act))
                 finish();
 
             }
-        },PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this),PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
 
@@ -584,14 +631,14 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 setUserInfo("list",bid);//删除成功后
 
             }
-        }, PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this), PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
-    private void deldelListFile(){
-        DownManger.delListFile(selList, new DownManger.ResultCallback() {
+    private void deldelListFile(List<ComAll> comAlls){
+        DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
             @Override
             public void onSuccess(Object o) {
-                NToast.shortToastBaseApp("删除成功");
+                NToast.shortToastBaseApp("本地删除成功");
             }
 
             @Override
@@ -636,6 +683,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                 if(isLogin()){
                     user_broadcast("del",null);
+
                 }
 
             }

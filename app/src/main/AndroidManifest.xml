@@ -64,6 +64,7 @@
         <activity android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -192,13 +193,14 @@
         <receiver android:name=".receiver.SimpleWidgetProvider" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-                <action android:name="com.wm.remusic.metachanged"/>
-                <action android:name="com.wm.remusi.change_music"/>
-                <action android:name="com.wm.remusic.progress"/>
+                <action android:name="fm.qian.michael.updatepause"/>
+                <action android:name="fm.qian.michael.playstatechanged"/>
+                <action android:name="fm.qian.michael.progress"/>
             </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/appwidget_info" />
         </receiver>
+
         <receiver android:name=".receiver.MediaButtonIntentReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />

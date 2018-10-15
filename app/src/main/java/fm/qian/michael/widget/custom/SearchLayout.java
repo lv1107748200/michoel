@@ -22,6 +22,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.hr.bclibrary.utils.NLog;
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
@@ -40,8 +41,10 @@ import fm.qian.michael.db.SearchHistory;
 import fm.qian.michael.db.SearchHistory_Table;
 import fm.qian.michael.db.TasksManagerModel;
 import fm.qian.michael.net.entry.response.Base;
+import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.DateUtils;
+import fm.qian.michael.utils.NToast;
 
 /*
  * lv   2018/9/18
@@ -158,7 +161,7 @@ public class SearchLayout extends FrameLayout implements
         if(hasFocus){
             if(nv.getVisibility() == GONE){
                 nv.setVisibility(VISIBLE);
-                setItem_recyclerData();
+                setItem_recyclerData();//焦点改变时
                 if(null != searchCallBack){
                     searchCallBack.show(GONE);
                 }
@@ -173,17 +176,22 @@ public class SearchLayout extends FrameLayout implements
     }
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.search_et_input){
-            if(nv.getVisibility() == GONE){
-                nv.setVisibility(VISIBLE);
-                setItem_recyclerData();
-                if(null != searchCallBack){
-                    searchCallBack.show(GONE);
+
+        switch (v.getId()){
+            case R.id.search_et_input:
+                if(nv.getVisibility() == GONE){
+                    nv.setVisibility(VISIBLE);
+                    setItem_recyclerData();//点击按钮
+                    if(null != searchCallBack){
+                        searchCallBack.show(GONE);
+                    }
                 }
-            }
-        }else if(v.getId() == R.id.tv_clear){
-            SQLite.delete(SearchHistory.class);
-            setItem_recyclerData();
+                break;
+            case R.id.tv_clear:
+               // NToast.shortToastBaseApp("清空");
+                Delete.table(SearchHistory.class);
+                setItem_recyclerData();//清空后
+                break;
         }
     }
     @Override
@@ -243,7 +251,7 @@ public class SearchLayout extends FrameLayout implements
                         if(item instanceof SearchHistory){
                             ((SearchHistory) item).delete();
 
-                            setItem_recyclerData();
+                            setItem_recyclerData();//删除某一个后
                         }
                     }
                 });
@@ -276,7 +284,7 @@ public class SearchLayout extends FrameLayout implements
         searchHistory.setName(searchText);
         searchHistory.setTime(DateUtils.getStringTodayLong());
         searchHistory.save();
-        setItem_recyclerData();
+        setItem_recyclerData();//保存后刷新
     }
 
     public void setItem_recyclerData(){

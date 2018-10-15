@@ -202,7 +202,7 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
 
                         }
                     }
-                },
+                }.setContext(this),
                 CollectionToBuyActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
@@ -231,7 +231,7 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
                 }
 
             }
-        },CollectionToBuyActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }.setContext(this),CollectionToBuyActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
 
     }
 

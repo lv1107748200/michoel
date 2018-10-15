@@ -215,7 +215,7 @@ public class PopPlayListWindow extends BasePopupWindow {
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ONE));
 
             }
-        }, getObservableTransformer());
+        }.setContext(getContext()), getObservableTransformer());
     }
 
 
@@ -241,7 +241,7 @@ public class PopPlayListWindow extends BasePopupWindow {
                         updataPlayListRecycle(comAlls);
 
                     }
-                }, getObservableTransformer()
+                }.setContext(getContext()), getObservableTransformer()
 
         );
 

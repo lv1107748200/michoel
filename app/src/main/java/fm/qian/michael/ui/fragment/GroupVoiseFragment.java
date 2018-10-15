@@ -120,7 +120,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     SelectableRoundedImageView itemImage;
 
     LinearLayout layout_fav,layout_down,
-            layout_share,layout_select,layout_orderdesc,sel_all_Layout,cancel_layout;
+            layout_share,layout_select,
+            layout_orderdesc,sel_all_Layout,
+            cancel_layout,xq_layout,gs_layout,xq_gs_layout;
     RelativeLayout relayout_sel_cancel;
 
     @OnClick({R.id.add_layout,R.id.down_layout,R.id.play_layout})
@@ -311,6 +313,12 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 quickAdapter.notifyDataSetChanged();
 
                 break;
+            case R.id.xq_layout:
+                setLayout(0);
+                break;
+            case R.id.gs_layout:
+                setLayout(1);
+                break;
         }
     }
 
@@ -345,6 +353,10 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         layout_orderdesc =   view.findViewById(R.id.layout_orderdesc);
         sel_all_Layout =   view.findViewById(R.id.sel_all_Layout);
         cancel_layout =   view.findViewById(R.id.cancel_layout);
+        xq_layout = view.findViewById(R.id.xq_layout);
+        gs_layout = view.findViewById(R.id.gs_layout);
+        xq_gs_layout = view.findViewById(R.id.xq_gs_layout);
+
 
         layout_fav.setOnClickListener(this);
         layout_down.setOnClickListener(this);
@@ -354,6 +366,8 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         sel_all_Layout.setOnClickListener(this);
         cancel_layout.setOnClickListener(this);
         relayout_sel_cancel.setOnClickListener(this);
+        xq_layout.setOnClickListener(this);
+        gs_layout.setOnClickListener(this);
 
 
 
@@ -488,6 +502,15 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                getIdDown();
             }
 
+            if(GlobalVariable.ONE.equals(album.getIspay())){
+
+                xq_gs_layout.setVisibility(View.VISIBLE);
+
+                setLayout(0);
+
+            }else {
+                xq_gs_layout.setVisibility(View.GONE);
+            }
         }else {
 
 
@@ -511,6 +534,17 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //
 //            }
 //        });
+    }
+    private void setLayout(int layout){
+        if(layout == 0){
+            xq_layout.setSelected(true);
+            gs_layout.setSelected(false);
+            quickAdapter.replaceData(new ArrayList<>());
+        }else {
+            xq_layout.setSelected(false);
+            gs_layout.setSelected(true);
+            quickAdapter.replaceData(comAllList);
+        }
     }
 
     public void postNotifyDataChanged() {
@@ -670,7 +704,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                         }
                     }
-                },
+                }.setContext(mFontext),
                 GroupVoiseFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
     }
 

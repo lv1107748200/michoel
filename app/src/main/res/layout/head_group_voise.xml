@@ -32,6 +32,8 @@
 
     <include layout="@layout/item_make"/>
 
+    <include layout="@layout/item_xq_gs"/>
+
     <View
         style="@style/view_line"
         />

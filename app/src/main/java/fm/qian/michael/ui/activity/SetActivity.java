@@ -2,8 +2,11 @@ package fm.qian.michael.ui.activity;
 
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.TextView;
 
@@ -41,7 +44,8 @@ public class SetActivity extends BaseIntensifyActivity {
     TextView tv_banbenhao;
     @BindView(R.id.item_image)
     SelectableRoundedImageView item_image;
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout,R.id.out_login_layout})
+    @OnClick({R.id.base_left_layout, R.id.base_right_layout,R.id.out_login_layout
+    ,R.id.benbenhao_layout})
     public  void  onClick(View view){
         switch (view.getId()){
             case R.id.base_left_layout:
@@ -52,6 +56,9 @@ public class SetActivity extends BaseIntensifyActivity {
                 break;
             case R.id.out_login_layout:
                 setDelAlertDialog();
+                break;
+            case R.id.benbenhao_layout:
+                goToMarket(this,"fm.qian.michael");
                 break;
         }
     }
@@ -116,5 +123,18 @@ public class SetActivity extends BaseIntensifyActivity {
         AlertDialog dialog=builder.create();
         dialog.show();
     }
+
+    public void goToMarket(Context context, String packageName) {
+        Uri uri = Uri.parse("market://details?id=" + packageName);
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            goToMarket.setClassName("com.tencent.android.qqdownloader", "com.tencent.pangu.link.LinkProxyActivity");
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            NToast.shortToastBaseApp("请安装应用宝");
+        }
+    }
+
 
 }

@@ -32,9 +32,6 @@ public class MultiPlayer implements MediaPlayer.OnErrorListener,
     private MediaPlayer mCurrentMediaPlayer;
 
     public void setDataSource(final String path) {
-        if(null == path)
-            return;
-
         if(null == mCurrentMediaPlayer){
            // MLog.E("播放器  setDataSource null");
 

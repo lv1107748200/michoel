@@ -35,6 +35,7 @@ import fm.qian.michael.net.http.HttpUtils;
 import fm.qian.michael.net.subscriber.HttpSubscriber;
 import fm.qian.michael.net.subscriber.HttpUserSubscriber;
 import fm.qian.michael.net.subscriber.HttpWXUserSubscriber;
+import fm.qian.michael.widget.single.UserInfoManger;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import okhttp3.MediaType;
@@ -144,7 +145,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.album(id,p,phone,sessionkey);
+        Observable observable =  appService.album(id,p, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey());
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseResponse<Album,List<ComAll>>>(httpCallback)
@@ -161,7 +162,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.audio(id,phone,sessionkey);
+        Observable observable =  appService.audio(id, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey());
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<ComAll>>(httpCallback)
@@ -396,13 +397,13 @@ public class BaseService {
             String sessionkey,
             String username,
 
-            HttpCallback<YZMOrSID, BaseDataResponse<UserInfo>> httpCallback
+            HttpCallback<Object, BaseDataResponse> httpCallback
             , ObservableTransformer transformer
     ) {
         Observable observable =  userService.user_tbxiaoe(sessionkey,username);
         HttpUtils.toSubscribe(
                 observable,
-                new HttpUserSubscriber<BaseDataResponse<UserInfo>>(httpCallback)
+                new HttpUserSubscriber<BaseDataResponse>(httpCallback)
                 ,transformer
         );
     }

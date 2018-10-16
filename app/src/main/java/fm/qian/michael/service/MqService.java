@@ -73,6 +73,7 @@ import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.SPUtils;
 import fm.qian.michael.widget.single.DownManger;
+import fm.qian.michael.widget.single.UserInfoManger;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -381,6 +382,8 @@ public class MqService extends Service {
     }
 
     public void setDataSource(final String path) {
+        if(CheckUtil.isEmpty(path))
+            return;
         mIsTrackPrepared = false;
         multiPlayer.setDataSource(path);
         isCom = false;
@@ -963,7 +966,8 @@ public class MqService extends Service {
        // isTermination = false;
         NLog.e(NLog.PLAYER,"path 通过接口获取  id : " + id);
 
-        String url = "https://api.qian.fm/api/app/audio.ashx?"+"id="+id;
+        String url = "https://api.qian.fm/api/app/audio.ashx?"+"id="+id+"&username="
+                + UserInfoManger.getInstance().getUserName()+"&sessionkey="+UserInfoManger.getInstance().getSessionkey();
         OkHttpClient okHttpClient = new OkHttpClient();
         final Request request = new Request.Builder()
                 .url(url)
@@ -1035,9 +1039,9 @@ public class MqService extends Service {
     public void setUpdataNUll(BaseDataResponse<ComAll> comAll){
         this. comAll = comAll.getData();
 
-        comAllList.set(0,  this.comAll);
+        comAllList.set(playNumber,  this.comAll);
 
-        mPlayerHandler.post(this.saveData);
+      //  mPlayerHandler.post(this.saveData);
 
         mainPlayerHandler.sendEmptyMessage(REQDATA);//进入主线程
     }

@@ -172,7 +172,13 @@ public class DownManger {
 
                 for(ComAll comAll: list){
 
+
+
                     String url = comAll.getUrl();
+
+                    if(CheckUtil.isEmpty(url))
+                        return;
+
                     String path = getInstance().createPath(url);
                     String name = FileDownloadUtils.generateFileName(url);//MD5编码
 

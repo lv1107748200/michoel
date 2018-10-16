@@ -101,13 +101,13 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     public static final String HEADGROUP = "HEADGROUP";
     private String id;
-    private QuickAdapter quickAdapter;
+    private QuickAdapter quickAdapter;//list
     private Album  album;
 
     private List<ComAll> comAllList;
     private List<ComAll> selList;
 
-    private View footView;
+    private View headView;
 
 
     private boolean isSelMore = false;//是否多选操作
@@ -133,6 +133,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     WLoaignMake();
                     return;
                 }
+                if(isPay()){//添加到播单
+                    return;
+                }
 
                 if(null == popPlayListWindow){
                     popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
@@ -156,6 +159,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             case R.id.down_layout://下载
                 if(!isLogin()){
                     WLoaignMake();
+                    return;
+                }
+                if(isPay()){//下载
                     return;
                 }
                 if(!CheckUtil.isEmpty(selList)){
@@ -197,6 +203,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     WLoaignMake();
                     return;
                 }
+                if(isPay()){//收藏
+                    return;
+                }
                 if(view.isSelected()){//取消收藏
                     user_favorite("del");
                 }else {//收藏
@@ -206,11 +215,14 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                 break;
             case R.id.layout_down://下载
+
                 if(!isLogin()){
                     WLoaignMake();
                     return;
                 }
-
+                if(isPay()){//下载
+                    return;
+                }
                 if(isSelMore)
                     return;
                 if(!CheckUtil.isEmpty(comAllList)){
@@ -239,8 +251,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
 
-                if(null == album)
+                if(isPay()){//分享
                     return;
+                }
 
                 if(GlobalVariable.ONE.equals(album.getIspay())){ // 0不是  1是
                     NToast.shortToastBaseApp("付费专辑不能分享");
@@ -341,21 +354,21 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         id = intent.getStringExtra(HEADGROUP);
 
 
-        View view = LayoutInflater.from(mFontext).inflate(R.layout.head_group_voise,null,false);
-        itemTv = view.findViewById(R.id.item_tv);
-        itemImage = view.findViewById(R.id.item_image);
-        relayout_sel_cancel = view.findViewById(R.id.relayout_sel_cancel);
+         headView = LayoutInflater.from(mFontext).inflate(R.layout.head_group_voise,null,false);
+        itemTv = headView.findViewById(R.id.item_tv);
+        itemImage = headView.findViewById(R.id.item_image);
+        relayout_sel_cancel = headView.findViewById(R.id.relayout_sel_cancel);
 
-        layout_fav =   view.findViewById(R.id.layout_fav);
-        layout_down =   view.findViewById(R.id.layout_down);
-        layout_share =   view.findViewById(R.id.layout_share);
-        layout_select =   view.findViewById(R.id.layout_select);
-        layout_orderdesc =   view.findViewById(R.id.layout_orderdesc);
-        sel_all_Layout =   view.findViewById(R.id.sel_all_Layout);
-        cancel_layout =   view.findViewById(R.id.cancel_layout);
-        xq_layout = view.findViewById(R.id.xq_layout);
-        gs_layout = view.findViewById(R.id.gs_layout);
-        xq_gs_layout = view.findViewById(R.id.xq_gs_layout);
+        layout_fav =   headView.findViewById(R.id.layout_fav);
+        layout_down =   headView.findViewById(R.id.layout_down);
+        layout_share =   headView.findViewById(R.id.layout_share);
+        layout_select =   headView.findViewById(R.id.layout_select);
+        layout_orderdesc =   headView.findViewById(R.id.layout_orderdesc);
+        sel_all_Layout =   headView.findViewById(R.id.sel_all_Layout);
+        cancel_layout =   headView.findViewById(R.id.cancel_layout);
+        xq_layout = headView.findViewById(R.id.xq_layout);
+        gs_layout = headView.findViewById(R.id.gs_layout);
+        xq_gs_layout = headView.findViewById(R.id.xq_gs_layout);
 
 
         layout_fav.setOnClickListener(this);
@@ -370,11 +383,10 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         gs_layout.setOnClickListener(this);
 
 
-
-
         rvList.setLayoutManager(new LinearLayoutManager(mFontext));
 
         quickAdapter =  new QuickAdapter(R.layout.item_sel_voice){
+
             @Override
             protected void convert(BaseViewHolder helper, Object item) {
 
@@ -455,7 +467,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             }
         };
 
-        quickAdapter.addHeaderView(view);
+        quickAdapter.addHeaderView(headView);
 
         quickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -463,11 +475,11 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 Object item = quickAdapter.getItem(position);
                 if(item instanceof  ComAll) {
                     ComAll rankMore = (ComAll) item;
-                        if(isSelMore){
+                    if(isSelMore){
                         view.setSelected(!view.isSelected());
                         setSellList(rankMore);
                     }else {
-                            setRecord();
+                        setRecord();
                         CommonUtils.getIntent(mFontext,comAllList,position,null);
 
                     }
@@ -475,7 +487,6 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
             }
         });
-
         rvList.setAdapter(quickAdapter);
 
         upPlay();//初始化
@@ -506,7 +517,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                 xq_gs_layout.setVisibility(View.VISIBLE);
 
-                setLayout(0);
+                setLayout(1);
 
             }else {
                 xq_gs_layout.setVisibility(View.GONE);
@@ -535,14 +546,31 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //            }
 //        });
     }
+    private boolean isPay(){
+        if(null != album){
+            if(GlobalVariable.ONE.equals(album.getIspay())){
+                NToast.shortToastBaseApp("付费专辑不能操作");
+                return true;
+            }else {
+                return false;
+            }
+
+        }else {
+            return true;
+        }
+
+    }
     private void setLayout(int layout){
         if(layout == 0){
             xq_layout.setSelected(true);
             gs_layout.setSelected(false);
+
             quickAdapter.replaceData(new ArrayList<>());
+
         }else {
             xq_layout.setSelected(false);
             gs_layout.setSelected(true);
+            if(!CheckUtil.isEmpty(comAllList))
             quickAdapter.replaceData(comAllList);
         }
     }
@@ -660,14 +688,14 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         return false;
     }
 
-    private View getFootView(){
+//    private View getFootView(){
 
-        if(null == footView){
-            footView = LayoutInflater.from(mFontext).inflate(R.layout.foot_make,null,false);
-        }
-
-        return footView;
-    }
+//        if(null == footView){
+//            footView = LayoutInflater.from(mFontext).inflate(R.layout.foot_make,null,false);
+//        }
+//
+//        return footView;
+ //   }
 
     //收藏的专辑 取消收藏
     private void user_favorite(final String act){

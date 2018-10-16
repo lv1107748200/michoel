@@ -5,6 +5,9 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+
+import java.util.List;
+
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.DataServer;
 import fm.qian.michael.net.entry.Video;
@@ -27,6 +30,9 @@ public class QuickAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
 
     public QuickAdapter(int layout) {
         super(layout);
+    }
+    public QuickAdapter(int layout,List list) {
+        super(layout,list);
     }
     public QuickAdapter(int layout,int dataSize) {
         super(layout, DataServer.getSampleData(dataSize));

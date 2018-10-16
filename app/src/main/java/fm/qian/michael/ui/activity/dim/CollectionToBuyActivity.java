@@ -3,6 +3,7 @@ package fm.qian.michael.ui.activity.dim;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -27,6 +28,7 @@ import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.Base;
 import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.entry.response.UserInfo;
+import fm.qian.michael.net.entry.response.YZMOrSID;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.ui.adapter.QuickAdapter;
@@ -107,6 +109,18 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
         getRvList().setAdapter(quickAdapterIma);
 
         if(isDowp){
+
+            View footView = LayoutInflater.from(this).inflate(R.layout.item_tbgmjl_layout,null,false);
+
+            footView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    user_tbxiaoe();
+                }
+            });
+
+            quickAdapterIma.addFooterView(footView);
+
             user_album();
         }else {
             user_favorite_list();
@@ -227,12 +241,32 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
                     quickAdapterIma.replaceData(comAlls);
                 }else {
                     quickAdapterIma.replaceData(new ArrayList<>());
-                    quickAdapterIma.setEmptyView(getEmpty());
+//                    quickAdapterIma.setEmptyView(getEmpty());
                 }
 
             }
         }.setContext(this),CollectionToBuyActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
 
+    }
+
+    //同步购买记录
+    private void user_tbxiaoe(){
+        baseService.user_tbxiaoe(UserInfoManger.getInstance().getSessionkey()
+                , UserInfoManger.getInstance().getUserName(), new HttpCallback<Object, BaseDataResponse>() {
+                    @Override
+                    public void onError(HttpException e) {
+
+                        NToast.shortToastBaseApp(e.getMsg());
+
+                    }
+
+                    @Override
+                    public void onSuccessAll(BaseDataResponse k) {
+
+                        user_album();
+
+                    }
+                }.setContext(this),CollectionToBuyActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
 

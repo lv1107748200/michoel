@@ -22,6 +22,7 @@
             android:text="详情"
             android:textColor="@drawable/selector_tv_color_one"
             android:textSize="@dimen/size_14"
+            android:layout_marginBottom="@dimen/margin_4"
             />
 
         <View
@@ -53,6 +54,7 @@
             android:text="@string/故事"
             android:textColor="@drawable/selector_tv_color_one"
             android:textSize="@dimen/size_14"
+            android:layout_marginBottom="@dimen/margin_4"
             />
 
         <View

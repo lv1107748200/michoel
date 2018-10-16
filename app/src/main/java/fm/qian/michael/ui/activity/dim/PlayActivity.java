@@ -233,6 +233,12 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             case R.id.down_image://下载按钮
 
                 if(null != comAll){
+
+                    if(isPay()){
+                        NToast.shortToastBaseApp("付费音频不能下载");
+                        return;
+                    }
+
                     if(DownManger.isDownloaded(comAll.getUrl())){
                         NToast.shortToastBaseApp("已下载");
                     }else {
@@ -266,6 +272,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     WLoaignMake();
                     return;
                 }
+                if(isPay()){
+                    NToast.shortToastBaseApp("付费音频不能分享");
+                    return;
+                }
                 if(null == popShareWindow){
                     popShareWindow = new PopShareWindow(this,new CustomPopuWindConfig.Builder(this)
                             .setOutSideTouchable(true)
@@ -287,6 +297,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             case R.id.add_play_list://加入播单
                 if(!isLogin()){
                     WLoaignMake();
+                    return;
+                }
+                if(isPay()){
+                    NToast.shortToastBaseApp("付费音频");
                     return;
                 }
                 if(null == popPlayListWindow){
@@ -629,6 +643,19 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
             }
         });
+    }
+
+    private boolean isPay(){
+        if(null != comAll){
+            if(GlobalVariable.ONE.equals(comAll.getIspay())){
+              //  NToast.shortToastBaseApp("付费专辑不能操作");
+                return true;
+            }else {
+                return false;
+            }
+        }else {
+            return true;
+        }
     }
 
     private  class PlaybackStatus extends BroadcastReceiver {

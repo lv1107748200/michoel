@@ -24,6 +24,7 @@ import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.Ver;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.fragment.MyFragment;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
@@ -108,8 +109,9 @@ public class SetActivity extends BaseIntensifyActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                UserInfoManger.getInstance().clearLogin();//清空本地数据
                 UserInfoManger.getInstance().clear();//清空缓存
-                SPUtils.clearLogin();//清空本地数据
+                MusicPlayerManger.login(1);//告知播放器
 
                 Intent intent = new Intent(SetActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

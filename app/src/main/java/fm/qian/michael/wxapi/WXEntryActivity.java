@@ -20,12 +20,14 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.request.Reg;
 import fm.qian.michael.net.entry.response.UserInfo;
 import fm.qian.michael.net.entry.response.WXAccessData;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.LoginActivity;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
@@ -166,13 +168,15 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
                 if("succ_yes".equals(msg)){
                     NToast.shortToastBaseApp("登陆成功");
 
-                    SPUtils.putString(USERNAME,userInfo.getUsername(),true);
-                    SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
+                  //  SPUtils.putString(USERNAME,userInfo.getUsername(),true);
+                 //   SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
 //                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
 //                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
-                    SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
-
+                 //   SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
+                    UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
                     UserInfoManger.getInstance().clear();//每次登陆清空数据
+                    MusicPlayerManger.login(0);
+
                     EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.TWO));
                     finish();
                 }else if("succ_no".equals(msg)){
@@ -234,7 +238,11 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 
             @Override
             public void onSuccessAll(BaseDataResponse<Object> k) {
-                SPUtils.putString(USERBINDWX,"1",true);
+           //     SPUtils.putString(USERBINDWX,"1",true);
+
+                UseData useData = UseData.getUseData();
+                useData.setBindWx("1");
+                useData.update();
 
                 UserInfoManger.getInstance().clear();//每次登陆清空数据
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ZERO));

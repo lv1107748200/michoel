@@ -27,5 +27,6 @@ interface MediaAidlInterface
     ComAll getComAll();
     List<ComAll> getComAllList();
     int getPlayNumber();
+    void login(int index);
 }
 

@@ -4,6 +4,8 @@ package fm.qian.michael.widget.single;
 import com.hr.bclibrary.utils.CheckUtil;
 
 import fm.qian.michael.common.UserInforConfig;
+import fm.qian.michael.db.UseData;
+import fm.qian.michael.net.entry.response.UserInfo;
 import fm.qian.michael.utils.SPUtils;
 
 /**
@@ -41,14 +43,14 @@ public class UserInfoManger{
 
     public String getSessionkey(){
         if(null == sessionkey){
-            sessionkey = SPUtils.getString( UserInforConfig.USERSESSIONKEY,"").toString();
+            sessionkey = UseData.getUseData().getSessionkey();
         }
         return sessionkey;
     }
 
     public String getUserName() {
         if(null == userName){
-            userName = SPUtils.getString(UserInforConfig.USERNAME,"").toString();
+            userName = UseData.getUseData().getUserName();
         }
         return userName;
     }
@@ -62,7 +64,7 @@ public class UserInfoManger{
 
     public String getBindWx() {
         if(null == bindWx){
-            bindWx = SPUtils.getString(UserInforConfig.USERBINDWX,"").toString();
+            bindWx = UseData.getUseData().getBindWx();
         }
         return bindWx;
     }
@@ -113,6 +115,9 @@ public class UserInfoManger{
         firstaudio = null;
         musicId = null;
         logo = null;
+    }
+    public void clearLogin(){
+        UseData.setLogin("","","0");
     }
 
 }

@@ -277,6 +277,15 @@ public class MusicPlayerManger {
         return 0;
     }
 
+    public static void login(int i){
+        try {
+            if (mService != null) {
+                    mService.login(i);
+            }
+        } catch (final Exception ignored) {
+        }
+    }
+
     public static boolean isNull(){
         if(null == mService){
             return true;

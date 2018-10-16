@@ -511,41 +511,12 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
                 PlayActivity.this.comAll = comAll;
 
-
-                GlideUtil.setGlideImageMake(PlayActivity.this,comAll.getCover(),
-                        imagePoster);
-
-                setTitleTv(comAll.getTitle());
-
-                itemMingTv.setText(comAll.getTitle());
-
-                if(!CheckUtil.isEmpty(comAll.getBroad())){
-                    kOne.setVisibility(View.VISIBLE);
-                    itemNameTv.setText(comAll.getBroad());
-                }else {
-                    kOne.setVisibility(View.GONE);
+                if(!isLogin()){
+                    if(isPay()){//接口返回
+                        NToast.shortToastBaseApp("登陆后播放");
+                    }
                 }
-                if(!CheckUtil.isEmpty(comAll.getPlaynums())){
-                    kThree.setVisibility(View.VISIBLE);
-                    itemPeoTv.setText(comAll.getPlaynums());
-                }else {
-                    kThree.setVisibility(View.GONE);
-                }
-                itemTimeTv.setText(comAll.getMinute()+":"+comAll.getSecond());
-                introduceTv.setText(comAll.getBrief());
-
-                if(DownManger.isDownloaded(comAll.getUrl())){
-                    kFour.setVisibility(View.VISIBLE);
-                    kFour.setActivated(true);
-                    itemDownTv.setText("已下载");
-
-                }else {
-                    kFour.setVisibility(View.GONE);
-                    kFour.setActivated(false);
-
-                }
-
-
+                setMessage();
             }
         },PlayActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
@@ -658,6 +629,41 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
         }
     }
 
+    private void setMessage(){
+        GlideUtil.setGlideImageMake(PlayActivity.this,comAll.getCover(),
+                imagePoster);
+
+        setTitleTv(comAll.getTitle());
+
+        itemMingTv.setText(comAll.getTitle());
+
+        if(!CheckUtil.isEmpty(comAll.getBroad())){
+            kOne.setVisibility(View.VISIBLE);
+            itemNameTv.setText(comAll.getBroad());
+        }else {
+            kOne.setVisibility(View.GONE);
+        }
+        if(!CheckUtil.isEmpty(comAll.getPlaynums())){
+            kThree.setVisibility(View.VISIBLE);
+            itemPeoTv.setText(comAll.getPlaynums());
+        }else {
+            kThree.setVisibility(View.GONE);
+        }
+        itemTimeTv.setText(comAll.getMinute()+":"+comAll.getSecond());
+        introduceTv.setText(comAll.getBrief());
+
+        if(DownManger.isDownloaded(comAll.getUrl())){
+            kFour.setVisibility(View.VISIBLE);
+            kFour.setActivated(true);
+            itemDownTv.setText("已下载");
+
+        }else {
+            kFour.setVisibility(View.GONE);
+            kFour.setActivated(false);
+
+        }
+    }
+
     private  class PlaybackStatus extends BroadcastReceiver {
 
         private final WeakReference<PlayActivity> mReference;
@@ -705,7 +711,6 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                 }
 
                autio();//service 返回  id;
-
             }
 
         }else if(CMDNOTIF.equals(action)){

@@ -123,4 +123,9 @@ public class MServiceHandler extends MediaAidlInterface.Stub{
         return mService.get().getPlayNumber();
     }
 
+    @Override
+    public void login(int index) throws RemoteException {
+        mService.get().login(index);
+    }
+
 }

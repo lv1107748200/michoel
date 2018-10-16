@@ -34,8 +34,6 @@ public class MusicPlayerHandler extends Handler {
             switch (msg.what) {
                 case REQDATA:
 
-                    BaseDataResponse<ComAll> comAll = ( BaseDataResponse<ComAll>) msg.obj;
-                    service.setUpdataNUll(comAll);
 
                     break;
                 case REQICON:

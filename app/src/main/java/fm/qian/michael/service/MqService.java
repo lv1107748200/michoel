@@ -60,6 +60,7 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
@@ -76,10 +77,13 @@ import fm.qian.michael.widget.single.DownManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
+import static fm.qian.michael.common.GlobalVariable.BaseUrlONE;
 import static fm.qian.michael.common.UserInforConfig.USERPLAYId;
 import static fm.qian.michael.common.UserInforConfig.USERPLAYSEEK;
 import static fm.qian.michael.common.UserInforConfig.USERTMEING;
@@ -91,6 +95,7 @@ public class MqService extends Service {
 
     public static final String pathSong = "song";
 
+    public static final String UPDATALOGIN = "fm.qian.michael.loginchanged";
     public static final String UPDATA_ID = "fm.qian.michael.playstatechanged";
     public static final String UPDATA_PAUSE = "fm.qian.michael.updatepause";
     public static final String SERVICECMD = "fm.qian.michael.musicservicecommand";
@@ -174,6 +179,8 @@ public class MqService extends Service {
 
     private boolean isPlayNow = false;//完成当前播放任务后停止
 
+    private boolean isLogin;
+
 
     //private boolean isTermination = false;//强行终止异步操作
     @Nullable
@@ -240,11 +247,17 @@ public class MqService extends Service {
         filter.addAction(Intent.ACTION_USER_PRESENT);//解锁
         filter.addAction(LOCK_SCREEN);
         filter.addAction(SETQUEUE);
+//        filter.addAction(UPDATALOGIN);
         // Attach the broadcast listener
         registerReceiver(mIntentReceiver, filter);
 
-
-        whatPattern = UseData.getUseData().getPattern();
+        UseData useData = UseData.getUseData();
+        if(!CheckUtil.isEmpty(useData.getSessionkey())){
+            isLogin = true;
+        }else {
+            isLogin = false;
+        }
+        whatPattern = useData.getPattern();
         NLog.e(NLog.PLAYER,"播放模式 --->" + whatPattern);
 //        Intent shutdownIntent = new Intent(this, MqService.class);
 //        shutdownIntent.setAction(SHUTDOWN);
@@ -301,11 +314,19 @@ public class MqService extends Service {
     //传进播放地址
     public void play(String playPath) {
 
+        if(!isLogin){
+
+        }
+
+
         if(CheckUtil.isEmpty(playPath)){
             if(isFirstLoad){//处理点击已经正在播放的音频
                 if(null != comAll && !CheckUtil.isEmpty(comAllList)){
-                    NLog.e(NLog.PLAYER,"开始 play " + " isFirstLoad :" + isFirstLoad + "  comAll.getId() : " + comAll.getId()
+
+                    NLog.e(NLog.PLAYER,"开始 play " + " isFirstLoad :" + isFirstLoad
+                            + "  comAll.getId() : " + comAll.getId()
                             + " comAllList.get(playNumber).getId() : " + comAllList.get(playNumber).getId());
+
                     if(comAll.getId().equals(comAllList.get(playNumber).getId())){
                         NLog.e(NLog.PLAYER, "播放器处于当前歌曲位置");
                         isFirstLoad = false;
@@ -323,8 +344,10 @@ public class MqService extends Service {
             return;
         }
 
-        mPlayerHandler.removeCallbacks(reqData);
+       // mPlayerHandler.removeCallbacks(reqData);
        // mPlayerHandler.removeCallbacks(reqIcon);
+
+
 
         final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
        //intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, getAudioSessionId());
@@ -525,6 +548,15 @@ public class MqService extends Service {
     public int getPlayNumber() {
         return playNumber;
     }
+    public void login(int index){
+
+        if(index == 0){//登陆
+            isLogin = true;
+        }else if(index == 1){//退出
+            isLogin = false;
+        }
+
+    }
 
     /**
      * AlarmManager.ELAPSED_REALTIME：使用相对时间，可以通过SystemClock.elapsedRealtime() 获取（从开机到现在的毫秒数，包括手机的睡眠时间），设备休眠时并不会唤醒设备。
@@ -676,13 +708,16 @@ public class MqService extends Service {
         if(CheckUtil.isEmpty(path)){
             NLog.e(NLog.PLAYER,"path 为 null 通过接口获取 ");
 
-            mPlayerHandler.post(reqData);//获取地址
+       //     mPlayerHandler.post(reqData);//获取地址
+
+            reqData(comAll.getId());//播放时检测到播放地址为空
         }
 
         NLog.e(NLog.PLAYER,"获取播放地址 path ：" + path );
 
         if(!CheckUtil.isEmpty(comAll.getId())){
             pushAction(UPDATA_ID,comAll.getId());
+            setReqPta();//更换地址时
         }
         return path;
     }
@@ -752,6 +787,8 @@ public class MqService extends Service {
         } else if (LOCK_SCREEN.equals(action)){
 
             mIsLocked = intent.getBooleanExtra("islock",true);
+
+        }else if(UPDATALOGIN.equals(action)){
 
         }
     }
@@ -944,106 +981,162 @@ public class MqService extends Service {
 
         }
     };
-    private Runnable reqData = new Runnable() {
-        @Override
-        public void run() {
-            reqData(comAll.getId());//播放时检测到播放地址为空
-        }
-    };
-    private Runnable reqIcon = new Runnable() {
-        @Override
-        public void run() {
-            setReqicon();//子线程中建立
-        }
-    };
-
+//    private Runnable reqData = new Runnable() {
+//        @Override
+//        public void run() {
+//            reqData(comAll.getId());//播放时检测到播放地址为空
+//        }
+//    };
+    private Call call;
     private void reqData(String id){
 
         if(CheckUtil.isEmpty(id)){
             comAll = null;
             return;
         }
-       // isTermination = false;
-        NLog.e(NLog.PLAYER,"path 通过接口获取  id : " + id);
+        if(null != call){
+           // NLog.e(NLog.PLAYER,"path 通过接口获取  call 状态 : " + " isCanceled : " + call.isCanceled()+" isExecuted : " + call.isExecuted());
 
-        String url = "https://api.qian.fm/api/app/audio.ashx?"+"id="+id+"&username="
-                + UserInfoManger.getInstance().getUserName()+"&sessionkey="+UserInfoManger.getInstance().getSessionkey();
-        OkHttpClient okHttpClient = new OkHttpClient();
+            call.cancel();
+        }
+
+        UseData useData = UseData.getUseData();
+
+        String userName = useData.getUserName();
+        String sessionKey = useData.getSessionkey();
+
+        String url = BaseUrlONE+"app/audio.ashx?"+"id="+id+"&username="
+                + userName+"&sessionkey="+sessionKey;
+
+        NLog.e(NLog.PLAYER,"path 通过接口获取  url: " + url);
+
+        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .build();
         final Request request = new Request.Builder()
                 .url(url)
                 .get()//默认就是GET请求，可以不写
                 .build();
-        Call call = okHttpClient.newCall(request);
-        Response response = null;
-        String s= null;
-        try {
-            response = call.execute();
-            s = response.body().string();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //  NLog.e(NLog.PLAYER, "onResponse: " + response.body().string());
-        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        call = okHttpClient.newCall(request);
 
-        BaseDataResponse<ComAll> comAll = null;
-        try {
-            comAll = objectMapper.readValue(s, new TypeReference<BaseDataResponse<ComAll>>(){});
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                NLog.e(NLog.PLAYER,"path 通过接口获取：onFailure " +e.toString() + e.getMessage());
+            }
 
-            NLog.e(NLog.PLAYER,"path 通过接口获取 json : " +s);
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if(null != comAll){
-            Message message = new Message();
-            message.what = REQDATA;
-            message.obj = comAll;
-            mPlayerHandler.sendMessage(message);
-        }
+                if(response.isSuccessful()){
+                    ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+                    objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+                    String s = response.body().string();
+                    NLog.e(NLog.PLAYER,"path 通过接口获取 json : " +s);
+
+                    BaseDataResponse<ComAll> baseDataResponse = objectMapper.readValue(s, new TypeReference<BaseDataResponse<ComAll>>(){});
+
+                    if(baseDataResponse.getCode() == 1){
+                        ComAll comAll = baseDataResponse.getData();
+
+                        if(!CheckUtil.isEmpty(comAll.getUrl())){
+                            Message message = new Message();
+                            message.what = REQDATA;
+                            message.obj = baseDataResponse;
+                            mainPlayerHandler.sendMessage(message);
+                        }
+                    }
+                }else {
+
+                }
+
+            }
+        });
+
+
+//        Response response = null;
+//        String s= null;
+//        try {
+//            response = call.execute();
+//            s = response.body().string();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        //  NLog.e(NLog.PLAYER, "onResponse: " + response.body().string());
+//        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+//        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+//
+//        BaseDataResponse<ComAll> baseDataResponse = null;
+//        try {
+//            baseDataResponse = objectMapper.readValue(s, new TypeReference<BaseDataResponse<ComAll>>(){});
+//
+//            NLog.e(NLog.PLAYER,"path 通过接口获取 json : " +s);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        if(null != baseDataResponse){
+//            Message message = new Message();
+//            message.what = REQDATA;
+//            message.obj = baseDataResponse;
+//            mPlayerHandler.sendMessage(message);
+//        }
     }
 
-    private void setReqicon(){
-        if(null == comAll)
-            return;
-        if(CheckUtil.isEmpty(comAll.getCover_small()))
-            return;
-        NLog.e(NLog.PLAYER,"获取 图片 " + comAll.getCover_small());
+    //上传 播放次数
+    private void setReqPta(){
 
-        OkHttpClient okHttpClient = new OkHttpClient();
-        final Request request = new Request.Builder()
-                .url(comAll.getCover_small())
-                .get()//默认就是GET请求，可以不写
-                .build();
-        Call call = okHttpClient.newCall(request);
-        try {
-            Response  response  =  call.execute();
+                if(null == comAll)
+                    return;
 
-            NLog.e(NLog.PLAYER, "onResponse: ");
-            InputStream is = response.body().byteStream();
-            //使用 BitmapFactory 的 decodeStream 将图片的输入流直接转换为 Bitmap
-            Bitmap bitmap = BitmapFactory.decodeStream(is);
+                String url = BaseUrlONE+"app/pta.ashx";
 
-            Message message = new Message();
-            message.what = REQICON;
-            message.obj = bitmap;
-            mPlayerHandler.sendMessage(message);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+                        .connectTimeout(30, TimeUnit.SECONDS)
+                        .build();
+
+                FormBody.Builder builder = new FormBody.Builder();
+                builder.add("mid", comAll.getId());
+                RequestBody formBody = builder.build();
+
+                final Request request = new Request.Builder()
+                        .url(url)
+                        .post(formBody)//默认就是GET请求，可以不写
+                        .build();
+                Call call = okHttpClient.newCall(request);
+
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        NLog.e(NLog.PLAYER, "上传播放次数 onFailure: " + e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        if(response.isSuccessful()){
+                            String s= response.body().string();
+                            NLog.e(NLog.PLAYER, "上传播放次数 onResponse: " + s);
+                        }else {
+                            NLog.e(NLog.PLAYER, "上传播放次数 失败了");
+                        }
+
+                    }
+                });
+
     }
 
     // MusicPlayerHandler 消息传递 子线程
 
-    public void setUpdataNUll(BaseDataResponse<ComAll> comAll){
-        this. comAll = comAll.getData();
+    public void setUpdataNUll(BaseDataResponse<ComAll> baseDataResponse){
+       comAll = baseDataResponse.getData();
 
-        comAllList.set(playNumber,  this.comAll);
+        comAllList.set(playNumber, comAll);
 
       //  mPlayerHandler.post(this.saveData);
-
-        mainPlayerHandler.sendEmptyMessage(REQDATA);//进入主线程
+        play(comAll.getUrl());//获取地址后直接播放
     }
 
     private final AudioManager.OnAudioFocusChangeListener mAudioFocusListener = new AudioManager.OnAudioFocusChangeListener() {

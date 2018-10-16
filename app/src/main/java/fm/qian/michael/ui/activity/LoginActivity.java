@@ -22,6 +22,7 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.request.Reg;
 import fm.qian.michael.net.entry.response.UserInfo;
@@ -29,6 +30,7 @@ import fm.qian.michael.net.entry.response.WXAccessData;
 import fm.qian.michael.net.entry.response.YZMOrSID;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NToast;
@@ -333,13 +335,16 @@ public class LoginActivity extends BaseIntensifyActivity {
                 String msg = k.getMsg();
                 NToast.shortToastBaseApp("登陆成功");
 
-                SPUtils.putString(USERNAME,userInfo.getUsername(),true);
-                SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
+           //     SPUtils.putString(USERNAME,userInfo.getUsername(),true);
+         //       SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
 //                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
 //                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
-                SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
+          //      SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
 
+                UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
                 UserInfoManger.getInstance().clear();//每次登陆清空数据
+                MusicPlayerManger.login(0);
+
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.TWO));
                 finish();
 
@@ -398,13 +403,15 @@ public class LoginActivity extends BaseIntensifyActivity {
                 if("succ_yes".equals(msg)){
                     NToast.shortToastBaseApp("登陆成功");
 
-                    SPUtils.putString(USERNAME,userInfo.getUsername(),true);
-                    SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
+                 //   SPUtils.putString(USERNAME,userInfo.getUsername(),true);
+                  //  SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
 //                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
 //                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
-                    SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
-
+                  //  SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
+                    UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
                     UserInfoManger.getInstance().clear();//每次登陆清空数据
+                    MusicPlayerManger.login(0);
+
                     EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.TWO));
                     finish();
 

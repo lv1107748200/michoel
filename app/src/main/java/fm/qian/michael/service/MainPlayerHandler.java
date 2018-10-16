@@ -7,6 +7,9 @@ import android.os.Message;
 
 import java.lang.ref.WeakReference;
 
+import fm.qian.michael.net.base.BaseDataResponse;
+import fm.qian.michael.net.entry.response.ComAll;
+
 import static fm.qian.michael.service.MqService.REQDATA;
 import static fm.qian.michael.service.MqService.REQGETSAVE;
 import static fm.qian.michael.service.MqService.REQNFTION;
@@ -33,7 +36,9 @@ public class MainPlayerHandler extends Handler {
                 service.updateNotification("main线程刷新");//开始播放
                 break;
             case REQDATA:
-                service.play(service.getComAll().getUrl());//获取地址后直接播放
+
+                BaseDataResponse<ComAll> comAll = ( BaseDataResponse<ComAll>) msg.obj;
+                service.setUpdataNUll(comAll);
                 break;
             case REQGETSAVE:
                 service.getSave();

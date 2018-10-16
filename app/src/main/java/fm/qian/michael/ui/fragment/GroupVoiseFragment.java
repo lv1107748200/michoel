@@ -6,11 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -19,6 +23,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.hr.bclibrary.utils.DisplayUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
@@ -34,6 +39,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +66,7 @@ import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.MainActivity;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.ui.activity.dim.SearchActivity;
+import fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
@@ -86,7 +93,6 @@ import static fm.qian.michael.common.UserInforConfig.USERMUSICTYPE;
  * lv   2018/9/19  音频专辑
  */
 public class GroupVoiseFragment extends BaseFragment implements View.OnClickListener{
-
     public int pageNo = 1;
     public boolean isUpOrDown = false;//上拉下拉
 
@@ -101,7 +107,8 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     public static final String HEADGROUP = "HEADGROUP";
     private String id;
-    private QuickAdapter quickAdapter;//list
+  //  private QuickAdapter quickAdapter;//list
+    private MultipleItemPayOrAdapter quickAdapter;
     private Album  album;
 
     private List<ComAll> comAllList;
@@ -115,6 +122,8 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     private boolean isPlay = false;
 
     private ComAll comAll;
+
+    private int showType;
 
     TextView itemTv;
     SelectableRoundedImageView itemImage;
@@ -292,6 +301,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             case R.id.layout_orderdesc://排序
 
                 setpaixv();
+
                 break;
             case R.id.sel_all_Layout://选中所有
 
@@ -327,10 +337,10 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                 break;
             case R.id.xq_layout:
-                setLayout(0);
+                setLayout(0);//详情
                 break;
             case R.id.gs_layout:
-                setLayout(1);
+                setLayout(1);//故事
                 break;
         }
     }
@@ -385,84 +395,91 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
         rvList.setLayoutManager(new LinearLayoutManager(mFontext));
 
-        quickAdapter =  new QuickAdapter(R.layout.item_sel_voice){
+        quickAdapter = new MultipleItemPayOrAdapter(null){
 
             @Override
-            protected void convert(BaseViewHolder helper, Object item) {
+            protected void convert(BaseViewHolder helper, MultiItemEntity item) {
+                switch (helper.getItemViewType()) {
+                    case WEB:
+                        if(item instanceof Album){
+                            setWebView((WebView) helper.getView(R.id.webview),((Album) item).getBrief_pay());
+                        }
+                        break;
+                    case LIST:
+                        if(item instanceof  ComAll) {
+                            ComAll rankMore = (ComAll) item;
 
-                if(item instanceof  ComAll){
-                    ComAll rankMore = (ComAll) item;
+                            String path = DownManger.createPath(rankMore.getUrl());
+                            int id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
 
-                    String path = DownManger.createPath(rankMore.getUrl());
-                    int id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                            DownManger.updateViewHolder(id, new BaseDownViewHolder(id, helper.getView(R.id.k_four),
+                                    (TextView) helper.getView(R.id.item_down_tv)));
 
-                    DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getView(R.id.k_four),
-                            (TextView) helper.getView(R.id.item_down_tv)));
-
-                    int statue = DownManger.isDownStatus(id,path);
+                            int statue = DownManger.isDownStatus(id, path);
 
 
-                    if(statue == FileDownloadStatus.completed){
-                        helper.setGone(R.id.k_four,true);
-                        helper.getView(R.id.k_four).setActivated(true);
-                        helper.setText(R.id.item_down_tv,"已下载");
+                            if (statue == FileDownloadStatus.completed) {
+                                helper.setGone(R.id.k_four, true);
+                                helper.getView(R.id.k_four).setActivated(true);
+                                helper.setText(R.id.item_down_tv, "已下载");
 
-                    }else if(statue == FileDownloadStatus.progress){
-                        helper.getView(R.id.k_four).setActivated(false);
-                        helper.setGone(R.id.k_four,true);
-                        helper.setText(R.id.item_down_tv,"下载中...");
+                            } else if (statue == FileDownloadStatus.progress) {
+                                helper.getView(R.id.k_four).setActivated(false);
+                                helper.setGone(R.id.k_four, true);
+                                helper.setText(R.id.item_down_tv, "下载中...");
 
-                    }else {
-                        helper.setGone(R.id.k_four,false);
-                    }
-
-                    helper.setGone(R.id.item_tv_num,true);
-                    helper.setGone(R.id.item_tv_play_image,false);
-                    //哪一个在播放
-                    if(isPlay){
-                        if(comAll != null){
-                            if(rankMore.getId().equals(comAll.getId())){
-                                helper.setGone(R.id.item_tv_play_image,true);
-                                helper.setGone(R.id.item_tv_num,false);
+                            } else {
+                                helper.setGone(R.id.k_four, false);
                             }
+
+                            helper.setGone(R.id.item_tv_num, true);
+                            helper.setGone(R.id.item_tv_play_image, false);
+                            //哪一个在播放
+                            if (isPlay) {
+                                if (comAll != null) {
+                                    if (rankMore.getId().equals(comAll.getId())) {
+                                        helper.setGone(R.id.item_tv_play_image, true);
+                                        helper.setGone(R.id.item_tv_num, false);
+                                    }
+                                }
+                            }
+
+                            if (isSelMore) {
+
+                                helper.setGone(R.id.sel_image, true);
+
+                                if (issetSelList(rankMore)) {
+                                    helper.itemView.setSelected(true);
+                                } else {
+                                    helper.itemView.setSelected(false);
+                                }
+
+                            } else {
+                                helper.setGone(R.id.sel_image, false);
+                            }
+
+                            helper.setText(R.id.item_tv_num, helper.getLayoutPosition() + "");
+
+                            helper.setText(R.id.item_ming_tv, rankMore.getTitle());
+
+                            if (CheckUtil.isEmpty(rankMore.getBroad())) {
+                                helper.setGone(R.id.k_one, false);
+                            } else {
+                                helper.setGone(R.id.k_one, true);
+                                helper.setText(R.id.item_name_tv, rankMore.getBroad());
+                            }
+                            if (CheckUtil.isEmpty(rankMore.getPlaynums())) {
+                                helper.setGone(R.id.k_two, false);
+                            } else {
+                                helper.setGone(R.id.k_two, true);
+                                helper.setText(R.id.item_peo_tv, rankMore.getPlaynums());
+                            }
+                            helper.setText(R.id.item_time_tv, rankMore.getMinute() + ":" + rankMore.getSecond());
+
+                            GlideUtil.setGlideImageMake(mFontext, rankMore.getCover_small(),
+                                    (ImageView) helper.getView(R.id.head_portrait));
                         }
-                    }
-
-                    if(isSelMore){
-
-                        helper.setGone(R.id.sel_image,true);
-
-                        if(issetSelList(rankMore)){
-                            helper.itemView.setSelected(true);
-                        }else {
-                            helper.itemView.setSelected(false);
-                        }
-
-                    }else {
-                        helper.setGone(R.id.sel_image,false);
-                    }
-
-                    helper.setText(R.id.item_tv_num,helper.getLayoutPosition() + "");
-
-                    helper.setText(R.id.item_ming_tv,rankMore.getTitle());
-
-                    if(CheckUtil.isEmpty(rankMore.getBroad())){
-                        helper.setGone(R.id.k_one,false);
-                    }else {
-                        helper.setGone(R.id.k_one,true);
-                        helper.setText(R.id.item_name_tv,rankMore.getBroad());
-                    }
-                    if(CheckUtil.isEmpty(rankMore.getPlaynums())){
-                        helper.setGone(R.id.k_two,false);
-                    }else {
-                        helper.setGone(R.id.k_two,true);
-                        helper.setText(R.id.item_peo_tv,rankMore.getPlaynums());
-                    }
-                    helper.setText(R.id.item_time_tv,rankMore.getMinute()+":"+rankMore.getSecond());
-
-                    GlideUtil.setGlideImageMake(mFontext,rankMore.getCover_small(),
-                            (ImageView) helper.getView(R.id.head_portrait));
-
+                        break;
                 }
             }
         };
@@ -546,9 +563,25 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //            }
 //        });
     }
-    private boolean isPay(){
+    private void setWebView(WebView webview,String content) {
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setBuiltInZoomControls(true);
+        webview.getSettings().setDisplayZoomControls(false);
+        webview.setWebChromeClient(new WebChromeClient());
+        webview.setWebViewClient(new WebViewClient());
+        webview.getSettings().setDefaultTextEncodingName("UTF-8") ;
+        webview.getSettings().setBlockNetworkImage(false);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            webview.getSettings().setMixedContentMode(webview.getSettings()
+                    .MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
+        }
+        webview.loadDataWithBaseURL(null,CommonUtils.getNewContent(content),
+                "text/html", "UTF-8", null);
+    }
+    private boolean isPay(boolean is){
         if(null != album){
             if(GlobalVariable.ONE.equals(album.getIspay())){
+                if(is)
                 NToast.shortToastBaseApp("付费专辑不能操作");
                 return true;
             }else {
@@ -556,16 +589,34 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             }
 
         }else {
+            NToast.shortToastBaseApp("数据为空不能操作");
+            return true;
+        }
+
+    }
+    private boolean isPay(){
+        if(null != album){
+            if(GlobalVariable.ONE.equals(album.getIspay())){
+                    NToast.shortToastBaseApp("付费专辑不能操作");
+                return true;
+            }else {
+                return false;
+            }
+
+        }else {
+            NToast.shortToastBaseApp("数据为空不能操作");
             return true;
         }
 
     }
     private void setLayout(int layout){
+        showType = layout;
         if(layout == 0){
             xq_layout.setSelected(true);
             gs_layout.setSelected(false);
 
-            quickAdapter.replaceData(new ArrayList<>());
+            if(!CheckUtil.isEmpty(album))
+            quickAdapter.replaceData(Arrays.asList(album));
 
         }else {
             xq_layout.setSelected(false);
@@ -599,11 +650,17 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         if(CheckUtil.isEmpty(comAllList))
             return;
 
-
-        Collections.reverse(comAllList);// 倒序排列
-
-
-        quickAdapter.replaceData(comAllList);
+        if(isPay(false)){ //排序问题
+            if(showType == 1){
+                Collections.reverse(comAllList);// 倒序排列
+                quickAdapter.replaceData(comAllList);
+            }else {
+                Collections.reverse(comAllList);// 倒序排列
+            }
+        }else {
+            Collections.reverse(comAllList);// 倒序排列
+            quickAdapter.replaceData(comAllList);
+        }
     }
 
     private boolean issetSelList(ComAll comAll){

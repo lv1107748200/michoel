@@ -137,4 +137,8 @@ dependencies {
     implementation "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+"//微信
 
     implementation 'com.king.zxing:zxing-lite:1.0.2'
+
+  //  implementation 'com.zzhoujay.richtext:richtext:3.0.7'
+
+    implementation 'org.jsoup:jsoup:1.9.2'
 }

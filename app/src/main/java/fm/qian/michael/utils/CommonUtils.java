@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.icu.util.RangeValueIterator;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Parcel;
@@ -33,6 +34,11 @@ import android.view.ViewGroup;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -303,6 +309,17 @@ public class CommonUtils {
         s = s.replaceAll(Repase,what);
 
         return s;
+    }
+
+    public static String getNewContent(String htmltext) {
+
+        Document doc = Jsoup.parse(htmltext);
+        Elements elements = doc.getElementsByTag("img");
+        for (Element element : elements) {
+            element.attr("width","100%").attr("height","auto");
+        }
+
+        return doc.toString();
     }
 
 

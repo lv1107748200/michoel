@@ -5,6 +5,7 @@ package fm.qian.michael.net.entry.response;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
@@ -12,11 +13,13 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import fm.qian.michael.db.AppDatabase;
 
+import static fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter.LIST;
+
 /*
  * lv   2018/9/17 通用版
  */
 @Table(database = AppDatabase.class)
-public class ComAll extends BaseModel implements Parcelable {
+public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
 
     @PrimaryKey
     private String id;
@@ -345,4 +348,9 @@ public class ComAll extends BaseModel implements Parcelable {
             return new ComAll[size];
         }
     };
+
+    @Override
+    public int getItemType() {
+        return LIST;
+    }
 }

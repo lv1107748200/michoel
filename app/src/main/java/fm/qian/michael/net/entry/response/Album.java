@@ -1,10 +1,14 @@
 package fm.qian.michael.net.entry.response;
 
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+import static fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter.WEB;
+
 /*
  * lv   2018/9/17 专辑
  */
-public class Album extends Base {
+public class Album extends Base implements MultiItemEntity {
     private String brief;
     private String brief_pay;
     private String userpay;
@@ -67,5 +71,10 @@ public class Album extends Base {
 
     public void setIsfav(String isfav) {
         this.isfav = isfav;
+    }
+
+    @Override
+    public int getItemType() {
+        return WEB;
     }
 }

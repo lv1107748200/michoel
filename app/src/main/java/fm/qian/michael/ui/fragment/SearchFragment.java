@@ -1,6 +1,8 @@
 package fm.qian.michael.ui.fragment;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +49,8 @@ import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopPlayListWindow;
 import fm.qian.michael.widget.single.DownManger;
 
+import static fm.qian.michael.utils.NetStateUtils.isWifi;
+
 /*
  * lv   2018/9/25
  */
@@ -65,6 +69,8 @@ public class SearchFragment extends BaseRecycleViewFragment {
     private boolean IdDown ;
 
     private List<ComAll> selList;
+
+    private boolean isDown;
 
     private View footView;
     private PopPlayListWindow popPlayListWindow;
@@ -86,48 +92,27 @@ public class SearchFragment extends BaseRecycleViewFragment {
     @OnClick({R.id.add_layout,R.id.down_layout,R.id.play_layout})
     public void Onclick(View view){
         switch (view.getId()){
-            case R.id.add_layout://添加到播单
-                if(null == popPlayListWindow){
-                    popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
-                            .setOutSideTouchable(true)
-                            .setFocusable(true)
-                            .setAnimation(R.style.popup_hint_anim)
-                            .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.hr.bclibrary.utils.DisplayUtils.dip2px(mFontext,80)))
-                            .build());
-                    popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
-                        @Override
-                        public List<ComAll> getSelComAll() {
-                            return selList;
-                        }
-                    });
+            case R.id.add_layout:
 
-                }else {
-
+                if(!isLogin()){
+                    WLoaignMake();
+                    return;
                 }
-                popPlayListWindow.user_broadcastall();
-                popPlayListWindow.show(view);
+                isDown = false;
+               addPlayerList();//仅仅添加到播单
 
                 break;
             case R.id.down_layout://下载
+                if(!isLogin()){
+                    WLoaignMake();
+                    return;
+                }
 
-                if(!CheckUtil.isEmpty(selList)){
-                    DownManger.setIdAndPath(selList,null,new DownManger.ResultCallback() {
-
-                        @Override
-                        public void onSuccess(Object baseDownloadTaskSparseArray) {
-                            if(null != quickAdapter){
-                                quickAdapter.notifyDataSetChanged();
-                                NToast.shortToastBaseApp("任务已添加");
-                            }
-                        }
-
-                        @Override
-                        public void onError(String errString) {
-
-                        }
-                    });
+                isDown =true;
+                if(isWifi(mFontext)){
+                    addPlayerList();//底部点击下载 在 wifi
                 }else {
-                    NToast.shortToastBaseApp("请选择");
+                    setDelAlertDialog();
                 }
 
                 break;
@@ -551,4 +536,79 @@ public class SearchFragment extends BaseRecycleViewFragment {
         return footView;
     }
 
+    //添加波胆
+    private void addPlayerList(){
+
+        if(null == popPlayListWindow){
+            popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
+                    .setOutSideTouchable(true)
+                    .setFocusable(true)
+                    .setAnimation(R.style.popup_hint_anim)
+                    .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.hr.bclibrary.utils.DisplayUtils.dip2px(mFontext,80)))
+                    .build());
+            popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
+                @Override
+                public List<ComAll> getSelComAll() {
+                    return selList;
+                }
+
+                @Override
+                public void state(int what) {
+                    if(isDown){
+                        down(selList);
+                    }
+
+                }
+            });
+        }else {
+
+        }
+        popPlayListWindow.user_broadcastall();
+        popPlayListWindow.show(buttomLayout);
+    }
+
+    //非wifi网络下的提醒
+    private void setDelAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mFontext);
+        builder.setTitle("提示");
+        builder.setMessage("当前非WiFi网络是否确定下载？");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                addPlayerList();//下载 非WiFi环境
+
+            }
+
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
+    //下载管理
+    private void down(List<ComAll> list){
+        if(!CheckUtil.isEmpty(list)){
+            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+                @Override
+                public void onSuccess(Object baseDownloadTaskSparseArray) {
+                    if(null != quickAdapter){
+                        quickAdapter.notifyDataSetChanged();
+                        NToast.shortToastBaseApp("成功添加下载任务");
+                    }
+                }
+                @Override
+                public void onError(String errString) {
+
+                }
+            });
+        }else {
+            NToast.shortToastBaseApp("请选择");
+        }
+    }
 }

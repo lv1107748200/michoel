@@ -559,7 +559,8 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:orientation">vertical</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_marginLeft">@dimen/dp_36</item>
+        <item name="android:paddingLeft">@dimen/dp_36</item>
+        <item name="android:paddingRight">@dimen/dp_16</item>
         <item name="android:background">@drawable/press_one</item>
     </style>
 

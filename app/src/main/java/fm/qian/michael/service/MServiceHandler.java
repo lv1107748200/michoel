@@ -35,7 +35,7 @@ public class MServiceHandler extends MediaAidlInterface.Stub{
 
     @Override
     public void play() throws RemoteException {
-        mService.get().play(null);
+        mService.get().play();
     }
     @Override
     public void playHistory() throws RemoteException {

@@ -177,6 +177,7 @@ public class PopPlayListWindow extends BasePopupWindow {
 
     public interface PopPlayListWindowCallBack{
         List<ComAll> getSelComAll();
+        void state(int what);
     }
 
 
@@ -208,7 +209,11 @@ public class PopPlayListWindow extends BasePopupWindow {
 
             @Override
             public void onSuccess(Object comAll) {
-                NToast.shortToastBaseApp("添加成功");
+                NToast.shortToastBaseApp("播单添加成功");
+
+                if(null != popPlayListWindowCallBack){
+                    popPlayListWindowCallBack.state(0);
+                }
 
                 dismiss();
 

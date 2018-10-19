@@ -1,8 +1,10 @@
 package fm.qian.michael.ui.fragment;
 
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.widget.NestedScrollView;
@@ -64,6 +66,7 @@ import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.MainActivity;
+import fm.qian.michael.ui.activity.SetActivity;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.ui.activity.dim.SearchActivity;
 import fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter;
@@ -88,6 +91,7 @@ import io.reactivex.functions.Consumer;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICID;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICNAME;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICTYPE;
+import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*
  * lv   2018/9/19  音频专辑
@@ -121,9 +125,12 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     private boolean isPlay = false;
 
+
     private ComAll comAll;
 
     private int showType;
+
+    private boolean isDown;
 
     TextView itemTv;
     SelectableRoundedImageView itemImage;
@@ -145,25 +152,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 if(isPay()){//添加到播单
                     return;
                 }
+                isDown = false;
+                addPlayerList();//底部点击
 
-                if(null == popPlayListWindow){
-                    popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
-                            .setOutSideTouchable(true)
-                            .setFocusable(true)
-                            .setAnimation(R.style.popup_hint_anim)
-                            .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
-                            .build());
-                    popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
-                        @Override
-                        public List<ComAll> getSelComAll() {
-                            return selList;
-                        }
-                    });
-                }else {
-
-                }
-                popPlayListWindow.user_broadcastall();
-                popPlayListWindow.show(view);
                 break;
             case R.id.down_layout://下载
                 if(!isLogin()){
@@ -173,22 +164,13 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 if(isPay()){//下载
                     return;
                 }
-                if(!CheckUtil.isEmpty(selList)){
-                    DownManger.setIdAndPath(selList,null,new DownManger.ResultCallback() {
-                        @Override
-                        public void onSuccess(Object baseDownloadTaskSparseArray) {
-                            if(null != quickAdapter){
-                                quickAdapter.notifyDataSetChanged();
-                                NToast.shortToastBaseApp("成功添加任务");
-                            }
-                        }
-                        @Override
-                        public void onError(String errString) {
 
-                        }
-                    });
+                isDown = true;
+
+                if(isWifi(mFontext)){
+                    addPlayerList();//底部点击下载 在 wifi
                 }else {
-                    NToast.shortToastBaseApp("请选择");
+                    setDelAlertDialog(0);
                 }
 
                 break;
@@ -215,50 +197,45 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 if(isPay()){//收藏
                     return;
                 }
+                isDown = false;
                 if(view.isSelected()){//取消收藏
-                    user_favorite("del");
+                    user_favorite("del");//取消收藏
                 }else {//收藏
-                    user_favorite("add");
+                    user_favorite("add");//点击收藏按钮
                 }
 
 
                 break;
             case R.id.layout_down://下载
+                if(isSelMore)
+                    return;
 
                 if(!isLogin()){
                     WLoaignMake();
                     return;
                 }
+
                 if(isPay()){//下载
                     return;
                 }
-                if(isSelMore)
-                    return;
-                if(!CheckUtil.isEmpty(comAllList)){
-                    DownManger.setIdAndPath(comAllList,null,
-                            new DownManger.ResultCallback() {
 
-                        @Override
-                        public void onSuccess(Object baseDownloadTaskSparseArray) {
-                            if(null != quickAdapter){
-                                quickAdapter.notifyDataSetChanged();
-                                NToast.shortToastBaseApp("成功添加任务");
-                            }
-
-                        }
-
-                        @Override
-                        public void onError(String errString) {
-
-                        }
-                    });
+                if(isWifi(mFontext)){
+                    if(!view.isSelected()) {//未收藏
+                        isDown = true;
+                        user_favorite("add");//wifi环境下载
+                    }else {
+                        down(comAllList);
+                    }
+                }else {
+                    setDelAlertDialog(1);
                 }
+
                 break;
             case R.id.layout_share://分享
-                if(!isLogin()){
-                    WLoaignMake();
-                    return;
-                }
+//                if(!isLogin()){
+//                    WLoaignMake();
+//                    return;
+//                }
 
                 if(isPay()){//分享
                     return;
@@ -426,7 +403,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                             } else if (statue == FileDownloadStatus.progress) {
                                 helper.getView(R.id.k_four).setActivated(false);
                                 helper.setGone(R.id.k_four, true);
-                                helper.setText(R.id.item_down_tv, "下载中...");
+                                helper.setText(R.id.item_down_tv, "下载中");
 
                             } else {
                                 helper.setGone(R.id.k_four, false);
@@ -605,7 +582,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
         }else {
             NToast.shortToastBaseApp("数据为空不能操作");
-            return true;
+            return false;
         }
 
     }
@@ -785,12 +762,98 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                             EventBus.getDefault().post(new Event.FavEvent(2,album.getId()));
                         }else if("add".equals(act)){
                             layout_fav.setSelected(true);
+                            if(isDown){
+                                down(comAllList);
+                            }
                             EventBus.getDefault().post(new Event.FavEvent(1,album.getId()));
-
                         }
+
+
                     }
                 }.setContext(mFontext),
                 GroupVoiseFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+    }
+    //下载管理
+    private void down(List<ComAll> list){
+        if(!CheckUtil.isEmpty(list)){
+            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+                @Override
+                public void onSuccess(Object baseDownloadTaskSparseArray) {
+                    if(null != quickAdapter){
+                        quickAdapter.notifyDataSetChanged();
+                        NToast.shortToastBaseApp("成功添加下载任务");
+                    }
+                }
+                @Override
+                public void onError(String errString) {
+
+                }
+            });
+        }else {
+            NToast.shortToastBaseApp("请选择");
+        }
+    }
+    //添加波胆
+    private void addPlayerList(){
+
+        if(null == popPlayListWindow){
+            popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
+                    .setOutSideTouchable(true)
+                    .setFocusable(true)
+                    .setAnimation(R.style.popup_hint_anim)
+                    .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
+                    .build());
+            popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
+                @Override
+                public List<ComAll> getSelComAll() {
+                    return selList;
+                }
+
+                @Override
+                public void state(int what) {
+                    if(isDown){
+                        down(selList);
+                    }
+
+                }
+            });
+        }else {
+
+        }
+        popPlayListWindow.user_broadcastall();
+        popPlayListWindow.show(buttomLayout);
+    }
+
+    //非wifi网络下的提醒
+    private void setDelAlertDialog(final int showType){
+        AlertDialog.Builder builder = new AlertDialog.Builder(mFontext);
+        builder.setTitle("提示");
+        builder.setMessage("当前非WiFi网络是否确定下载？");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(showType == 0){//添加波丹后下载
+                    addPlayerList();//下载 非WiFi环境
+                }else if(showType == 1) {//收藏后下载
+                    if(!layout_fav.isSelected()) {//未收藏
+                        isDown = true;
+                        user_favorite("add");//非WiFi环境
+                    }else {
+                        down(comAllList);
+                    }
+                }
+
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
     }
 
 

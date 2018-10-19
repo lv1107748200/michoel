@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -26,6 +27,7 @@ import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.fragment.MyFragment;
+import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
@@ -41,6 +43,8 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 public class SetActivity extends BaseIntensifyActivity {
 
 
+    @BindView(R.id.up_image)
+    ImageView up_image;
     @BindView(R.id.tv_banbenhao)
     TextView tv_banbenhao;
     @BindView(R.id.item_image)
@@ -90,6 +94,13 @@ public class SetActivity extends BaseIntensifyActivity {
             public void onSuccess(Ver ver) {
                 //NLog.e(NLog.TAG,""+ver.getVer() + ver.getVerint());
                 tv_banbenhao.setText(ver.getVer());
+
+
+                if(ver.getVerint() == CommonUtils.getAPPVersionCode(SetActivity.this)){
+                    up_image.setVisibility(View.GONE);
+                }else {
+                    up_image.setVisibility(View.VISIBLE);
+                }
             }
 
         },SetActivity.this.bindUntilEvent(ActivityEvent.DESTROY));

@@ -4,14 +4,14 @@
     android:useLevel="false"
     >
 
-    <solid android:color="@color/color_618"/>
+    <solid android:color="@color/color_F86"/>
     <stroke
         android:width="0dp"
         android:color="@color/white"/>
-    <size android:width="20dp"
-    android:height="20dp"/>
-    <gradient
-        android:angle="360"
-        android:endColor="@color/color_4D9"
-        android:startColor="@color/color_43A" />
+    <size android:width="10dp"
+    android:height="10dp"/>
+    <!--<gradient-->
+        <!--android:angle="360"-->
+        <!--android:endColor="@color/color_4D9"-->
+        <!--android:startColor="@color/color_43A" />-->
 </shape>

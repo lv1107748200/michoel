@@ -64,6 +64,7 @@ import java.util.concurrent.TimeUnit;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
+import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.ComAll;
@@ -72,6 +73,7 @@ import fm.qian.michael.receiver.MediaButtonIntentReceiver;
 import fm.qian.michael.ui.activity.LockActivity;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;
+import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
 import fm.qian.michael.widget.single.DownManger;
 import fm.qian.michael.widget.single.UserInfoManger;
@@ -179,7 +181,7 @@ public class MqService extends Service {
 
     private boolean isPlayNow = false;//完成当前播放任务后停止
 
-    private boolean isLogin;
+    private boolean isLogin;//是否登陆
 
 
     //private boolean isTermination = false;//强行终止异步操作
@@ -312,14 +314,13 @@ public class MqService extends Service {
     }
 
     //传进播放地址
-    public void play(String playPath) {
+    public void play() {
 
-        if(!isLogin){
-
+        if(!isCanPlay()){
+            NToast.shortToastBaseApp("需登陆");
+            return;
         }
 
-
-        if(CheckUtil.isEmpty(playPath)){
             if(isFirstLoad){//处理点击已经正在播放的音频
                 if(null != comAll && !CheckUtil.isEmpty(comAllList)){
 
@@ -334,7 +335,7 @@ public class MqService extends Service {
                     }
                 }
             }
-        }
+
 
 
         int status = mAudioManager.requestAudioFocus(mAudioFocusListener,
@@ -344,29 +345,27 @@ public class MqService extends Service {
             return;
         }
 
-       // mPlayerHandler.removeCallbacks(reqData);
-       // mPlayerHandler.removeCallbacks(reqIcon);
-
-
-
         final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
        //intent.putExtra(AudioEffect.EXTRA_AUDIO_SESSION, getAudioSessionId());
         intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, getPackageName());
         sendBroadcast(intent);
 
-
-        if(CheckUtil.isEmpty(playPath)){
-            setDataSource(getPlayPath());//获取链表中数据进行播放
-        }else {
-            setDataSource(playPath);//直接播放传入地址
+       // pushAction(MUSIC_LODING);//正在加载
+        if(isPlaying()){
+            pause();//换歌时暂停
         }
-
-        pushAction(MUSIC_LODING);//正在加载
-
-       // updateNotification("0");//第一次进来
+        getPlayPath();
 
         mainPlayerHandler.sendEmptyMessage(REQNFTION);
 
+    }
+    //确认播放调用
+    private void playQQQ(String pathSong){
+        if(CheckUtil.isEmpty(pathSong)){
+            setDataSource(comAll.getUrl());//获取链表中数据进行播放
+        }else {
+            setDataSource(pathSong);//直接播放传入地址
+        }
     }
 
     //直接进行历史播放
@@ -391,7 +390,7 @@ public class MqService extends Service {
                 playNumber = 0;
             }
 
-            play(null);//历史播放
+            play();//历史播放
         }
 
 
@@ -400,7 +399,7 @@ public class MqService extends Service {
     public void playNum(int i){
         synchronized (this) {
             PlayOnclickNum = i;
-            play(null);//选集播放
+            play();//选集播放
         }
     }
 
@@ -413,6 +412,10 @@ public class MqService extends Service {
     }
 
     public void start(){
+        if(!isCanPlay()){
+            NToast.shortToastBaseApp("付费专辑需登陆播放");
+            return;
+        }
 
         int status = mAudioManager.requestAudioFocus(mAudioFocusListener,
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
@@ -516,11 +519,11 @@ public class MqService extends Service {
 
     public void next(){
         isNext = true;
-        play(null);//下一集
+        play();//下一集
     }
     public void up(){
         isNext = false;
-        play(null);//上一集
+        play();//上一集
     }
     public long duration(){
         if(mIsTrackPrepared)
@@ -554,10 +557,33 @@ public class MqService extends Service {
             isLogin = true;
         }else if(index == 1){//退出
             isLogin = false;
+            if(isPay()){
+                pause();
+            }
+
         }
 
     }
 
+    private boolean isPay(){
+        if(null != comAll){
+            if(GlobalVariable.ONE.equals(comAll.getIspay())){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isCanPlay(){
+        if(isPay()){
+            if(isLogin){
+               return true;
+            }else {
+                return false;
+            }
+        }else {
+            return true;
+        }
+    }
     /**
      * AlarmManager.ELAPSED_REALTIME：使用相对时间，可以通过SystemClock.elapsedRealtime() 获取（从开机到现在的毫秒数，包括手机的睡眠时间），设备休眠时并不会唤醒设备。
      AlarmManager.ELAPSED_REALTIME_WAKEUP：与ELAPSED_REALTIME基本功能一样，只是会在设备休眠时唤醒设备。
@@ -626,7 +652,10 @@ public class MqService extends Service {
     public void onSeekComplete(MediaPlayer mp) {
         NLog.e(NLog.PLAYER,"播放器  onSeekComplete");
         isSendking = false;
-        pushAction(SEND_PROGRESS);//快进完成
+        if(isCanPlay()){//快进完成
+            pushAction(SEND_PROGRESS);//快进完成
+        }
+
     }
     public boolean onError(MediaPlayer mp, int what, int extra) {
         NLog.e(NLog.PLAYER,"播放器  onError");
@@ -705,20 +734,8 @@ public class MqService extends Service {
 
         path = comAll.getUrl();//播放地址
 
-        if(CheckUtil.isEmpty(path)){
-            NLog.e(NLog.PLAYER,"path 为 null 通过接口获取 ");
+        reqData(comAll.getId());//播放时检测到播放地址为空
 
-       //     mPlayerHandler.post(reqData);//获取地址
-
-            reqData(comAll.getId());//播放时检测到播放地址为空
-        }
-
-        NLog.e(NLog.PLAYER,"获取播放地址 path ：" + path );
-
-        if(!CheckUtil.isEmpty(comAll.getId())){
-            pushAction(UPDATA_ID,comAll.getId());
-            setReqPta();//更换地址时
-        }
         return path;
     }
 
@@ -756,7 +773,7 @@ public class MqService extends Service {
             } else {
                 if(isFirstLoad){
                     updata(null,0);
-                    play(null);
+                    play();
                 }else {
                     start();//外部按钮
                 }
@@ -827,8 +844,6 @@ public class MqService extends Service {
     }
 
     private Notification getNotification(String what,Bitmap bitmap) {
-
-
         RemoteViews remoteViews;
         final int PAUSE_FLAG = 0x1;
         final int NEXT_FLAG = 0x2;
@@ -990,6 +1005,8 @@ public class MqService extends Service {
     private Call call;
     private void reqData(String id){
 
+        NLog.e(NLog.PLAYER, "通过接口  获取播放地址 id ：" + id);
+
         if(CheckUtil.isEmpty(id)){
             comAll = null;
             return;
@@ -1053,35 +1070,6 @@ public class MqService extends Service {
 
             }
         });
-
-
-//        Response response = null;
-//        String s= null;
-//        try {
-//            response = call.execute();
-//            s = response.body().string();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        //  NLog.e(NLog.PLAYER, "onResponse: " + response.body().string());
-//        ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
-//        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-//
-//        BaseDataResponse<ComAll> baseDataResponse = null;
-//        try {
-//            baseDataResponse = objectMapper.readValue(s, new TypeReference<BaseDataResponse<ComAll>>(){});
-//
-//            NLog.e(NLog.PLAYER,"path 通过接口获取 json : " +s);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        if(null != baseDataResponse){
-//            Message message = new Message();
-//            message.what = REQDATA;
-//            message.obj = baseDataResponse;
-//            mPlayerHandler.sendMessage(message);
-//        }
     }
 
     //上传 播放次数
@@ -1131,12 +1119,15 @@ public class MqService extends Service {
     // MusicPlayerHandler 消息传递 子线程
 
     public void setUpdataNUll(BaseDataResponse<ComAll> baseDataResponse){
-       comAll = baseDataResponse.getData();
+        comAll = baseDataResponse.getData();
 
         comAllList.set(playNumber, comAll);
 
+        pushAction(UPDATA_ID,comAll.getId());
+        setReqPta();//更换地址时
+
       //  mPlayerHandler.post(this.saveData);
-        play(comAll.getUrl());//获取地址后直接播放
+        playQQQ(comAll.getUrl());//获取地址后直接播放
     }
 
     private final AudioManager.OnAudioFocusChangeListener mAudioFocusListener = new AudioManager.OnAudioFocusChangeListener() {

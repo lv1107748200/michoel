@@ -212,7 +212,7 @@ public class DownManger {
                 getInstance().queueSet.start();
 
                 if(null != resultCallback){
-                    resultCallback.onCallbackSuccess("");
+                    resultCallback.onCallbackSuccess("成功添加下载任务");
                 }
 
             }
@@ -580,7 +580,7 @@ public class DownManger {
                     }
                     tag.getView().setVisibility(View.VISIBLE);
                     tag.getView().setActivated(false);
-                    tag.getTextView().setText("下载中...");
+                    tag.getTextView().setText("下载中");
                 }
 
                 @Override

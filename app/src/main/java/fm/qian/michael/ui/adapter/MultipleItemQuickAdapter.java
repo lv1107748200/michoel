@@ -72,8 +72,8 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
         addItemType(MultipleItem.BAN, R.layout.item_find_ban);
         addItemType(MultipleItem.HEAD, R.layout.item_head_one);
         addItemType(MultipleItem.IMGANDTEXT, R.layout.item_image_and_text);
-        addItemType(MultipleItem.IMGANDTEXTG2, R.layout.item_image_and_text);
-        addItemType(MultipleItem.IMGANDTEXTG4, R.layout.item_image_and_text);
+        addItemType(MultipleItem.IMGANDTEXTG2, R.layout.item_image_and_text_changed_one);
+        addItemType(MultipleItem.IMGANDTEXTG4, R.layout.item_image_and_text_set_sp);
         addItemType(MultipleItem.TEXTDATE, R.layout.item_text_layout);
         addItemType(MultipleItem.RANKING, R.layout.item_ranking);
         addItemType(MultipleItem.RECY, R.layout.item_recycleview);
@@ -172,8 +172,10 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                 break;
             case MultipleItem.IMGANDTEXTG2://上下结构的 图片 文字
 
-                helper.itemView.setLayoutParams(
-                        LayoutParmsUtils.getGroupParms(wight2()));
+//                helper.itemView.setLayoutParams(
+//                        LayoutParmsUtils.getGroupParms(wight2()));
+
+                LayoutParmsUtils.setHight(wight2(),helper.getView(R.id.item_image));
 
                 if(item.getObject() instanceof Base){
 
@@ -186,12 +188,12 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                 }
                 break;
             case MultipleItem.IMGANDTEXTG4://上下结构的 图片 文字
-                final int p = DisplayUtils.getDimen(R.dimen.margin_18);
-                int p1 = DisplayUtils.getDimen(R.dimen.margin_6);
-                helper.itemView.setPadding(p,p1,p,p1);
+//                final int p = DisplayUtils.getDimen(R.dimen.margin_18);
+//                int p1 = DisplayUtils.getDimen(R.dimen.margin_6);
+//                helper.itemView.setPadding(p,p1,p,p1);
 
-                helper.itemView.setLayoutParams(
-                        LayoutParmsUtils.getGroupParms(wight4()));
+//                helper.itemView.setLayoutParams(
+//                        LayoutParmsUtils.getGroupParms(wight4()));
 
                 if(item.getObject() instanceof Base){
                     Base itemBase = (Base) item.getObject();
@@ -444,6 +446,6 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
         int  wight = DisplayUtils.getWideP(2,0
                 ,DisplayUtils.getDimen(R.dimen.margin_5));
 
-        return (int) (wight*1.2);
+        return (int) (wight*1);
     }
 }

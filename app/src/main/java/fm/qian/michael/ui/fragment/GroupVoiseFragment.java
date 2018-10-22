@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -34,6 +35,7 @@ import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.zzhoujay.richtext.RichText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -194,9 +196,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     WLoaignMake();
                     return;
                 }
-                if(isPay()){//收藏
-                    return;
-                }
+//                if(isPay()){//收藏
+//                    return;
+//                }
                 isDown = false;
                 if(view.isSelected()){//取消收藏
                     user_favorite("del");//取消收藏
@@ -220,7 +222,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 }
 
                 if(isWifi(mFontext)){
-                    if(!view.isSelected()) {//未收藏
+                    if(!layout_fav.isSelected()) {//未收藏
                         isDown = true;
                         user_favorite("add");//wifi环境下载
                     }else {
@@ -250,7 +252,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     popShareWindow = new PopShareWindow(mFontext,new CustomPopuWindConfig.Builder(mFontext)
                             .setOutSideTouchable(true)
                             .setFocusable(true)
-                            .setTouMing(true)
+                            .setTouMing(false)
                             .setAnimation(R.style.popup_hint_anim)
                             .setWith((DisplayUtils.getScreenWidth(mFontext)))
                             .build());
@@ -386,8 +388,22 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                         if(item instanceof  ComAll) {
                             ComAll rankMore = (ComAll) item;
 
-                            String path = DownManger.createPath(rankMore.getUrl());
-                            int id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                            String path;
+                            int id;
+
+                            if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                                path = DownManger.createPath(rankMore.getUrl());
+                                id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                                rankMore.setDownPath(path);
+                                rankMore.setIsDown(id);
+
+                            }else {
+
+                                path = rankMore.getDownPath();
+                                id = rankMore.getIsDown();
+
+                                //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+                            }
 
                             DownManger.updateViewHolder(id, new BaseDownViewHolder(id, helper.getView(R.id.k_four),
                                     (TextView) helper.getView(R.id.item_down_tv)));
@@ -459,6 +475,31 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                         break;
                 }
             }
+            @Override
+            public void onViewRecycled(@NonNull BaseViewHolder holder) {
+                super.onViewRecycled(holder);
+                // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
+
+                if(null != holder){
+                    Object item = quickAdapter.getItem(holder.getLayoutPosition()+1);
+                    if(item instanceof ComAll){
+                        ComAll rankMore = (ComAll) item;
+                        String path ;
+                        int id ;
+                        //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+
+                        if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                            path = DownManger.createPath(rankMore.getUrl());
+                            id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                        }else {
+                            id =  rankMore.getIsDown();
+                        }
+
+                        DownManger.updateViewHolder(id);
+                    }
+                }
+
+            }
         };
 
         quickAdapter.addHeaderView(headView);
@@ -493,7 +534,11 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
             GlideUtil.setGlideImageMake(mFontext,album.getCover(),
                     itemImage);
-            itemTv.setText(album.getBrief());
+
+            if(!CheckUtil.isEmpty(album.getBrief())){
+                RichText.from(album.getBrief()).bind(this).into(itemTv);
+            }
+//            itemTv.setText(album.getBrief());
 
 
             if(GlobalVariable.ONE.equals(album.getIsfav())){
@@ -638,6 +683,12 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             Collections.reverse(comAllList);// 倒序排列
             quickAdapter.replaceData(comAllList);
         }
+
+        if(layout_orderdesc.isSelected()){
+            layout_orderdesc.setSelected(false);
+        }else {
+            layout_orderdesc.setSelected(true);
+        }
     }
 
     private boolean issetSelList(ComAll comAll){
@@ -753,14 +804,16 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                     @Override
                     public void onSuccessAll(BaseDataResponse<Object> k) {
-                        NToast.shortToastBaseApp(k.getMsg());
+
 
                         layout_fav.setEnabled(true);
 
                         if(("del").equals(act)){
+                            NToast.shortToastBaseApp("取消收藏成功");
                             layout_fav.setSelected(false);
                             EventBus.getDefault().post(new Event.FavEvent(2,album.getId()));
                         }else if("add".equals(act)){
+                            NToast.shortToastBaseApp("收藏成功");
                             layout_fav.setSelected(true);
                             if(isDown){
                                 down(comAllList);
@@ -860,6 +913,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onDestroy() {
         quickAdapter = null;
+        RichText.clear(this);
         super.onDestroy();
 
         EventBus.getDefault().unregister(this);//解除订阅

@@ -61,81 +61,86 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
     @Override
     @SuppressWarnings("unchecked")
     public void onNext(Response<T> httpResultResponse) {
-        if(httpResultResponse.code()==200){
-            T result = httpResultResponse.body();
+        try {
+            if(httpResultResponse.code()==200){
+                T result = httpResultResponse.body();
 
-            if(result instanceof  BaseDataResponse){
-                BaseDataResponse baseDataResponse = (BaseDataResponse) result;
+                if(result instanceof  BaseDataResponse){
+                    BaseDataResponse baseDataResponse = (BaseDataResponse) result;
 
-                int code = baseDataResponse.getCode();
+                    int code = baseDataResponse.getCode();
 
-                if(code == 1){
-                    if (callback != null) {
-                        callback.onSuccess(baseDataResponse.getData());
-                        callback.onSuccessAll(result);
-                    }
-                }else if(code == -2){
-
-                    NToast.shortToastBaseApp("用户登录过期，需重新登陆");
-
-                    if(null != callback){
-                        if(callback.getContext() != null){
-                            Intent intent = new Intent();
-                            intent.setClass(callback.getContext(), LoginActivity.class);
-                            intent.putExtra(LoginActivity.LOGIN,THREE);
-                            callback.getContext().startActivity(intent);
+                    if(code == 1){
+                        if (callback != null) {
+                            callback.onSuccess(baseDataResponse.getData());
+                            callback.onSuccessAll(result);
                         }
-                    }
+                    }else if(code == -2){
 
-                }else {
-                    if (callback != null) {
-                        callback.onError(new HttpException(((BaseDataResponse) result).getCode(),
-                                ((BaseDataResponse) result).getMsg()));
-                    }
-                }
-            }else if(result instanceof ResponseBody){
+                        NToast.shortToastBaseApp("用户登录过期，需重新登陆");
 
-                ResponseBody responseBody = (ResponseBody) result;
-
-                try {
-
-
-                    String resjson = responseBody.string();
-                    NLog.e(NLog.TAG,resjson);
-
-
-                    if(null != aClass){
                         if(null != callback){
-                            callback.onSuccess( HttpUtils.jsonToBeanT(resjson,aClass));
+                            if(callback.getContext() != null){
+                                Intent intent = new Intent();
+                                intent.setClass(callback.getContext(), LoginActivity.class);
+                                intent.putExtra(LoginActivity.LOGIN,THREE);
+                                callback.getContext().startActivity(intent);
+                            }
+                        }
+
+                    }else {
+                        if (callback != null) {
+                            callback.onError(new HttpException(((BaseDataResponse) result).getCode(),
+                                    ((BaseDataResponse) result).getMsg()));
                         }
                     }
+                }else if(result instanceof ResponseBody){
+
+                    ResponseBody responseBody = (ResponseBody) result;
+
+                    try {
+
+
+                        String resjson = responseBody.string();
+                        NLog.e(NLog.TAG,resjson);
+
+
+                        if(null != aClass){
+                            if(null != callback){
+                                callback.onSuccess( HttpUtils.jsonToBeanT(resjson,aClass));
+                            }
+                        }
 
 
 
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                } else if(result instanceof  BaseResponse) {
+                    if(((BaseResponse) result).getCode() == 1){
+                        if (callback != null) {
+                            callback.onSuccessAll(result);
+                        }
+                    } else {
+                        if (callback != null) {
+                            callback.onError(new HttpException(((BaseResponse) result).getCode(),
+                                    ((BaseResponse) result).getMsg()));
+                        }
+                    }
                 }
 
 
-            } else if(result instanceof  BaseResponse) {
-                if(((BaseResponse) result).getCode() == 1){
-                    if (callback != null) {
-                        callback.onSuccessAll(result);
-                    }
-                } else {
-                    if (callback != null) {
-                        callback.onError(new HttpException(((BaseResponse) result).getCode(),
-                                ((BaseResponse) result).getMsg()));
-                    }
+            } else {
+                if (callback != null) {
+                    callback.onError(new HttpException(httpResultResponse.code(),httpResultResponse.message()));
                 }
             }
-
-
-        } else {
-            if (callback != null) {
-                callback.onError(new HttpException(httpResultResponse.code(),httpResultResponse.message()));
-            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
     }
 
 

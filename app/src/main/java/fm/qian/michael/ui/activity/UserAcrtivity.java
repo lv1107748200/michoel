@@ -191,9 +191,9 @@ public class UserAcrtivity extends BaseIntensifyActivity {
                 if(type == ONE){
                     EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ZERO));
 
-                    GlideUtil.setGlideImageMake(UserAcrtivity.this
-                            , userInfo.getLogo()
-                            ,headPortrait);
+                    GlideUtil.setGlideImage(UserAcrtivity.this
+                            ,userInfo.getLogo()
+                            ,headPortrait,R.drawable.myicon);
 
                     nickname.setText(userInfo.getNickname());
                     nc_tv.setText(userInfo.getNickname());

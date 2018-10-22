@@ -121,7 +121,7 @@ public class LoginActivity extends BaseIntensifyActivity {
 
                 }
 
-                login();
+              //login();
                 break;
             case R.id.send_verification_code://获取验证码
                 user_sms();
@@ -175,8 +175,8 @@ public class LoginActivity extends BaseIntensifyActivity {
 
                     break;
                 case THREE:
-                    setTitleTv(getString(R.string.手机号登陆));
-                    tv_message.setText(getString(R.string.手机号登陆));
+                    setTitleTv(getString(R.string.手机号登录));
+                    tv_message.setText(getString(R.string.手机号登录));
                    // act = "smslogin";
                     getyzm();//手机号登陆
 

@@ -37,7 +37,7 @@
             >
             <ImageView
                 style="@style/image_make_style"
-                android:background="@drawable/down"
+                android:background="@drawable/press_down"
                 />
 
             <TextView

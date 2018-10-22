@@ -4,18 +4,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     >
 
     <View
         android:id="@+id/statu_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/color_292"
+        />
 
     <fm.qian.michael.widget.custom.SildingFinishLayout
         android:id="@+id/lock_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_292"
         >
 
 

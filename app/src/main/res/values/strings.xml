@@ -59,7 +59,7 @@
     <string name="清除历史">清除历史</string>
     <string name="没有找到相关内容">没有找到相关内容</string>
     <string name="加载中">加载中</string>
-    <string name="点击登陆">点击登陆</string>
+    <string name="点击登陆">点击登录</string>
     <string name="我的信息">我的信息</string>
     <string name="宝宝信息">宝宝信息</string>
     <string name="收藏的专辑">收藏的专辑</string>
@@ -106,18 +106,18 @@
     <string name="本周专辑">本周专辑</string>
     <string name="本月故事">本月故事</string>
     <string name="本月专辑">本月专辑</string>
-    <string name="微信登陆">微信登陆</string>
+    <string name="微信登陆">微信登录</string>
     <string name="登陆">登陆</string>
     <string name="注册">注册</string>
-    <string name="one">微信登陆，快速同步钱儿频道收听数据</string>
+    <string name="one">微信登录，快速同步钱儿频道收听数据</string>
     <string name="two">我已阅读并同意《钱儿频道软件服务协议》</string>
     <string name="绑定手机">绑定手机</string>
-    <string name="手机号登陆">手机号登陆</string>
+    <string name="手机号登录">手机号登录</string>
     <string name="手机号注册">手机号注册</string>
     <string name="获取验证码">获取验证码</string>
     <string name="已绑定">已绑定</string>
     <string name="未绑定">绑定后同步购买收听记录</string>
-    <string name="需登陆">需登陆</string>
+    <string name="需登陆">需登录</string>
     <string name="已登录">已登录</string>
 
     <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>

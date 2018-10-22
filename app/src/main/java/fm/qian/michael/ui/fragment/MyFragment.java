@@ -61,6 +61,7 @@ import fm.qian.michael.widget.single.UserInfoManger;
 import static fm.qian.michael.ui.activity.UserAcrtivity.USERA;
 import static fm.qian.michael.ui.activity.dim.HeadGroupActivity.HEADGROUP;
 import static fm.qian.michael.ui.activity.dim.PlayListMessageAtivity.PLAYLIST;
+import static fm.qian.michael.ui.activity.dim.PlayListMessageAtivity.PLAYLISTNAME;
 
 /**
  * Created by 吕 on 2017/12/6.
@@ -158,10 +159,10 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
 
                 break;
             case R.id.sz_layout://设置
-                if(!isLogin()){
-                    WLoaignMake();
-                    return;
-                }
+//                if(!isLogin()){
+//                    WLoaignMake();
+//                    return;
+//                }
                 intent.setClass(getContext(),SetActivity.class);
                 startActivity(intent);
                 break;
@@ -241,6 +242,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
 
                     Intent intent = new Intent(getContext(), PlayListMessageAtivity.class);
                     intent.putExtra(PLAYLIST,comAll.getId());
+                    intent.putExtra(PLAYLISTNAME,comAll.getTitle());
 
                     startActivity(intent);
                 }
@@ -346,9 +348,9 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
             public void onSuccess(UserInfo userInfo) {
                // NToast.shortToastBaseApp("成功");
 
-                GlideUtil.setGlideImageMake(mFontext
+                GlideUtil.setGlideImage(mFontext
                         , userInfo.getLogo()
-                        ,roundedImageView);
+                        ,roundedImageView,R.drawable.myicon);
                 nickname.setText(userInfo.getNickname());
 
             }

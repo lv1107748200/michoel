@@ -3,6 +3,7 @@ package fm.qian.michael.ui.activity.dim;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
+import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 
@@ -59,6 +61,7 @@ import fm.qian.michael.widget.single.UserInfoManger;
 public class PlayListMessageAtivity extends BaseRecycleViewActivity implements View.OnClickListener {
 
     public static final String PLAYLIST = "PlayList";
+    public static final String PLAYLISTNAME = "PlayListName";
 
     private boolean isSelMore = false;//是否多选操作
     private QuickAdapter quickAdapter;
@@ -289,6 +292,11 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
         bid = getIntent().getStringExtra(PLAYLIST);
 
+        String name = getIntent().getStringExtra(PLAYLISTNAME);
+
+        if(!CheckUtil.isEmpty(name)){
+            setTitleTv(name);
+        }
 
         View view = LayoutInflater.from(this).inflate(R.layout.item_play_list_make,null,false);
 
@@ -309,14 +317,30 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         relayout_sel_cancel.setOnClickListener(this);
 
         getRvList().setLayoutManager(new LinearLayoutManager(this));
-        quickAdapter =  new QuickAdapter(R.layout.item_sel_voice,10){
+        quickAdapter =  new QuickAdapter(R.layout.item_sel_voice){
             @Override
             protected void convert(BaseViewHolder helper, Object item) {
                 if(item instanceof ComAll){
                     ComAll rankMore = (ComAll) item;
 
-                        String path = DownManger.createPath(rankMore.getUrl());
-                        int id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                        String path;
+                        int id;
+
+                        if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                            path = DownManger.createPath(rankMore.getUrl());
+                            id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                            rankMore.setDownPath(path);
+                            rankMore.setIsDown(id);
+
+                        }else {
+
+                            path = rankMore.getDownPath();
+                            id = rankMore.getIsDown();
+
+                           //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+                        }
+
+                       // NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
 
                          DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getView(R.id.k_four),
                             (TextView) helper.getView(R.id.item_down_tv)));
@@ -331,7 +355,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                         }else if(statue == FileDownloadStatus.progress){
                             helper.getView(R.id.k_four).setActivated(false);
                             helper.setGone(R.id.k_four,true);
-                            helper.setText(R.id.item_down_tv,"下载中...");
+                            helper.setText(R.id.item_down_tv,"下载中");
 
                         }else {
 
@@ -385,6 +409,33 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                     GlideUtil.setGlideImageMake(PlayListMessageAtivity.this,rankMore.getCover_small(),
                             (ImageView) helper.getView(R.id.head_portrait));
+                }
+
+            }
+
+            @Override
+            public void onViewRecycled(@NonNull BaseViewHolder holder) {
+                super.onViewRecycled(holder);
+               // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
+
+                if(null != holder){
+                    Object item = quickAdapter.getItem(holder.getLayoutPosition()+1);
+                    if(item instanceof ComAll){
+                        ComAll rankMore = (ComAll) item;
+                        String path ;
+                        int id ;
+                        //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+
+                        if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                            path = DownManger.createPath(rankMore.getUrl());
+                            id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                        }else {
+                            id =  rankMore.getIsDown();
+                        }
+
+                        DownManger.updateViewHolder(id);
+
+                    }
                 }
 
             }
@@ -560,7 +611,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         );
     }
 
-    private void user_broadcast(final String act, String title){
+    private void user_broadcast(final String act,final String title){
 
         UserInfo data = new UserInfo();
 
@@ -590,12 +641,17 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                     popInputWindow.dismiss();
                 NToast.shortToastBaseApp(k.getMsg());
 
-                deldelListFile(comAllList);
+                if("update".equals(act)){
+                    setTitleTv(title);
+                }
+
 
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ONE));
 
-                if("del".equals(act))
-                finish();
+                if("del".equals(act)){
+                    deldelListFile(comAllList);
+                    finish();
+                }
 
             }
         }.setContext(this),PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
@@ -692,5 +748,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         AlertDialog dialog=builder.create();
         dialog.show();
     }
+
+    //下载相关
 
 }

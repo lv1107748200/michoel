@@ -16,7 +16,9 @@ import com.raizlabs.android.dbflow.annotation.Table;
 @Table(database = AppDatabase.class)
 public class TasksManagerModel extends BaseData {
 
-    @PrimaryKey
+    @PrimaryKey(autoincrement = true)
+    private int Idd;
+    @Column
     private int id;
     @Column
     private String name;
@@ -27,6 +29,13 @@ public class TasksManagerModel extends BaseData {
     @Column
     private String path;
 
+    public int getIdd() {
+        return Idd;
+    }
+
+    public void setIdd(int idd) {
+        Idd = idd;
+    }
 
     public int getId() {
         return id;

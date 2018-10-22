@@ -10,12 +10,17 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.hr.bclibrary.utils.CheckUtil;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
+import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
+import com.zzhoujay.richtext.RichText;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
@@ -23,6 +28,8 @@ import fm.qian.michael.base.activity.BaseExitActivity;
 import fm.qian.michael.base.activity.PermissionCallback;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.TasksManagerModel;
+import fm.qian.michael.db.TasksManagerModel_Table;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.entry.response.Base;
 import fm.qian.michael.net.entry.response.ComAll;
@@ -35,8 +42,11 @@ import fm.qian.michael.ui.fragment.ArticleFragment;
 import fm.qian.michael.ui.fragment.CategoryFragment;
 import fm.qian.michael.ui.fragment.FindFragment;
 import fm.qian.michael.ui.fragment.MyFragment;
+import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
+import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
 import fm.qian.michael.widget.custom.BottomBarLayout;
 import fm.qian.michael.widget.custom.XCViewPager;
@@ -84,6 +94,10 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
     BottomBarLayout bottomLayout;
     @BindView(R.id.search_layout)
     LinearLayout searchLayout;
+    @BindView(R.id.layout_lift)
+    LinearLayout layout_lift;
+    @BindView(R.id.layout_right)
+    LinearLayout layout_right;
 
     @BindView(R.id.status_bar)
     View statusBar;
@@ -200,7 +214,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         bottomLayout.setSelect(0);
         bottomLayout.setBomSel(0);
 
-
+        autoDown();//检测自动下载
     }
 
     //点击安全企业
@@ -212,6 +226,15 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
 
     @Override
     public void onBottomTab(int num) {
+
+        if(num == 0){
+            layout_lift.setVisibility(View.VISIBLE);
+            layout_right.setVisibility(View.VISIBLE);
+        }else {
+            layout_lift.setVisibility(View.GONE);
+            layout_right.setVisibility(View.GONE);
+
+        }
 
     }
     //网络状态广播
@@ -270,6 +293,47 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         }
     }
 
+    private void autoDown(){
+        if(NetStateUtils.isWifi(this)){
+            SQLite.select()
+                    .from(TasksManagerModel.class)
+                    .orderBy(TasksManagerModel_Table.Idd,false)
+                    .async()
+                    .queryListResultCallback(new QueryTransaction.QueryResultListCallback<TasksManagerModel>() {
+                        @Override
+                        public void onListQueryResult(QueryTransaction transaction, @NonNull List<TasksManagerModel> tResult) {
+                            NLog.e(NLog.TAGDOWN, "来自MainActivity   SQLite  onListQueryResult 查询成功");
+                            if(!CheckUtil.isEmpty(tResult)){
+                                NLog.e(NLog.TAGDOWN, "来自MainActivity   SQLite  onListQueryResult 查询成功" + tResult.size());
+
+                                DownManger.addListTask(tResult, new DownManger.ResultCallback() {
+                                    @Override
+                                    public void onSuccess(Object o) {
+                                       // NToast.shortToastBaseApp("自动下载未完成任务");
+                                    }
+
+                                    @Override
+                                    public void onError(String errString) {
+
+                                    }
+                                });
+
+                            }else {
+
+                            }
+
+                        }
+                    })
+                    .error(new Transaction.Error() {
+                        @Override
+                        public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
+                            NLog.e(NLog.TAGDOWN, "来自MainActivity   SQLite  error"+error.getMessage());
+                        }
+                    })
+                    .execute();
+        }
+    }
+
     @Override
     protected void onDestroy() {
         UseData.setSTimeing(0);//本次播放停止直接 取消定时
@@ -277,6 +341,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         DownManger.close();
         UserInfoManger.getInstance().clear();
         unregisterReceiver(mPlaybackStatus);
+        RichText.recycle();
         super.onDestroy();
     }
 

@@ -29,8 +29,6 @@ public class BaseApplation extends Application {
     private static BaseApplation baseApp = null;
     private AppComponent mAppComponent;
 
-
-    //static 代码段可以防止内存泄露
     static {
 
     }
@@ -58,34 +56,12 @@ public class BaseApplation extends Application {
                             .connectTimeout(15_000) // set connection timeout.
                             .readTimeout(15_000) // set read timeout.
                     )).commit();
-            FileDownloader.setGlobalPost2UIInterval(100);//设置ui 刷新时间间隔 防止掉帧
-            FileDownloader.getImpl().setMaxNetworkThreadCount(2);//设置最大并行下载数量
+            FileDownloader.setGlobalPost2UIInterval(50);//设置ui 刷新时间间隔 防止掉帧
+            FileDownloader.getImpl().setMaxNetworkThreadCount(1);//设置最大并行下载数量
 
-            DownManger.getInstance();
             DownManger.bindService();
 
             FlowManager.init(new FlowConfig.Builder(this).build());
-
-
-            //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
-
-            QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
-
-                @Override
-                public void onViewInitFinished(boolean arg0) {
-                    // TODO Auto-generated method stub
-                    //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                    Log.d("app", " onViewInitFinished is " + arg0);
-                }
-
-                @Override
-                public void onCoreInitFinished() {
-                    // TODO Auto-generated method stub
-                }
-            };
-            //x5内核初始化接口
-            QbSdk.initX5Environment(getApplicationContext(),  cb);
-
 
 
             String type = UseData.getUseData().getType();
@@ -98,6 +74,24 @@ public class BaseApplation extends Application {
         }
 
 
+        //搜集本地tbs内核信息并上报服务器，服务器返回结果决定使用哪个内核。
+
+        QbSdk.PreInitCallback cb = new QbSdk.PreInitCallback() {
+
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                // TODO Auto-generated method stub
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                NLog.e(NLog.TAGOther, " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                // TODO Auto-generated method stub
+            }
+        };
+        //x5内核初始化接口
+        QbSdk.initX5Environment(getApplicationContext(),  cb);
     }
 
     public static BaseApplation getBaseApp() {

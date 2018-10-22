@@ -23,12 +23,15 @@ public class GlideImageLoader extends ImageLoader {
 
     }
 
-//    @Override
-//    public ImageView createImageView(Context context) {
-//
+    @Override
+    public ImageView createImageView(Context context) {
+
 //        SelectableRoundedImageView selectableRoundedImageView  = new SelectableRoundedImageView(context);
 //        selectableRoundedImageView.setCornerRadiiDP(4,4,4,4);
 //        //圆角
-//        return selectableRoundedImageView;
-//    }
+
+        ImageView imageView = new ImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        return imageView;
+    }
 }

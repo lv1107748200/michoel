@@ -60,6 +60,9 @@ public class SetActivity extends BaseIntensifyActivity {
 
                 break;
             case R.id.out_login_layout:
+                if(!isLogin()){
+                    return;
+                }
                 setDelAlertDialog();
                 break;
             case R.id.benbenhao_layout:

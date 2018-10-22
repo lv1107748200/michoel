@@ -50,6 +50,7 @@ import fm.qian.michael.utils.SPUtils;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,6 +96,12 @@ public class DownManger {
 
     public static SparseArray<BaseDownloadTask> getTaskSparseArray() {
         if(null == taskSparseArray){
+            taskSparseArray =  new SparseArray<BaseDownloadTask>();
+        }
+        return taskSparseArray;
+    }
+    public static SparseArray<BaseDownloadTask> getTaskSparseArray(boolean isTu) {
+        if(isTu){
             taskSparseArray =  new SparseArray<BaseDownloadTask>();
         }
         return taskSparseArray;
@@ -160,13 +167,12 @@ public class DownManger {
 
                 getInstance().setDownloadListener();
 
-//                SparseArray<BaseDownloadTask> taskSparseArray = new SparseArray<>();
                 if(null == getInstance().queueSet){
                     getInstance().queueSet = new FileDownloadQueueSet(getInstance().taskDownloadListener);
                     getInstance().queueSet.setAutoRetryTimes(1);
                 }
 
-                //queueSet.disableCallbackProgressTimes();
+
 
                 List<BaseDownloadTask> tasks = new ArrayList<>();
 
@@ -184,25 +190,206 @@ public class DownManger {
 
                     int id = FileDownloadUtils.generateId(url, path);
 
-                    BaseDownloadTask task = getInstance().getTaskSparseArray().get(id);
+                    TasksManagerModel tasksManagerModel =  SQLite.select()
+                            .from(TasksManagerModel.class)
+                            .where(TasksManagerModel_Table.id.eq(id))
+                            .querySingle();
 
-                    if(task != null){
-
-                       // tasks.add(task);
+                    if(tasksManagerModel != null){
 
                     }else {
+                        TasksManagerModel tasksManagerMode = new TasksManagerModel();
+                        tasksManagerMode.setId(id);
+                        tasksManagerMode.setName(name);
+                        tasksManagerMode.setUrl(url);
+                        tasksManagerMode.setUrlImg(ImgDatasUtils.getUrl());
+                        tasksManagerMode.setPath(path);
+                        tasksManagerMode.save();
+                    }
 
-                        if(isDownStatus(id,path) != FileDownloadStatus.completed){
-                            task = FileDownloader.getImpl().create(url)
-                                    .setPath(path);
-                            getInstance().getTaskSparseArray().put(task.getId(),task);
+                    BaseDownloadTask task = getInstance().getTaskSparseArray().get(id);
+
+                    if(task == null){
+                        task = FileDownloader.getImpl().create(url)
+                                .setPath(path);
+                        getInstance().getTaskSparseArray().put(task.getId(),task);
+
+                        if(isDownStatus(id,path) != FileDownloadStatus.completed) {
                             tasks.add(task);
                         }
 
+                    }else {
+//                        if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+//                            tasks.add(task);
+//                        }
                     }
 
                 }
                 NLog.e(NLog.TAGOther,tasks.size());
+
+                if(isC){//串行
+                    getInstance().queueSet.downloadSequentially(tasks);
+                }else {//并行
+                    getInstance().queueSet.downloadTogether(tasks);
+                }
+
+                getInstance().queueSet.start();
+
+                if(null != resultCallback){
+                    resultCallback.onCallbackSuccess("成功添加下载任务");
+                }
+
+            }
+        });
+    }
+
+    //任务管理
+//    public static void setIdAndPath(final List<ComAll> list,
+//                                    final FileDownloadListener fileDownloadListener,
+//                                    final ResultCallback resultCallback){
+//
+//        if(getInstance().workHandler == null){
+//            getInstance().init();
+//        }
+//
+//        if(CheckUtil.isEmpty(list))
+//            return ;
+//
+//        getInstance().workHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                getInstance().setDownloadListener();
+//                FileDownloader.getImpl().pause(getInstance().taskDownloadListener);
+//
+//                getInstance().getTaskSparseArray(true);
+//
+//                Collections.reverse(list);
+//
+//                for(ComAll comAll: list){
+//
+//                    String url = comAll.getUrl();
+//
+//                    if(CheckUtil.isEmpty(url))
+//                        return;
+//
+//                    String path = getInstance().createPath(url);
+//                    if(CheckUtil.isEmpty(path))
+//                        return;
+//
+//                    String name = FileDownloadUtils.generateFileName(url);//MD5编码
+//
+//                    int id = FileDownloadUtils.generateId(url, path);
+//
+//                    TasksManagerModel tasksManagerModel =  SQLite.select()
+//                            .from(TasksManagerModel.class)
+//                            .where(TasksManagerModel_Table.id.eq(id))
+//                            .querySingle();
+//
+//                    if(tasksManagerModel != null){
+//
+//                    }else {
+//                        TasksManagerModel tasksManagerMode = new TasksManagerModel();
+//                        tasksManagerMode.setId(id);
+//                        tasksManagerMode.setName(name);
+//                        tasksManagerMode.setUrl(url);
+//                        tasksManagerMode.setUrlImg(ImgDatasUtils.getUrl());
+//                        tasksManagerMode.setPath(path);
+//                        tasksManagerMode.save();
+//                    }
+//
+//
+//                }
+//
+//                List<TasksManagerModel> listTask =  SQLite.select()
+//                        .from(TasksManagerModel.class)
+//                        .orderBy(TasksManagerModel_Table.Idd,false)
+//                        .queryList();
+//
+//
+//                if(!CheckUtil.isEmpty(listTask)){
+//                    for(TasksManagerModel tasksManagerModel : listTask){
+//
+//                        String url = tasksManagerModel.getUrl();
+//                        String path = tasksManagerModel.getPath();
+//                        int id = tasksManagerModel.getId();
+//
+//                        if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+//                            BaseDownloadTask task = FileDownloader.getImpl().create(url)
+//                                    .setListener(getInstance().taskDownloadListener)
+//                                    .setPath(path);
+//
+//                            getInstance().getTaskSparseArray().put(task.getId(),task);
+//
+//                            task .asInQueueTask()
+//                                    .enqueue();
+//                        }
+//                    }
+//                }
+//
+//
+//                if(isC){//串行
+//                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, true);
+//                }else {//并行
+//                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, false);
+//                }
+//
+//
+//                if(null != resultCallback){
+//                    resultCallback.onCallbackSuccess("成功添加下载任务");
+//                }
+//
+//            }
+//        });
+//    }
+
+    public static boolean addListTask(final List<TasksManagerModel> list, final ResultCallback resultCallback){
+
+        if(getInstance().workHandler == null){
+            getInstance().init();
+        }
+        if(CheckUtil.isEmpty(list))
+            return false;
+        NLog.e(NLog.TAGDOWN,"服务是否连接--- " +FileDownloader.getImpl().isServiceConnected());
+
+        getInstance().workHandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                getInstance().setDownloadListener();
+                if(null == getInstance().queueSet){
+                    getInstance().queueSet = new FileDownloadQueueSet(getInstance().taskDownloadListener);
+                    getInstance().queueSet.setAutoRetryTimes(1);
+                }
+
+                List<BaseDownloadTask> tasks = new ArrayList<>();
+                for (int i = 0; i < list.size(); i++) {
+
+                    TasksManagerModel tasksManagerModel = list.get(i);
+
+                    String url = tasksManagerModel.getUrl();
+                    String path = tasksManagerModel.getPath();
+
+                    int id = tasksManagerModel.getId();
+                    // NLog.e(NLog.TAGDOWN," 数据库 下载id : " + id);
+
+                    BaseDownloadTask task = getInstance().getTaskSparseArray().get(id);
+
+
+                    if(task == null){
+                        task = FileDownloader.getImpl().create(url)
+                                .setPath(path);
+                        getInstance().getTaskSparseArray().put(task.getId(),task);
+
+                        if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+                            tasks.add(task);
+                        }
+
+                    }else {
+//                        if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+//                            tasks.add(task);
+//                        }
+                    }
+                }
 
                 if(isC){//串行
                     getInstance().queueSet.downloadSequentially(tasks);
@@ -217,6 +404,8 @@ public class DownManger {
 
             }
         });
+
+        return true;
     }
 
     public static void singTask(ComAll comAll, final ResultCallback resultCallback){
@@ -229,85 +418,62 @@ public class DownManger {
         task.start();
     }
 
-    public static boolean addListTask(final List<ComAll> list, final ResultCallback resultCallback){
-
-        if(getInstance().workHandler == null){
-            getInstance().init();
-        }
-        if(CheckUtil.isEmpty(list))
-            return false;
-
-        if(null == getInstance().downloadListener)
-            getInstance(). downloadListener = getInstance().createLis();
-
-        getInstance().workHandler.post(new Runnable() {
-            @Override
-            public void run() {
-
-                FileDownloadQueueSet queueSet = new FileDownloadQueueSet(instance.downloadListener);
-
-                //queueSet.disableCallbackProgressTimes();
-
-                queueSet.setAutoRetryTimes(1);
-
-                List<BaseDownloadTask> tasks = new ArrayList<>();
-
-                for (int i = 0; i < list.size(); i++) {
-
-                    String url = list.get(i).getUrl();
-                    String path = instance.createPath(url);
-                    String name = FileDownloadUtils.generateFileName(url);//MD5编码
-
-                    int id = FileDownloadUtils.generateId(url, path);
-
-                    TasksManagerModel tasksManagerModel =  SQLite.select()
-                            .from(TasksManagerModel.class)
-                            .where(TasksManagerModel_Table.id.eq(id))
-                            .querySingle();
-
-                    if(tasksManagerModel != null){
-                        int status = FileDownloader.getImpl().getStatus(id, path);
-                        if(status != FileDownloadStatus.completed){
-                            tasks.add(FileDownloader.getImpl().create(url)
-                                    .setPath(path));
-                        }
-                    }else {
-                        TasksManagerModel tasksManagerMode = new TasksManagerModel();
-                        tasksManagerMode.setId(id);
-                        tasksManagerMode.setName(name);
-                        tasksManagerMode.setUrl(url);
-                        tasksManagerMode.setUrlImg(ImgDatasUtils.getUrl());
-                        tasksManagerMode.setPath(path);
-                        tasksManagerMode.save();
-
-                        tasks.add(FileDownloader.getImpl().create(url)
-                                .setPath(path));
-                    }
-
-                }
-                if(CheckUtil.isEmpty(tasks)) {
-
-                    if(null != resultCallback){
-                        resultCallback.onCallbackSuccess("完成");
-                    }
-                    return;
-                }
-
-                if(isC){//串行
-                    queueSet.downloadSequentially(tasks);
-                }else {//并行
-                    queueSet.downloadTogether(tasks);
-                }
-                queueSet.start();
-                if(null != resultCallback){
-                    resultCallback.onCallbackSuccess("添加成功开始下载");
-                }
-
-            }
-        });
-
-        return true;
-    }
+//    public static boolean addListTask(final List<TasksManagerModel> list, final ResultCallback resultCallback){
+//
+//        if(getInstance().workHandler == null){
+//            getInstance().init();
+//        }
+//        if(CheckUtil.isEmpty(list))
+//            return false;
+//        NLog.e(NLog.TAGDOWN,"服务是否连接--- " +FileDownloader.getImpl().isServiceConnected());
+//
+//        getInstance().workHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                getInstance().setDownloadListener();
+//                FileDownloader.getImpl().pause(getInstance().taskDownloadListener);
+//
+//
+//                for (int i = 0; i < list.size(); i++) {
+//
+//                    TasksManagerModel tasksManagerModel = list.get(i);
+//
+//                    String url = tasksManagerModel.getUrl();
+//                    String path = tasksManagerModel.getPath();
+//
+//                    int id = tasksManagerModel.getId();
+//                   // NLog.e(NLog.TAGDOWN," 数据库 下载id : " + id);
+//
+//                    if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+//                        BaseDownloadTask task = FileDownloader.getImpl().create(url)
+//                                .setListener(getInstance().taskDownloadListener)
+//                                .setPath(path);
+//
+//                        getInstance().getTaskSparseArray().put(task.getId(),task);
+//
+//                        task .asInQueueTask()
+//                                .enqueue();
+//                    }else {
+//                       // tasksManagerModel.delete();
+//                    }
+//                }
+//
+//                if(isC){//串行
+//                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, true);
+//                }else {//并行
+//                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, false);
+//                }
+//
+//                if(null != resultCallback){
+//                    resultCallback.onCallbackSuccess("成功添加下载任务");
+//                }
+//
+//            }
+//        });
+//
+//        return true;
+//    }
 
     //爆粗播放列表
     public static void saveListComAll(final List<ComAll> comAlls,final ResultCallback resultCallback){
@@ -349,6 +515,15 @@ public class DownManger {
                     String path = DownManger.createPath(comAll.getUrl());
                     int id = FileDownloadUtils.generateId(comAll.getUrl(), path);
                     int statue = DownManger.isDownStatus(id,path);
+
+                    TasksManagerModel tasksManagerModel =  SQLite.select()
+                            .from(TasksManagerModel.class)
+                            .where(TasksManagerModel_Table.id.eq(id))
+                            .querySingle();
+
+                    if(tasksManagerModel !=null){
+                        tasksManagerModel.delete();
+                    }
 
                     if(statue == FileDownloadStatus.completed){
                         new File(path).delete();
@@ -497,22 +672,33 @@ public class DownManger {
 
     public static void updateViewHolder(final int id, final BaseDownViewHolder holder) {
 
-            if(getInstance().getTaskSparseArray() == null)
+            if(getInstance().getTaskSparseArray() == null || getInstance().getTaskSparseArray().size() == 0)
                 return;
+
             final BaseDownloadTask task = getInstance().getTaskSparseArray().get(id);
             if (task == null) {
                 return;
             }
 
             task.setTag(holder);
+    }
+    public static void updateViewHolder(final int id) {
 
+        if(getInstance().getTaskSparseArray() == null || getInstance().getTaskSparseArray().size() == 0)
+            return;
+            final BaseDownloadTask task = getInstance().getTaskSparseArray().get(id);
+            if (task == null) {
+                return;
+            }
+
+            task.setTag(null);
 
     }
     public static void removeTaskForViewHolder(final int id) {
 
             if(getInstance().getTaskSparseArray() == null)
                 return;
-        getInstance().getTaskSparseArray().remove(id);
+            getInstance().getTaskSparseArray().remove(id);
 
         NLog.e(NLog.TAGDOWN,"从任务列表中删除 id --- "+ id);
         NLog.e(NLog.TAGDOWN,"删除后列表大小 size --- "+ getInstance().getTaskSparseArray().size());
@@ -575,20 +761,21 @@ public class DownManger {
                 protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
                     super.progress(task, soFarBytes, totalBytes);
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
-                    if (tag == null) {
-                        return;
+                    if (tag != null) {
+                        tag.getView().setVisibility(View.VISIBLE);
+                        tag.getView().setActivated(false);
+                        tag.getTextView().setText("下载中");
                     }
-                    tag.getView().setVisibility(View.VISIBLE);
-                    tag.getView().setActivated(false);
-                    tag.getTextView().setText("下载中");
+
                 }
 
                 @Override
                 protected void error(BaseDownloadTask task, Throwable e) {
                     super.error(task, e);
+
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
-                    if (tag == null) {
-                        return;
+                    if (tag != null) {
+
                     }
                     removeTaskForViewHolder(task.getId());
                 }
@@ -606,15 +793,14 @@ public class DownManger {
                 @Override
                 protected void completed(BaseDownloadTask task) {
                     super.completed(task);
+
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
-                    if (tag == null) {
-                        return;
+                    if (tag != null) {
+                        tag.getView().setVisibility(View.VISIBLE);
+                        tag.getView().setActivated(true);
+                        tag.getTextView().setText("已下载");
                     }
                     removeTaskForViewHolder(task.getId());
-
-                    tag.getView().setVisibility(View.VISIBLE);
-                    tag.getView().setActivated(true);
-                    tag.getTextView().setText("已下载");
 
                 }
             };
@@ -736,7 +922,9 @@ public class DownManger {
 
        // NLog.e(NLog.TAGOther,path);
         //"/storage/emulated/0/Android/data/fm.qian.michael/files/song"
-
+        if (TextUtils.isEmpty(path)) {
+            return null;
+        }
         return FileDownloadUtils.generateFilePath(path,FileDownloadUtils.generateFileName(url));
     }
 

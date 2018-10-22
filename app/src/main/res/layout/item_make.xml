@@ -31,7 +31,7 @@
             style="@style/m_style_layout_four"
             >
             <ImageView
-                android:background="@drawable/selector_checked_eight"
+                android:background="@drawable/press_down"
                 style="@style/m_image_style_two" />
 
             <TextView

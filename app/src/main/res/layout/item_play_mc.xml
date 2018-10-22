@@ -80,12 +80,12 @@
                 android:id="@+id/down_image"
                 android:layout_centerInParent="true"
                 style="@style/m_image_style_one"
-                android:background="@drawable/down"
+                android:background="@drawable/press_down"
                 />
             <ImageView
                 android:id="@+id/image_share"
                 android:layout_alignParentRight="true"
-                android:background="@drawable/share"
+                android:background="@drawable/myfenxiang"
                 style="@style/m_image_style_one" />
         </RelativeLayout>
 

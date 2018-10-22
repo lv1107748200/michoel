@@ -23,8 +23,16 @@ import retrofit2.Retrofit;
  */
 @Module
 public class HttpModule {
-    protected static final String APP_CODE = "AppCode";
-    protected static final String APP_CODE_VALUE = "ANDROID";
+    public static final String APP_CODE = "AppCode";
+    public static final String APP_CODE_VALUE = "android";
+    public static final String DEVID = "devid";
+    public static final String OS = "os";
+    public static final String VER = "ver";
+    public static final String P = "p";
+    public static final String Q = "q";
+    public static final String ID = "id";
+    public static final String USERNAME = "username";
+    public static final String SESSIONKEY = "sessionkey";
     @Provides
     @Singleton
     public ExampleService exampleService(){

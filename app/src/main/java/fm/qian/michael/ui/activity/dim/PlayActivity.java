@@ -22,6 +22,7 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.zzhoujay.richtext.RichText;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseActivity;
@@ -264,7 +265,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                         NToast.shortToastBaseApp("付费音频不能下载");
                         return;
                     }
-                    isDown = true;
+                    if(DownManger.isDownloaded(comAll.getUrl())){
+                        NToast.shortToastBaseApp("已下载");
+                    }
+                        isDown = true;
                     if(isWifi(this)){
                         addPlayerList();//在wifi
                     }else {
@@ -287,7 +291,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     popShareWindow = new PopShareWindow(this,new CustomPopuWindConfig.Builder(this)
                             .setOutSideTouchable(true)
                             .setFocusable(true)
-                            .setTouMing(true)
+                            .setTouMing(false)
                             .setAnimation(R.style.popup_hint_anim)
                             .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)))
                             .build());
@@ -537,6 +541,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             set = 0;
         }
 
+        if( set == 0){//循环播放
+            layoutPlayType.setBackgroundResource(R.drawable.xunhuan);
+        }else if(set == 1){//单曲
+            layoutPlayType.setBackgroundResource(R.drawable.xunhuanone);
+        }else if(set == 2){//随机
+            layoutPlayType.setBackgroundResource(R.drawable.random);
+        }
         MusicPlayerManger.playPattern(set);//设置播放模式
         UseData.setWhat(
                 null,
@@ -550,13 +561,6 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                 -1
         );
 
-        if( set == 0){//循环播放
-            layoutPlayType.setBackgroundResource(R.drawable.xunhuan);
-        }else if(set == 1){//随机
-            layoutPlayType.setBackgroundResource(R.drawable.random);
-        }else if(set == 2){//单曲
-            layoutPlayType.setBackgroundResource(R.drawable.xunhuanone);
-        }
     }
 
     private void setFromUseData(UseData useData){
@@ -570,10 +574,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
         if( pattern == 0){//循环播放
             layoutPlayType.setBackgroundResource(R.drawable.xunhuan);
-        }else if(pattern == 1){//随机
-            layoutPlayType.setBackgroundResource(R.drawable.random);
-        }else if(pattern == 2){//单曲
+        }else if(pattern == 1){//单曲
             layoutPlayType.setBackgroundResource(R.drawable.xunhuanone);
+        }else if(pattern == 2){//随机
+            layoutPlayType.setBackgroundResource(R.drawable.random);
         }
     }
 
@@ -608,6 +612,8 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     if(isLogin()){
                         MusicPlayerManger.seek(seekBar.getProgress());
                     }
+                }else {
+                    MusicPlayerManger.seek(seekBar.getProgress());
                 }
 
             }
@@ -648,7 +654,11 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             kThree.setVisibility(View.GONE);
         }
         itemTimeTv.setText(comAll.getMinute()+":"+comAll.getSecond());
-        introduceTv.setText(comAll.getBrief());
+        //introduceTv.setText(comAll.getBrief());
+
+        if(!CheckUtil.isEmpty(comAll.getBrief())){
+            RichText.from(comAll.getBrief()).bind(this).into(introduceTv);
+        }
 
         if(DownManger.isDownloaded(comAll.getUrl())){
             kFour.setVisibility(View.VISIBLE);
@@ -664,9 +674,9 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
     private void down(){
 
-        if(DownManger.isDownloaded(comAll.getUrl())){
-            NToast.shortToastBaseApp("已下载");
-        }else {
+        if(null == comAll)
+            return;
+
             List<ComAll> comAlls = new ArrayList<>();
             comAlls.add(comAll);
 
@@ -688,7 +698,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     }
                 });
             }
-        }
+
     }
 
     //非wifi网络下的提醒
@@ -888,6 +898,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
     @Override
     protected void onDestroy() {
+        RichText.clear(this);
         unregisterReceiver(mPlaybackStatus);
         dispose();
         super.onDestroy();

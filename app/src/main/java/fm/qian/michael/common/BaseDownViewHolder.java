@@ -17,7 +17,23 @@ public class BaseDownViewHolder {
         this.textView = textView;
     }
 
+    public BaseDownViewHolder(int id, int position, View view, TextView textView) {
+        this.id = id;
+        this.position = position;
+        this.view = view;
+        this.textView = textView;
+    }
+
     private int id;
+    private int position;
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
 
     private View view;
 

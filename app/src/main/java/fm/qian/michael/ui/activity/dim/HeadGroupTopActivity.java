@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,12 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
         topic();
     }
 
+    @Override
+    protected void onDestroy() {
+        RichText.clear(this);
+        super.onDestroy();
+    }
+
     private void  topic(){
         baseService.topic(id,pageNo+"",new HttpCallback<ComAll, BaseResponse<ComAll, List<Base>>>() {
             @Override
@@ -146,7 +153,10 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
 
             GlideUtil.setGlideImageMake(HeadGroupTopActivity.this,album.getCover(),
                     itemImage);
-            itemTv.setText(album.getBrief());
+//            itemTv.setText(album.getBrief());
+            if(!CheckUtil.isEmpty(album.getBrief())){
+                RichText.from(album.getBrief()).bind(this).into(itemTv);
+            }
             setTitleTv(album.getTitle());
 
             RecyclerView.LayoutManager layoutManager = null;

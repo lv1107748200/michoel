@@ -138,7 +138,7 @@ dependencies {
 
     implementation 'com.king.zxing:zxing-lite:1.0.2'
 
-  //  implementation 'com.zzhoujay.richtext:richtext:3.0.7'
+    implementation 'com.zzhoujay.richtext:richtext:3.0.7'
 
     implementation 'org.jsoup:jsoup:1.9.2'
 }

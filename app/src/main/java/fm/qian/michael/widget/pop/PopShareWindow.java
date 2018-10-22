@@ -3,6 +3,7 @@ package fm.qian.michael.widget.pop;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -100,28 +101,30 @@ public class PopShareWindow extends BasePopupWindow {
 
     private void share(){
 
-        RequestOptions options = new RequestOptions()
-                .error(R.mipmap.logo)
-                .priority(Priority.LOW);
-        Glide.with(context)
-                .asBitmap()
-                .apply(options)
-                .load(shareData.getCover())
-                .into(new SimpleTarget<Bitmap>(){
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-
-                        setData(resource);
-
-                    }
-
-                    @Override
-                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-
-                        setData(((BitmapDrawable) errorDrawable).getBitmap());
-
-                    }
-                });
+//        RequestOptions options = new RequestOptions()
+//                .error(R.mipmap.logo)
+//                .priority(Priority.LOW);
+//        Glide.with(context)
+//                .asBitmap()
+//                .apply(options)
+//                .load(shareData.getCover())
+//                .into(new SimpleTarget<Bitmap>(){
+//                    @Override
+//                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//
+//                        setData(resource);
+//
+//                    }
+//
+//                    @Override
+//                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
+//
+//                        setData(((BitmapDrawable) errorDrawable).getBitmap());
+//
+//                    }
+//                });
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.logo);
+        setData(bitmap);
 
     }
 

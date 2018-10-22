@@ -4,6 +4,8 @@ package fm.qian.michael.net.base;
 
 
 
+import android.os.Build;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.json.JSONObject;
@@ -35,6 +37,7 @@ import fm.qian.michael.net.http.HttpUtils;
 import fm.qian.michael.net.subscriber.HttpSubscriber;
 import fm.qian.michael.net.subscriber.HttpUserSubscriber;
 import fm.qian.michael.net.subscriber.HttpWXUserSubscriber;
+import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.widget.single.UserInfoManger;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
@@ -43,6 +46,8 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
+
+import static fm.qian.michael.net.http.HttpModule.APP_CODE_VALUE;
 
 /**
  * Created by 吕 on 2017/10/27.
@@ -66,7 +71,7 @@ public class BaseService {
     ,ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.ver();
+        Observable observable =  appService.ver(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<Ver>>(httpCallback)
@@ -81,7 +86,7 @@ public class BaseService {
             ,ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.index();
+        Observable observable =  appService.index(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<Index>>(httpCallback)
@@ -96,7 +101,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.ranklist(tid,day,p);
+        Observable observable =  appService.ranklist(tid,day,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<ComAll>>>(httpCallback)
@@ -111,7 +116,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.recommend(p);
+        Observable observable =  appService.recommend(p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<Base>>>(httpCallback)
@@ -127,7 +132,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.topic(id,p);
+        Observable observable =  appService.topic(id,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseResponse<ComAll,List<Base>>>(httpCallback)
@@ -145,7 +150,8 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.album(id,p, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey());
+        Observable observable =  appService.album(id,p, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey(),
+                CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseResponse<Album,List<ComAll>>>(httpCallback)
@@ -162,7 +168,8 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.audio(id, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey());
+        Observable observable =  appService.audio(id, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey(),
+                CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<ComAll>>(httpCallback)
@@ -176,7 +183,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.pta();
+        Observable observable =  appService.pta(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse>(httpCallback)
@@ -192,7 +199,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.video(id);
+        Observable observable =  appService.video(id,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<ComAll>>(httpCallback)
@@ -207,7 +214,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.article(id);
+        Observable observable =  appService.article(id,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<ComAll>>(httpCallback)
@@ -223,7 +230,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.articlelist(q,p);
+        Observable observable =  appService.articlelist(q,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<Base>>>(httpCallback)
@@ -238,7 +245,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.search_hotwords(tid);
+        Observable observable =  appService.search_hotwords(tid,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<Base>>>(httpCallback)
@@ -252,7 +259,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.category();
+        Observable observable =  appService.category(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<Category>>>(httpCallback)
@@ -269,7 +276,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.search(t,q,p);
+        Observable observable =  appService.search(t,q,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<List<ComAll>>>(httpCallback)
@@ -284,7 +291,7 @@ public class BaseService {
             , ObservableTransformer transformer
     ) {
 
-        Observable observable =  appService.isbn(isbn);
+        Observable observable =  appService.isbn(isbn,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpSubscriber<BaseDataResponse<ComAll>>(httpCallback)
@@ -306,7 +313,7 @@ public class BaseService {
       String body = HttpUtils.getStringValue(data);
 
       Map mapType = HttpUtils.jsonToBean(body,Map.class);
-      Observable observable =  userService.user_login(mapType);
+      Observable observable =  userService.user_login(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
       HttpUtils.toSubscribe(
               observable,
@@ -326,7 +333,7 @@ public class BaseService {
           String body = HttpUtils.getStringValue(data);
 
           Map mapType = HttpUtils.jsonToBean(body,Map.class);
-          Observable observable =  userService.user_reg(mapType);
+          Observable observable =  userService.user_reg(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
           HttpUtils.toSubscribe(
                   observable,
@@ -344,7 +351,7 @@ public class BaseService {
             ,HttpCallback<YZMOrSID, BaseDataResponse<YZMOrSID>> httpCallback
             , ObservableTransformer transformer
     ) {
-        Observable observable =  userService.getyzm(sid,random);
+        Observable observable =  userService.getyzm(sid,random,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpUserSubscriber<BaseDataResponse<YZMOrSID>>(httpCallback)
@@ -363,7 +370,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_sms(mapType);
+        Observable observable =  userService.user_sms(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -382,7 +389,7 @@ public class BaseService {
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
-        Observable observable =  userService.user_bind(mapType);
+        Observable observable =  userService.user_bind(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -400,7 +407,7 @@ public class BaseService {
             HttpCallback<Object, BaseDataResponse> httpCallback
             , ObservableTransformer transformer
     ) {
-        Observable observable =  userService.user_tbxiaoe(sessionkey,username);
+        Observable observable =  userService.user_tbxiaoe(sessionkey,username,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
                 new HttpUserSubscriber<BaseDataResponse>(httpCallback)
@@ -418,7 +425,7 @@ public class BaseService {
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
-        Observable observable =  userService.user_info(mapType);
+        Observable observable =  userService.user_info(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -463,7 +470,7 @@ public class BaseService {
             requestBodyMap.put(key,description);
         }
 
-        Observable observable =  userService.user_logo(body,requestBodyMap);
+        Observable observable =  userService.user_logo(body,requestBodyMap,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -483,7 +490,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_album(mapType);
+        Observable observable =  userService.user_album(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -504,7 +511,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_favorite(mapType);
+        Observable observable =  userService.user_favorite(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -525,7 +532,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_favorite_list(mapType);
+        Observable observable =  userService.user_favorite_list(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -545,7 +552,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_broadcast(mapType);
+        Observable observable =  userService.user_broadcast(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -566,7 +573,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_broadcastall(mapType);
+        Observable observable =  userService.user_broadcastall(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -587,7 +594,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_broadcastlist(mapType);
+        Observable observable =  userService.user_broadcastlist(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,
@@ -608,7 +615,7 @@ public class BaseService {
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
 
-        Observable observable =  userService.user_broadcastlistAll(mapType);
+        Observable observable =  userService.user_broadcastlistAll(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
 
         HttpUtils.toSubscribe(
                 observable,

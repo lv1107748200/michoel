@@ -14,6 +14,7 @@
 
 package fm.qian.michael.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.telephony.TelephonyManager;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ import com.hr.bclibrary.utils.CheckUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import org.greenrobot.eventbus.EventBus;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -49,6 +52,7 @@ import java.util.UUID;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.entry.response.Base;
 import fm.qian.michael.net.entry.response.ComAll;
@@ -87,6 +91,24 @@ public class CommonUtils {
 
     //获得独一无二的Psuedo ID
     public static String getUniquePsuedoID() {
+
+        try {
+            //实例化TelephonyManager对象
+            TelephonyManager telephonyManager = (TelephonyManager) BaseApplation.getBaseApp().getSystemService(Context.TELEPHONY_SERVICE);
+            //获取IMEI号
+            @SuppressLint("MissingPermission")
+            String imei = telephonyManager.getDeviceId();
+            //在次做个验证，也不是什么时候都能获取到的啊
+            if (imei == null) {
+                imei = "";
+            }
+            return imei;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
         String serial = null;
 
         String m_szDevIDShort = "35" +
@@ -362,8 +384,9 @@ public class CommonUtils {
                 intent.putExtra(HeadGroupTopActivity.HEADGROUPOTHER,base.getZid());
                 context.startActivity(intent);
                 break;
-                default:
-                return false;
+            default:
+                EventBus.getDefault().post(new Event.MainActivityEvent(2));
+            break;
         }
 
 

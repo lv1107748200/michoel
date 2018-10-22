@@ -25,6 +25,12 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
+import static fm.qian.michael.net.http.HttpModule.DEVID;
+import static fm.qian.michael.net.http.HttpModule.OS;
+import static fm.qian.michael.net.http.HttpModule.SESSIONKEY;
+import static fm.qian.michael.net.http.HttpModule.USERNAME;
+import static fm.qian.michael.net.http.HttpModule.VER;
+
 /*
  * lv   2018/9/27 用户相关
  */
@@ -33,72 +39,72 @@ public interface UserService {
     //登陆
     @FormUrlEncoded
     @POST("app/user_login.ashx")
-    Observable<Response<BaseDataResponse<UserInfo>>> user_login(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<UserInfo>>> user_login(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //注册
     @FormUrlEncoded
     @POST("app/user_reg.ashx")
-    Observable<Response<BaseDataResponse<UserInfo>>> user_reg(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<UserInfo>>> user_reg(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //获取验证码时  首先要获取 sid
     @GET("getyzm.ashx")
-    Observable<Response<BaseDataResponse<YZMOrSID>>> getyzm(@Query("sid") String sid,@Query("random") String random);
+    Observable<Response<BaseDataResponse<YZMOrSID>>> getyzm(@Query("sid") String sid,@Query("random") String random,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
     //短信验证码
     @FormUrlEncoded
     @POST("app/user_sms.ashx")
-    Observable<Response<BaseDataResponse>> user_sms(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse>> user_sms(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //用户绑定微信
     @FormUrlEncoded
     @POST("app/user_bind.ashx")
-    Observable<Response<BaseDataResponse<UserInfo>>> user_bind(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<UserInfo>>> user_bind(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //同步购买记录
     @GET("app/user_tbxiaoe.ashx")
-    Observable<Response<BaseDataResponse>> user_tbxiaoe(@Query("sessionkey") String sessionkey,
-                                                        @Query("username") String username);
+    Observable<Response<BaseDataResponse>> user_tbxiaoe(@Query(SESSIONKEY) String sessionkey,
+                                                        @Query(USERNAME) String username,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //我的信息 宝宝信息
     @FormUrlEncoded
     @POST("app/user_info.ashx")
-    Observable<Response<BaseDataResponse<UserInfo>>> user_info(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<UserInfo>>> user_info(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //上传头像
     @Multipart
     @POST("app/user_logo.ashx")
-    Observable<Response<BaseDataResponse<Object>>> user_logo(@Part MultipartBody.Part file,@PartMap Map<String, RequestBody> params);
+    Observable<Response<BaseDataResponse<Object>>> user_logo(@Part MultipartBody.Part file,@PartMap Map<String, RequestBody> params,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //收藏的专辑
     @FormUrlEncoded
     @POST("app/user_favorite.ashx")
-    Observable<Response<BaseDataResponse>> user_favorite(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse>> user_favorite(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
     //收藏的专辑 list
     @FormUrlEncoded
     @POST("app/user_favorite.ashx")
-    Observable<Response<BaseDataResponse<List<ComAll>>>> user_favorite_list(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<List<ComAll>>>> user_favorite_list(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //已购买的专辑
     @FormUrlEncoded
     @POST("app/user_album.ashx")
-    Observable<Response<BaseDataResponse<List<ComAll>>>> user_album(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<List<ComAll>>>> user_album(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //我的播单
     @FormUrlEncoded
     @POST("app/user_broadcast.ashx")
-    Observable<Response<BaseDataResponse>> user_broadcast(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse>> user_broadcast(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
     //我的播单 分页
     @FormUrlEncoded
     @POST("app/user_broadcast.ashx")
-    Observable<Response<BaseDataResponse<List<ComAll>>>> user_broadcastall(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<List<ComAll>>>> user_broadcastall(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
 
     //播单详情列表
     @FormUrlEncoded
     @POST("app/user_broadcastlist.ashx")
-    Observable<Response<BaseDataResponse<ComAll>>> user_broadcastlist(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<ComAll>>> user_broadcastlist(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 
     //播单详情列表 list
     @FormUrlEncoded
     @POST("app/user_broadcastlist.ashx")
-    Observable<Response<BaseDataResponse<List<ComAll>>>> user_broadcastlistAll(@FieldMap Map<String,String> map);
+    Observable<Response<BaseDataResponse<List<ComAll>>>> user_broadcastlistAll(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
 }

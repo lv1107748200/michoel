@@ -22,6 +22,7 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.os.Message;
+import android.os.PowerManager;
 import android.os.RemoteException;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -133,12 +134,13 @@ public class MqService extends Service {
     public static final int REQICON = 5;//请求icon
     public static final int REQNFTION = 4;//
     public static final int REQGETSAVE = 3;// 获取保存的数据
+    //public static final int REQDATATWO = 2;// 请求
 
     private ComAll comAll; //代表当前正在播放的  id;
 
     private static final int CIRCULATION = 0;//循环
-    private static final int RANDOM = 1;//随机
-    private static final int SINGLE = 2;//单曲
+    private static final int RANDOM = 1;//单曲
+    private static final int SINGLE = 2;//随机
     private  int whatPattern = CIRCULATION;
 
     private List<ComAll> comAllList;
@@ -171,6 +173,7 @@ public class MqService extends Service {
 //    private boolean mShutdownScheduled = false;
     private AlarmManager mAlarmManager;
     private PendingIntent pendingIntent;
+    private PowerManager.WakeLock mWakeLock;
 
     private int mServiceStartId = -1;
 
@@ -182,6 +185,8 @@ public class MqService extends Service {
     private boolean isPlayNow = false;//完成当前播放任务后停止
 
     private boolean isLogin;//是否登陆
+
+    //private boolean isNUll;
 
 
     //private boolean isTermination = false;//强行终止异步操作
@@ -265,7 +270,9 @@ public class MqService extends Service {
 //        shutdownIntent.setAction(SHUTDOWN);
 //        mAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //        mShutdownIntent = PendingIntent.getService(this, 0, shutdownIntent, 0);
-
+        final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
+        mWakeLock.setReferenceCounted(false);
     }
 
     @Override
@@ -293,6 +300,10 @@ public class MqService extends Service {
                 AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION);
         audioEffectsIntent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, getPackageName());
         sendBroadcast(audioEffectsIntent);
+        if(mWakeLock != null){
+            mWakeLock.release();
+        }
+
         super.onDestroy();
 
 //        mAlarmManager.cancel(mShutdownIntent);
@@ -324,13 +335,20 @@ public class MqService extends Service {
             if(isFirstLoad){//处理点击已经正在播放的音频
                 if(null != comAll && !CheckUtil.isEmpty(comAllList)){
 
+                    ComAll comAll1 = comAllList.get(playNumber);
                     NLog.e(NLog.PLAYER,"开始 play " + " isFirstLoad :" + isFirstLoad
                             + "  comAll.getId() : " + comAll.getId()
-                            + " comAllList.get(playNumber).getId() : " + comAllList.get(playNumber).getId());
+                            + " comAllList.get(playNumber).getId() : " + comAll1.getId());
 
-                    if(comAll.getId().equals(comAllList.get(playNumber).getId())){
+
+                    if(comAll.getId().equals(comAll1.getId())){
                         NLog.e(NLog.PLAYER, "播放器处于当前歌曲位置");
                         isFirstLoad = false;
+                        if(CheckUtil.isEmpty(comAll1.getTitle())){
+                         //   isNUll = true;//仅仅获取地址不播放
+                          //  reqData(comAll.getId());//播放时检测到播放地址为空
+                            comAllList.set(playNumber,comAll);
+                        }
                         return;
                     }
                 }
@@ -593,11 +611,20 @@ public class MqService extends Service {
      */
     public void timing(int time){
         if(time == -1){
+            if(null != mWakeLock){
+                mWakeLock.release();
+            }
             if(null != mAlarmManager)
             mAlarmManager.cancel(pendingIntent);
         }else if( time == -2){//播完当前
+            if(null != mWakeLock){
+                mWakeLock.release();
+            }
             isPlayNow = true;
         } else {
+            if(null != mWakeLock){
+                mWakeLock.acquire(30000);
+            }
             if(null == mAlarmManager){
                 pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(PAUSE_ACTION),
                         PendingIntent.FLAG_UPDATE_CURRENT);
@@ -702,21 +729,20 @@ public class MqService extends Service {
                         playNumber--;
                     }
                     break;
-                case RANDOM://随机
-                    Random random = new Random();
-                    playNumber =  random.nextInt(comAllList.size());
-                    break;
-                case SINGLE://单曲
-
+                case RANDOM://单曲
                     if(isNextPalyer){
                         isNextPalyer = false;
                     }else {
                         if(isNext){
-                              playNumber++;
+                            playNumber++;
                         }else {
-                              playNumber--;
+                            playNumber--;
                         }
                     }
+                    break;
+                case SINGLE://随机
+                    Random random = new Random();
+                    playNumber =  random.nextInt(comAllList.size());
 
                     break;
             }
@@ -734,6 +760,7 @@ public class MqService extends Service {
 
         path = comAll.getUrl();//播放地址
 
+     //   isNUll = false;//播放
         reqData(comAll.getId());//播放时检测到播放地址为空
 
         return path;
@@ -785,13 +812,16 @@ public class MqService extends Service {
             UseData.setSTimeing(0);
             pushAction(PAUSE_ACTION_APP);//发送定时器暂停广播
             pause();
+            if(null != mWakeLock){
+                mWakeLock.release();
+            }
         } else if (CMDPLAY.equals(command)) {
             start();//多媒体控制
         } else if (CMDSTOP.equals(command) || STOP_ACTION.equals(action)) {
             closeNotification();//广播结束
         }else if (Intent.ACTION_SCREEN_OFF.equals(action) ){
 
-            if(!mIsLocked && !isFirstLoad){
+            if(!mIsLocked && isPlaying()){
                 mIsLocked = true;
                 Intent lockscreen = new Intent(this, LockActivity.class);
                 lockscreen.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -1058,10 +1088,10 @@ public class MqService extends Service {
                         ComAll comAll = baseDataResponse.getData();
 
                         if(!CheckUtil.isEmpty(comAll.getUrl())){
-                            Message message = new Message();
-                            message.what = REQDATA;
-                            message.obj = baseDataResponse;
-                            mainPlayerHandler.sendMessage(message);
+                                Message message = new Message();
+                                message.what = REQDATA;
+                                message.obj = baseDataResponse;
+                                mainPlayerHandler.sendMessage(message);
                         }
                     }
                 }else {
@@ -1127,7 +1157,10 @@ public class MqService extends Service {
         setReqPta();//更换地址时
 
       //  mPlayerHandler.post(this.saveData);
-        playQQQ(comAll.getUrl());//获取地址后直接播放
+       // if(!isNUll){
+            playQQQ(comAll.getUrl());//获取地址后直接播放
+      //  }
+
     }
 
     private final AudioManager.OnAudioFocusChangeListener mAudioFocusListener = new AudioManager.OnAudioFocusChangeListener() {

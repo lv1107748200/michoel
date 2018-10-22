@@ -4,6 +4,7 @@ package fm.qian.michael.ui.fragment;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -217,8 +218,22 @@ public class SearchFragment extends BaseRecycleViewFragment {
 
                             helper.setGone(R.id.sel_image,true);
 
-                                String path = DownManger.createPath(rankMore.getUrl());
-                                int id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                            String path;
+                            int id;
+
+                            if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                                path = DownManger.createPath(rankMore.getUrl());
+                                id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                                rankMore.setDownPath(path);
+                                rankMore.setIsDown(id);
+
+                            }else {
+
+                                path = rankMore.getDownPath();
+                                id = rankMore.getIsDown();
+
+                                //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+                            }
 
                             DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getView(R.id.k_four),
                                     (TextView) helper.getView(R.id.item_down_tv)));
@@ -235,7 +250,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
 
                                     helper.setGone(R.id.k_four,true);
                                     helper.getView(R.id.k_four).setActivated(false);
-                                    helper.setText(R.id.item_down_tv,"下载中...");
+                                    helper.setText(R.id.item_down_tv,"下载中");
 
                                 }else {
 
@@ -271,6 +286,30 @@ public class SearchFragment extends BaseRecycleViewFragment {
                             GlideUtil.setGlideImageMake(mFontext,rankMore.getCover_small(),
                                     (ImageView) helper.getView(R.id.head_portrait));
 
+                        }
+                    }
+                    @Override
+                    public void onViewRecycled(@NonNull BaseViewHolder holder) {
+                        super.onViewRecycled(holder);
+                        // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
+
+                        if(null != holder){
+                            Object item = quickAdapter.getItem(holder.getLayoutPosition());
+                            if(item instanceof ComAll){
+                                ComAll rankMore = (ComAll) item;
+                                String path ;
+                                int id ;
+                                //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+
+                                if(CheckUtil.isEmpty(rankMore.getDownPath())){
+                                    path = DownManger.createPath(rankMore.getUrl());
+                                    id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+                                }else {
+                                    id =  rankMore.getIsDown();
+                                }
+
+                                DownManger.updateViewHolder(id);
+                            }
                         }
                     }
                 };

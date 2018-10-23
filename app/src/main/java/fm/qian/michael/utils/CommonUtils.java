@@ -149,13 +149,22 @@ public class CommonUtils {
         PackageManager manager = ctx.getPackageManager();
         try {
             PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
-            String appVersionName = info.versionName; // 版本名
             currentVersionCode = info.versionCode; // 版本号
-            System.out.println(currentVersionCode + " " + appVersionName);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return currentVersionCode;
+    }
+    public static String getAPPVersionName(Context ctx) {
+        String currentVersionName = "";
+        PackageManager manager = ctx.getPackageManager();
+        try {
+            PackageInfo info = manager.getPackageInfo(ctx.getPackageName(), 0);
+            currentVersionName= info.versionName; // 版本名
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return currentVersionName;
     }
 
     public static String getDeviceInfo() {

@@ -183,7 +183,8 @@ public class FindFragment extends BaseRecycleViewFragment {
     @Override
     public void loadData() {
         super.loadData();
-        index();
+       // index();
+        getRefreshLayout().autoRefresh();
     }
 
     @Override

@@ -31,6 +31,7 @@ public class GlideImageLoader extends ImageLoader {
 //        //圆角
 
         ImageView imageView = new ImageView(context);
+       // imageView.setBackgroundResource(R.color.color_F5F);
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         return imageView;
     }

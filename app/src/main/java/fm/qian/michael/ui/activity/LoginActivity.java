@@ -255,22 +255,23 @@ public class LoginActivity extends BaseIntensifyActivity {
             return;
         }
 
-        setMdDisposable();
-
         reg.setAct(act);
         reg.setYzm(yzm);
         reg.setUsername(phone);
         reg.setSid(yzmOrSID.getSid());
 
+        send_verification_code.setEnabled(false);
+
         baseService.user_sms(reg, new HttpCallback<Object, BaseDataResponse>() {
             @Override
             public void onError(HttpException e) {
+                send_verification_code.setEnabled(true);
                 NToast.shortToastBaseApp(e.getMsg());
             }
 
             @Override
             public void onSuccess(Object userInfo) {
-
+                setMdDisposable();
                 NToast.shortToastBaseApp("短信发送成功");
 
             }
@@ -435,8 +436,6 @@ public class LoginActivity extends BaseIntensifyActivity {
 
     private void setMdDisposable(){
         //从0开始发射11个数字为：0-10依次输出，延时0s执行，每1s发射一次。
-
-        send_verification_code.setEnabled(false);
 
         if(null != mdDisposable){
             if(!mdDisposable.isDisposed()){

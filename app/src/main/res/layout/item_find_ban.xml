@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:foreground="?android:attr/selectableItemBackground"
-        card_view:cardBackgroundColor="@color/white"
+        card_view:cardBackgroundColor="@color/color_f5f"
         card_view:cardCornerRadius="@dimen/radius"
         card_view:cardElevation="0dp"
         >

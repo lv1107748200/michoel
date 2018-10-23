@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -202,6 +203,9 @@ public class SearchFragment extends BaseRecycleViewFragment {
                 break;
             case TWO:
                 selList = new ArrayList<>();
+
+                ((SimpleItemAnimator) getRvList().getItemAnimator()).setSupportsChangeAnimations(false);
+
                 layoutManager =  new LinearLayoutManager(mFontext);
                 quickAdapter =  new QuickAdapter(R.layout.item_sel_voice,25){
                     @Override
@@ -235,7 +239,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                                 //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
                             }
 
-                            DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getView(R.id.k_four),
+                            DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getLayoutPosition(),helper.getView(R.id.k_four),
                                     (TextView) helper.getView(R.id.item_down_tv)));
 
                                 int statue = DownManger.isDownStatus(id,path);
@@ -244,13 +248,13 @@ public class SearchFragment extends BaseRecycleViewFragment {
 
                                     helper.setGone(R.id.k_four,true);
                                     helper.getView(R.id.k_four).setActivated(true);
-                                    helper.setText(R.id.item_down_tv,"已下载");
+                                    helper.setText(R.id.item_down_tv,getString(R.string.已下载));
 
-                                }else if(statue == FileDownloadStatus.progress){
+                                }else if(statue == FileDownloadStatus.progress||statue == FileDownloadStatus.started || statue == FileDownloadStatus.connected ){
 
                                     helper.setGone(R.id.k_four,true);
                                     helper.getView(R.id.k_four).setActivated(false);
-                                    helper.setText(R.id.item_down_tv,"下载中");
+                                    helper.setText(R.id.item_down_tv,getString(R.string.下载中));
 
                                 }else {
 
@@ -288,31 +292,32 @@ public class SearchFragment extends BaseRecycleViewFragment {
 
                         }
                     }
-                    @Override
-                    public void onViewRecycled(@NonNull BaseViewHolder holder) {
-                        super.onViewRecycled(holder);
-                        // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
-
-                        if(null != holder){
-                            Object item = quickAdapter.getItem(holder.getLayoutPosition());
-                            if(item instanceof ComAll){
-                                ComAll rankMore = (ComAll) item;
-                                String path ;
-                                int id ;
-                                //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
-
-                                if(CheckUtil.isEmpty(rankMore.getDownPath())){
-                                    path = DownManger.createPath(rankMore.getUrl());
-                                    id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
-                                }else {
-                                    id =  rankMore.getIsDown();
-                                }
-
-                                DownManger.updateViewHolder(id);
-                            }
-                        }
-                    }
+//                    @Override
+//                    public void onViewRecycled(@NonNull BaseViewHolder holder) {
+//                        super.onViewRecycled(holder);
+//                        // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
+//
+//                        if(null != holder){
+//                            Object item = quickAdapter.getItem(holder.getLayoutPosition());
+//                            if(item instanceof ComAll){
+//                                ComAll rankMore = (ComAll) item;
+//                                String path ;
+//                                int id ;
+//                                //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+//
+//                                if(CheckUtil.isEmpty(rankMore.getDownPath())){
+//                                    path = DownManger.createPath(rankMore.getUrl());
+//                                    id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+//                                }else {
+//                                    id =  rankMore.getIsDown();
+//                                }
+//
+//                                DownManger.updateViewHolder(id);
+//                            }
+//                        }
+//                    }
                 };
+                DownManger.setQAdapter(quickAdapter);
 
                 break;
             case THREE:
@@ -638,7 +643,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){
                         quickAdapter.notifyDataSetChanged();
-                        NToast.shortToastBaseApp("成功添加下载任务");
+                        NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
                     }
                 }
                 @Override
@@ -647,7 +652,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                 }
             });
         }else {
-            NToast.shortToastBaseApp("请选择");
+            NToast.shortToastBaseApp(getString(R.string.请选择));
         }
     }
 }

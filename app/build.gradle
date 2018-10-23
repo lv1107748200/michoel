@@ -7,7 +7,7 @@ android {
         minSdkVersion externalMinSdkVersion
         targetSdkVersion externalTargetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "v1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
 
@@ -50,7 +50,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         // 输出apk名称为XXXX_v1.0_2016-01-15.apk
-                        def fileName =  "${variant.applicationId}-${variant.buildType.name}-v${variant.versionName}.apk"
+                        def fileName =  "${variant.applicationId}-${variant.buildType.name}-${variant.versionName}.apk"
                         outputFileName = fileName
                     }
                 }
@@ -66,7 +66,7 @@ android {
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         // 输出apk名称为XXXX_v1.0_2016-01-15.apk
-                        def fileName = "${variant.applicationId}-${variant.buildType.name}-v${variant.versionName}.apk"
+                        def fileName = "${variant.applicationId}-${variant.buildType.name}-${variant.versionName}.apk"
                         outputFileName = fileName
                     }
                 }

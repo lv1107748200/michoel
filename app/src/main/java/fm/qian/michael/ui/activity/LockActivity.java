@@ -182,7 +182,7 @@ public class LockActivity extends BaseActivity {
 
         @Override
         public void onReceive(final Context context, final Intent intent) {
-            if(null != mReference)
+            if(null != mReference.get())
                 mReference.get().handleCommandIntent(intent);
 
         }

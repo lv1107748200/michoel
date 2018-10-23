@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:textColor="@color/white"
-            android:text="获取西游记购买记录"
+            android:text="同步超级故事购买记录"
             android:textSize="@dimen/size_15"
             android:gravity="center"
             />

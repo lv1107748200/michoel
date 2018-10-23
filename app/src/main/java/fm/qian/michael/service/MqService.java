@@ -150,11 +150,11 @@ public class MqService extends Service {
     private int playNumber;
     private AudioManager mAudioManager;
     private ComponentName mMediaButtonReceiverComponent;
-    private boolean mIsSending = false;//发送进度
-    private boolean isSendking = false;//正在快进
+   // private boolean mIsSending = false;//发送进度
+   // private boolean isSendking = false;//正在快进
     private boolean isFirstLoad = true;//跟新数据
     private boolean mIsTrackPrepared = false;//是否准备完成
-    private boolean isCom =false;//播放完成
+    //private boolean isCom =false;//播放完成
 
     private NotificationManager mNotificationManager;
     private Notification mNotification;
@@ -162,7 +162,7 @@ public class MqService extends Service {
 
     private long press = -1; //播放进度
 
-    private boolean mIsLocked;
+    private boolean mIsLocked;//是否锁屏
 
     private HandlerThread mHandlerThread;
     private MusicPlayerHandler mPlayerHandler;
@@ -185,6 +185,8 @@ public class MqService extends Service {
     private boolean isPlayNow = false;//完成当前播放任务后停止
 
     private boolean isLogin;//是否登陆
+
+    private boolean isAudio = false;//多媒体限制 用户点击暂停后 防止再次播放
 
     //private boolean isNUll;
 
@@ -426,7 +428,7 @@ public class MqService extends Service {
             return;
         mIsTrackPrepared = false;
         multiPlayer.setDataSource(path);
-        isCom = false;
+       // isCom = false;
     }
 
     public void start(){
@@ -434,7 +436,7 @@ public class MqService extends Service {
             NToast.shortToastBaseApp("付费专辑需登陆播放");
             return;
         }
-
+        isAudio = false;
         int status = mAudioManager.requestAudioFocus(mAudioFocusListener,
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         NLog.e(NLog.PLAYER, "Starting playback: audio focus request status = " + status);
@@ -447,6 +449,7 @@ public class MqService extends Service {
 
         synchronized (this) {
             if(mIsTrackPrepared){
+                if(null != multiPlayer)
                 multiPlayer.start();
 
                // updateNotification("开始播放");//开始播放
@@ -454,7 +457,7 @@ public class MqService extends Service {
 
                 mainPlayerHandler.sendEmptyMessage(REQNFTION);
 
-                mIsSending = false;
+               // mIsSending = false;
                 pushAction(SEND_PROGRESS);//发送一次进度杀心广播
             }else {
 
@@ -555,7 +558,7 @@ public class MqService extends Service {
     }
 
     public long seek(long pos){
-        isSendking = true;
+        //isSendking = true;
         multiPlayer.seek(pos);
         return pos;
     }
@@ -651,7 +654,7 @@ public class MqService extends Service {
         }
         start();//准备完成后调用
 
-        mIsSending = false;
+       // mIsSending = false;
         if(press > -1){
             seek(press);//有快进记录
             press = -1;
@@ -662,7 +665,7 @@ public class MqService extends Service {
     }
     public void onCompletion(MediaPlayer mp) {
         NLog.e(NLog.PLAYER,"播放器  onCompletion");
-        isCom = true;
+      //  isCom = true;
         if(isPlayNow){
             isPlayNow = false;
           //  SPUtils.putInt(USERTMEING,0);//定时器完成 播哦放完当前
@@ -678,7 +681,7 @@ public class MqService extends Service {
     }
     public void onSeekComplete(MediaPlayer mp) {
         NLog.e(NLog.PLAYER,"播放器  onSeekComplete");
-        isSendking = false;
+       // isSendking = false;
         if(isCanPlay()){//快进完成
             pushAction(SEND_PROGRESS);//快进完成
         }
@@ -1178,6 +1181,7 @@ public class MqService extends Service {
                         boolean is = isPlaying();
                         NLog.e(NLog.PLAYER,"播放器正在播放isPlaying " + is);
                         if (is) {
+                            isAudio = true;
                             pause();//多媒体限制
                         }
                     }
@@ -1195,7 +1199,10 @@ public class MqService extends Service {
                     break;
                 case AudioManager.AUDIOFOCUS_GAIN:
                     multiPlayer.setVolume(1.0f);
-                    start();//多媒体限制过后自动播放
+                    if(isAudio){
+                        isAudio = false;
+                        start();//多媒体限制过后自动播放
+                    }
                     break;
                 default:
             }

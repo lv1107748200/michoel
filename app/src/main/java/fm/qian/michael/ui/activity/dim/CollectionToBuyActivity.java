@@ -59,7 +59,7 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
         type = getIntent().getStringExtra(COLLECTIONTOBUY);
 
         if(GlobalVariable.ONE.equals(type)){//收藏
-            setTitleTv("我的收藏");
+            setTitleTv("收藏的专辑");
             isDowp = false;
         }else if(GlobalVariable.TWO.equals(type)){//已购买
             setTitleTv("已购买专辑");

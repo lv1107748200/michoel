@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
+import com.zzhoujay.richtext.RichText;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,8 +122,10 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
 
                 GlideUtil.setGlideImageMake(mFontext,album.getCover(),
                         itemImage);
-                itemTv.setText(album.getBrief());
-
+                //itemTv.setText(album.getBrief());
+                if(!CheckUtil.isEmpty(album.getBrief())){
+                    RichText.from(album.getBrief()).bind(this).into(itemTv);
+                }
 
             }
         },this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
@@ -261,5 +264,9 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
         return wight;
     }
 
-
+    @Override
+    public void onDestroy() {
+        RichText.clear(this);
+        super.onDestroy();
+    }
 }

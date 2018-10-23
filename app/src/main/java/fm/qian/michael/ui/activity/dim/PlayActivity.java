@@ -17,6 +17,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.hr.bclibrary.utils.CheckUtil;
+import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
@@ -266,7 +267,8 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                         return;
                     }
                     if(DownManger.isDownloaded(comAll.getUrl())){
-                        NToast.shortToastBaseApp("已下载");
+                        NToast.shortToastBaseApp(getString(R.string.已下载));
+                        return;
                     }
                         isDown = true;
                     if(isWifi(this)){
@@ -660,10 +662,21 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             RichText.from(comAll.getBrief()).bind(this).into(introduceTv);
         }
 
-        if(DownManger.isDownloaded(comAll.getUrl())){
+      String  path = DownManger.createPath(comAll.getUrl());
+       int id = FileDownloadUtils.generateId(comAll.getUrl(), path);
+        int statue = DownManger.isDownStatus(id, path);
+
+        if(statue == FileDownloadStatus.completed){
             kFour.setVisibility(View.VISIBLE);
             kFour.setActivated(true);
-            itemDownTv.setText("已下载");
+            itemDownTv.setText(getString(R.string.已下载));
+
+        }else if (statue == FileDownloadStatus.progress||statue == FileDownloadStatus.started || statue == FileDownloadStatus.connected ) {
+
+            DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,kFour,itemDownTv));
+            kFour.setVisibility(View.VISIBLE);
+            kFour.setActivated(true);
+            itemDownTv.setText(getString(R.string.下载中));
 
         }else {
             kFour.setVisibility(View.GONE);
@@ -688,7 +701,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                         String path = DownManger.createPath(comAll.getUrl());
                         int id = FileDownloadUtils.generateId(comAll.getUrl(), path);
 
-                        DownManger.updateViewHolder(id,new BaseDownViewHolder(id,kFour,itemDownTv));
+                        DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,kFour,itemDownTv));
 
                     }
 

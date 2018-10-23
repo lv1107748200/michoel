@@ -119,6 +119,10 @@
     <string name="未绑定">绑定后同步购买收听记录</string>
     <string name="需登陆">需登录</string>
     <string name="已登录">已登录</string>
+    <string name="成功添加下载任务">成功添加下载任务</string>
+    <string name="请选择">请选择</string>
+    <string name="已下载">已下载</string>
+    <string name="下载中">下载中</string>
 
     <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>
     <string name="what">输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单</string>

@@ -80,7 +80,7 @@ public class SetActivity extends BaseIntensifyActivity {
     public void initView() {
         super.initView();
         setTitleTv("设置");
-
+        tv_banbenhao.setText(CommonUtils.getAPPVersionName(this));
         Ver();
     }
 
@@ -96,7 +96,7 @@ public class SetActivity extends BaseIntensifyActivity {
             @Override
             public void onSuccess(Ver ver) {
                 //NLog.e(NLog.TAG,""+ver.getVer() + ver.getVerint());
-                tv_banbenhao.setText(ver.getVer());
+               // tv_banbenhao.setText(ver.getVer());
 
 
                 if(ver.getVerint() == CommonUtils.getAPPVersionCode(SetActivity.this)){

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -108,7 +109,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 break;
             case R.id.down_layout://下载
                 if(!isLogin()){
-                    NToast.shortToastBaseApp("请登录");
+                    WLoaignMake();
                     return;
                 }
                 if(!CheckUtil.isEmpty(selList)){
@@ -117,7 +118,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                         public void onSuccess(Object baseDownloadTaskSparseArray) {
                             if(null != quickAdapter){
                                 quickAdapter.notifyDataSetChanged();
-                                NToast.shortToastBaseApp("成功添加任务");
+                                NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
                             }
                         }
                         @Override
@@ -201,7 +202,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                                     if(null != quickAdapter){
                                         quickAdapter.notifyDataSetChanged();
-                                        NToast.shortToastBaseApp("成功添加任务");
+                                        NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
                                     }
 
                                 }
@@ -317,6 +318,9 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         relayout_sel_cancel.setOnClickListener(this);
 
         getRvList().setLayoutManager(new LinearLayoutManager(this));
+
+        ((SimpleItemAnimator)getRvList().getItemAnimator()).setSupportsChangeAnimations(false);
+
         quickAdapter =  new QuickAdapter(R.layout.item_sel_voice){
             @Override
             protected void convert(BaseViewHolder helper, Object item) {
@@ -342,7 +346,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                        // NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
 
-                         DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getView(R.id.k_four),
+                         DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getLayoutPosition(),helper.getView(R.id.k_four),
                             (TextView) helper.getView(R.id.item_down_tv)));
 
                         int statue = DownManger.isDownStatus(id,path);
@@ -350,12 +354,12 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                         if(statue == FileDownloadStatus.completed){
                             helper.setGone(R.id.k_four,true);
                             helper.getView(R.id.k_four).setActivated(true);
-                            helper.setText(R.id.item_down_tv,"已下载");
+                            helper.setText(R.id.item_down_tv,getString(R.string.已下载));
 
-                        }else if(statue == FileDownloadStatus.progress){
+                        }else if(statue == FileDownloadStatus.progress||statue == FileDownloadStatus.started || statue == FileDownloadStatus.connected ){
                             helper.getView(R.id.k_four).setActivated(false);
                             helper.setGone(R.id.k_four,true);
-                            helper.setText(R.id.item_down_tv,"下载中");
+                            helper.setText(R.id.item_down_tv,getString(R.string.下载中));
 
                         }else {
 
@@ -413,32 +417,33 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
             }
 
-            @Override
-            public void onViewRecycled(@NonNull BaseViewHolder holder) {
-                super.onViewRecycled(holder);
-               // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
 
-                if(null != holder){
-                    Object item = quickAdapter.getItem(holder.getLayoutPosition()+1);
-                    if(item instanceof ComAll){
-                        ComAll rankMore = (ComAll) item;
-                        String path ;
-                        int id ;
-                        //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+//            @Override
+//            public void onViewRecycled(@NonNull BaseViewHolder holder) {
+//                super.onViewRecycled(holder);
+//               // NLog.e(NLog.TAGDOWN," 视图 onViewRecycled : " + holder.getLayoutPosition()+1);
+//
+//                if(null != holder){
+//                    Object item = quickAdapter.getItem(holder.getLayoutPosition()+1);
+//                    if(item instanceof ComAll){
+//                        ComAll rankMore = (ComAll) item;
+//                        String path ;
+//                        int id ;
+//                        //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
+//
+//                        if(CheckUtil.isEmpty(rankMore.getDownPath())){
+//                            path = DownManger.createPath(rankMore.getUrl());
+//                            id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
+//                        }else {
+//                            id =  rankMore.getIsDown();
+//                        }
+//
+//                        DownManger.updateViewHolder(id);
+//
+//                    }
+//                }
+//            }
 
-                        if(CheckUtil.isEmpty(rankMore.getDownPath())){
-                            path = DownManger.createPath(rankMore.getUrl());
-                            id = FileDownloadUtils.generateId(rankMore.getUrl(), path);
-                        }else {
-                            id =  rankMore.getIsDown();
-                        }
-
-                        DownManger.updateViewHolder(id);
-
-                    }
-                }
-
-            }
         };
 
         quickAdapter.addHeaderView(view);
@@ -459,6 +464,9 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 }
             }
         });
+
+     DownManger.setQAdapter(quickAdapter);
+
         getRvList().setAdapter(quickAdapter);
         selList = new ArrayList<>();
 
@@ -694,7 +702,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
             @Override
             public void onSuccess(Object o) {
-                NToast.shortToastBaseApp("本地删除成功");
+                NToast.shortToastBaseApp("删除成功");
             }
 
             @Override

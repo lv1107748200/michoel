@@ -81,10 +81,13 @@ public class SearchLayout extends FrameLayout implements
     public void  Onclick(View view){
         switch (view.getId()){
             case R.id.search_iv_delete:
-                search_et_input.setText("");
+
 
                 if(null != searchCallBack){
-                    searchCallBack.del();
+                    if(!CheckUtil.isEmpty(search_et_input.getText().toString())){
+                        search_et_input.setText("");
+                        searchCallBack.del();
+                    }
                 }
 
                 break;
@@ -209,6 +212,10 @@ public class SearchLayout extends FrameLayout implements
                         searchCallBack.textCallBack(searchText);
                     }
                    save();
+                }else {
+                    if(null != searchCallBack) {
+                        searchCallBack.del();
+                    }
                 }
 
                 break;

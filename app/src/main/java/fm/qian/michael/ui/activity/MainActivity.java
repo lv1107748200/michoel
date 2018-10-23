@@ -297,7 +297,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         if(NetStateUtils.isWifi(this)){
             SQLite.select()
                     .from(TasksManagerModel.class)
-                    .orderBy(TasksManagerModel_Table.Idd,false)
+                    .orderBy(TasksManagerModel_Table.Idd,true)
                     .async()
                     .queryListResultCallback(new QueryTransaction.QueryResultListCallback<TasksManagerModel>() {
                         @Override

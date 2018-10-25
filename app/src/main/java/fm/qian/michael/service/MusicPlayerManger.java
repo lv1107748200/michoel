@@ -76,7 +76,7 @@ public class MusicPlayerManger {
         context.unbindService(binder);
     }
 
-    public static void synthesizeMake(final List<ComAll> comAlls,final int i){
+    public static void synthesizeMake(final List<ComAll> comAlls, final int i){
         if(MusicPlayerManger.isNull()){
 
             bindStartByContext(BaseApplation.getBaseApp(), new ServiceConnection() {
@@ -129,13 +129,15 @@ public class MusicPlayerManger {
         }
     }
 
-    public static void play() {
+    public static int play() {
         try {
             if (mService != null) {
-                    mService.play();
+                 return    mService.play();
             }
         } catch (final Exception ignored) {
         }
+
+        return -1;
     }
     public static void playHistory() {
         try {

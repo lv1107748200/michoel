@@ -154,6 +154,7 @@ public class MqService extends Service {
     private ComponentName mMediaButtonReceiverComponent;
    // private boolean mIsSending = false;//发送进度
    // private boolean isSendking = false;//正在快进
+   // private boolean isFirstOpen = true;//刚刚打开
     private boolean isFirstLoad = true;//跟新数据
     private boolean mIsTrackPrepared = false;//是否准备完成
     //private boolean isCom =false;//播放完成
@@ -330,12 +331,12 @@ public class MqService extends Service {
     }
 
     //传进播放地址
-    public void play() {
+    public int play() {
 
-        if(!isCanPlay()){
-            NToast.shortToastBaseApp("需登录");
-            return;
-        }
+//        if(!isCanPlay()){
+//            NToast.shortToastBaseApp("需登录");
+//            return 0;
+//        }
 
             if(isFirstLoad){//处理点击已经正在播放的音频
                 if(null != comAll && !CheckUtil.isEmpty(comAllList)){
@@ -348,13 +349,16 @@ public class MqService extends Service {
 
                     if(comAll.getId().equals(comAll1.getId())){
                         NLog.e(NLog.PLAYER, "播放器处于当前歌曲位置");
-                        isFirstLoad = false;
                         if(CheckUtil.isEmpty(comAll1.getTitle())){
                          //   isNUll = true;//仅仅获取地址不播放
                           //  reqData(comAll.getId());//播放时检测到播放地址为空
                             comAllList.set(playNumber,comAll);
                         }
-                        return;
+                        if(mIsTrackPrepared){
+                            isFirstLoad = false;
+                            return 1;
+                        }
+
                     }
                 }
             }
@@ -365,7 +369,7 @@ public class MqService extends Service {
                 AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
         NLog.e(NLog.PLAYER, "传入数据  play  playback: audio focus request status = " + status);
         if (status != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            return;
+            return 2;
         }
 
         final Intent intent = new Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION);
@@ -377,10 +381,15 @@ public class MqService extends Service {
         if(isPlaying()){
             pause();//换歌时暂停
         }
-        getPlayPath();
+
+        if("save".equals(getPlayPath())){
+            mainPlayerHandler.sendEmptyMessage(REQNFTION);
+            return 3;
+        }
 
         mainPlayerHandler.sendEmptyMessage(REQNFTION);
 
+        return 4;
     }
     //确认播放调用
     private void playQQQ(String pathSong){
@@ -717,7 +726,7 @@ public class MqService extends Service {
             getSave();//
           //  mainPlayerHandler.sendEmptyMessage(REQGETSAVE);
 
-            return path;
+            return "save";
         }else {
 
         }
@@ -1111,14 +1120,12 @@ public class MqService extends Service {
                     BaseDataResponse<ComAll> baseDataResponse = objectMapper.readValue(s, new TypeReference<BaseDataResponse<ComAll>>(){});
 
                     if(baseDataResponse.getCode() == 1){
-                        ComAll comAll = baseDataResponse.getData();
+                        Message message = new Message();
+                        message.what = REQDATA;
+                        message.obj = baseDataResponse;
+                        mainPlayerHandler.sendMessage(message);
+                    }else {
 
-                        if(!CheckUtil.isEmpty(comAll.getUrl())){
-                                Message message = new Message();
-                                message.what = REQDATA;
-                                message.obj = baseDataResponse;
-                                mainPlayerHandler.sendMessage(message);
-                        }
                     }
                 }else {
 
@@ -1180,12 +1187,15 @@ public class MqService extends Service {
         comAllList.set(playNumber, comAll);
 
         pushAction(UPDATA_ID,comAll.getId());
-        setReqPta();//更换地址时
 
-      //  mPlayerHandler.post(this.saveData);
-       // if(!isNUll){
-            playQQQ(comAll.getUrl());//获取地址后直接播放
-      //  }
+        if(!isLogin){
+            if(isPay()){
+                return;
+            }
+        }
+
+        setReqPta();//更换地址时
+        playQQQ(comAll.getUrl());//获取地址后直接播放
 
     }
 

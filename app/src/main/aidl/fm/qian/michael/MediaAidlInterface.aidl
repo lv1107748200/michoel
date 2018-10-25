@@ -8,7 +8,7 @@ interface MediaAidlInterface
     void openFile(String path);
     void openList(in List<String> ls,int i,boolean play,boolean clear);
     void updata(in List<ComAll> comAll,int num);
-    void play();
+    int play();
     void playHistory();
     void playNum(int i);
     void stop();

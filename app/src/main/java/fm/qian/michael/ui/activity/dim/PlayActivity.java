@@ -238,6 +238,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
                     return;
                 }
+                if(CheckUtil.isEmpty(comAll)){
+
+                    return;
+                }
 
                 if(popTimingSelWindow == null){
                     popTimingSelWindow = new PopTimingSelWindow(this,new CustomPopuWindConfig
@@ -372,7 +376,6 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             comAllList = new ArrayList<>();
             id = UserInfoManger.getInstance().getFirstaudio();
             if(!CheckUtil.isEmpty(id)){
-                loadingDialog.show("");
                 UseData.setInit(GlobalVariable.ONE);//初始化状态
 
                 List<ComAll> comAlls = new ArrayList<>();
@@ -386,22 +389,39 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
             }
 
-        }else if(GlobalVariable.ONE.equals(opType)){
+        }else {
 
             if(MusicPlayerManger.isPlayFirst()){//没有播放
+               int i = MusicPlayerManger.play();
 
-//                MusicPlayerManger.updata(null,0);
-//                MusicPlayerManger.play();
-
-                MusicPlayerManger.synthesizeMake(null,0);
+               if(i == 1){
+                   if(MusicPlayerManger.isPlaying()){
+                       layout_play.setSelected(true);
+                   }
+                   comAll = MusicPlayerManger.getCommAll();
+                   if(!CheckUtil.isEmpty(comAll)){
+                       isFristSet = true;
+                       doSomething();
+                       id = comAll.getId();
+                       // autio();
+                       setMessage();
+                   }
+               }else if(i == 0){
+                   comAll = MusicPlayerManger.getCommAll();
+                   if(!CheckUtil.isEmpty(comAll)){
+                       isFristSet = true;
+                       doSomething();
+                       id = comAll.getId();
+                       // autio();
+                       setMessage();
+                   }
+               }
 
             }else {
 
                 //comAllList = MusicPlayerManger.getCommAllList();
                 if(MusicPlayerManger.isPlaying()){
                     layout_play.setSelected(true);
-                }else {
-
                 }
                 comAll = MusicPlayerManger.getCommAll();
                 if(!CheckUtil.isEmpty(comAll)){
@@ -410,60 +430,14 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     id = comAll.getId();
                    // autio();
                     setMessage();
-
-                    if(!isLogin()){
-                        if(isPay()){
-                            NToast.shortToastBaseApp("付费专辑需登录播放");
-                        }
-                    }
                 }else {
-                    MusicPlayerManger.synthesizeMake(null,0);
+                    if(MusicPlayerManger.isNull()){
+                        MusicPlayerManger.synthesizeMake(null,0);
+                    }
                 }
 
             }
 
-        }else if(GlobalVariable.SIX.equals(opType)) {
-            UseData.setInit(GlobalVariable.ONE);//初始化状态
-                //此时数据为空  不作赋值
-           // comAllList = MusicPlayerManger.getCommAllList();
-
-
-            if(MusicPlayerManger.isPlaying()){
-                layout_play.setSelected(true);
-            }else {
-                loadingDialog.show("");
-            }
-
-            comAll = MusicPlayerManger.getCommAll();
-            if(!CheckUtil.isEmpty(comAll)){
-                isFristSet = true;
-                doSomething();
-                id = comAll.getId();
-                //autio();
-                setMessage();
-            }
-
-        } else {
-
-            UseData.setInit(GlobalVariable.ONE);//初始化状态
-
-            //comAllList = MusicPlayerManger.getCommAllList();
-
-
-            if(MusicPlayerManger.isPlaying()){
-                layout_play.setSelected(true);
-            }else {
-                loadingDialog.show("");
-            }
-
-            comAll = MusicPlayerManger.getCommAll();
-            if(!CheckUtil.isEmpty(comAll)){
-                isFristSet = true;
-                doSomething();
-                id = comAll.getId();
-                //autio();
-                setMessage();
-            }
         }
 
     }
@@ -527,11 +501,6 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
                 PlayActivity.this.comAll = comAll;
 
-                if(!isLogin()){
-                    if(isPay()){//接口返回
-                        NToast.shortToastBaseApp("登陆后播放");
-                    }
-                }
                 setMessage();
             }
         },PlayActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
@@ -656,6 +625,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     }
 
     private void setMessage(){
+        if(!isLogin()){
+            if(isPay()){//接口返回
+                loadingDialog.diss();
+                NToast.shortToastBaseApp("付费专辑需登录播放");
+            }
+        }
+
         GlideUtil.setGlideImageMake(PlayActivity.this,comAll.getCover(),
                 imagePoster);
 
@@ -831,13 +807,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                 if(popTimingSelWindow != null){
                     if(popTimingSelWindow.getType() == 1){
                         if(popTimingSelWindow.isShowing()){
-                            popTimingSelWindow.setComAllTwo(id);
+                            popTimingSelWindow.setComAll(id);
                         }
                     }
                 }
 
                 comAll = MusicPlayerManger.getCommAll();
-
+                if(null != comAll)
                 setMessage();
 
               // autio();//service 返回  id;

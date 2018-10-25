@@ -147,9 +147,12 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
 //                helper.itemView.setLayoutParams(
 //                        LayoutParmsUtils.getGroupParms(DisplayUtils.getDimen(R.dimen.margin_150)));
 
-                helper.getView(R.id.item_image).setLayoutParams(LayoutParmsUtils.getLParms(
-                        DisplayUtils.getDimen(R.dimen.margin_139)
-                        ,0,0,0,0));
+//                helper.getView(R.id.item_image).setLayoutParams(LayoutParmsUtils.getLParms(
+//                        DisplayUtils.getDimen(R.dimen.margin_139)
+//                        ,0,0,0,0));
+
+               ImageView imageView = helper.getView(R.id.item_image);
+               imageView.setAdjustViewBounds(true);
 
                 TextView textView = helper.getView(R.id.item_tv);
 

@@ -12,7 +12,6 @@
         android:id="@+id/item_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:scaleType="fitXY"
         android:src="@color/color_line_one"
         app:sriv_left_bottom_corner_radius="@dimen/radius"

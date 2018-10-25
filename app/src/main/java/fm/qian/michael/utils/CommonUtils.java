@@ -16,15 +16,18 @@ package fm.qian.michael.utils;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.icu.util.RangeValueIterator;
 import android.net.Uri;
 import android.os.Build;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.provider.MediaStore;
@@ -403,12 +406,10 @@ public class CommonUtils {
     }
 
 
-    public static Intent getIntent(Context context, List<ComAll> list,int num,String what){
+    public static Intent getIntent(final Context context,final List<ComAll> list,final int num,String what){
 
-        Intent intent = new Intent();
+       final Intent intent = new Intent();
         intent.setClass(context,PlayActivity.class);
-
-        context.startActivity(intent);
 
         if(!CheckUtil.isEmpty(what)){
             UseData.setInit(what);
@@ -422,10 +423,27 @@ public class CommonUtils {
 //        MusicPlayerManger.play();
 
 
-        MusicPlayerManger.synthesizeMake(list,num);
+      //  MusicPlayerManger.synthesizeMake(list,num);
 
 
+        if(MusicPlayerManger.isNull()){
+           MusicPlayerManger. bindStartByContext(BaseApplation.getBaseApp(), new ServiceConnection() {
+                @Override
+                public void onServiceConnected(ComponentName name, IBinder service) {
+                    MusicPlayerManger.updata(list,num);
+                    context.startActivity(intent);
+                }
 
+                @Override
+                public void onServiceDisconnected(ComponentName name) {
+
+                }
+            });
+
+        }else {
+            MusicPlayerManger.updata(list,num);
+            context.startActivity(intent);
+        }
         return intent;
     }
 

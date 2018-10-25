@@ -10,6 +10,7 @@ import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.ui.adapter.PoliticalNewsAdater;
 import fm.qian.michael.ui.adapter.QuickAdapter;
+import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.widget.custom.XCViewPager;
 
@@ -107,8 +108,10 @@ public class TopListActivity extends BaseIntensifyActivity {
             @Override
             public IPagerIndicator getIndicator(Context context) {
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
-                indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
+                indicator.setXOffset(DisplayUtils.getDimen(R.dimen.margin_10));
+                indicator.setMode(LinePagerIndicator.MODE_WRAP_CONTENT);
                 indicator.setColors(Color.parseColor("#F86E78"));
+                indicator.setRoundRadius(DisplayUtils.getDimen(R.dimen.radius));
                 return indicator;
             }
         });

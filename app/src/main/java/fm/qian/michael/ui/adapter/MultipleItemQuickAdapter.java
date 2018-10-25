@@ -153,11 +153,11 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
 
                 TextView textView = helper.getView(R.id.item_tv);
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    textView.setTextAppearance(R.style.Text3);
-                }else {
-                    textView.setTextAppearance(context,R.style.Text3);
-                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    textView.setTextAppearance(R.style.Text3);
+//                }else {
+//                    textView.setTextAppearance(context,R.style.Text3);
+//                }
 
                 if(item.getObject() instanceof Base){
                     Base itemBase = (Base) item.getObject();
@@ -197,10 +197,20 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
 
                 if(item.getObject() instanceof Base){
                     Base itemBase = (Base) item.getObject();
-                    helper.setText(R.id.item_tv,itemBase.getTitle());
+
+                    TextView titeview = helper.getView(R.id.item_tv);
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        titeview.setTextAppearance(R.style.Text4_one);
+                    }else {
+                        titeview.setTextAppearance(context, R.style.Text4_one);
+                    }
+
+                    titeview.setText(itemBase.getTitle());
 
                     GlideUtil.setGlideImageMake(context,itemBase.getCover(),
                             (ImageView) helper.getView(R.id.item_image));
+
                 }
                 break;
             case MultipleItem.TEXTDATE:// 左右结构的 图片 文字
@@ -395,6 +405,7 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                             LinePagerIndicator indicator = new LinePagerIndicator(context);
                             indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                             indicator.setColors(Color.parseColor("#F86E78"));
+                            indicator.setRoundRadius(DisplayUtils.getDimen(R.dimen.radius));
                             return indicator;
                         }
                     });

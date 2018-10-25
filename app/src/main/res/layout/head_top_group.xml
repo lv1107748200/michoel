@@ -5,8 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingTop="@dimen/item_margin_two"
     android:paddingBottom="@dimen/item_margin_two"
-    android:paddingRight="@dimen/item_margin_four"
-    android:paddingLeft="@dimen/item_margin_four"
     android:orientation="vertical">
 
         <fm.qian.michael.widget.custom.SelectableRoundedImageView
@@ -15,10 +13,10 @@
             android:layout_height="@dimen/dp_125"
             android:layout_weight="1"
             android:scaleType="fitXY"
-            app:sriv_left_bottom_corner_radius="@dimen/radius"
-            app:sriv_left_top_corner_radius="@dimen/radius"
-            app:sriv_right_bottom_corner_radius="@dimen/radius"
-            app:sriv_right_top_corner_radius="@dimen/radius"
+            app:sriv_left_bottom_corner_radius="0dp"
+            app:sriv_left_top_corner_radius="0dp"
+            app:sriv_right_bottom_corner_radius="0dp"
+            app:sriv_right_top_corner_radius="0dp"
             />
         <TextView
             android:layout_marginTop="@dimen/item_margin_three"
@@ -26,6 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|center"
-            style="@style/Text4"
+            android:paddingRight="@dimen/item_margin_four"
+            android:paddingLeft="@dimen/item_margin_four"
+            style="@style/Text4_one_one"
             />
 </LinearLayout>

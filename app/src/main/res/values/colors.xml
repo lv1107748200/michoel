@@ -51,7 +51,9 @@
     <!--  重新添加的  -->
 
     <color name="color_line">@color/color_E1E</color>
-    <color name="color_line_one">@color/color_F5F</color>
+    <color name="color_line_one">@color/color_ece</color>
+
+    <color name="color_back">#F9FCFF</color>
 
     <color name="bar_grey">#393a3e</color>
     <color name="color_F86">#F86E78</color>
@@ -70,6 +72,8 @@
     <color name="color_F5F">#F5F5F5</color>
     <color name="color_8a8">#8a8a8a</color>
     <color name="color_50B">#50B674</color>
+    <color name="color_ece">#ECECEC</color>
+    <color name="color_261">#1AB20A</color>
 
     <color name="back">@color/white</color>
     <color name="notification_bak">#47fafafa</color>

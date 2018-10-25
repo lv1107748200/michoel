@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -46,6 +48,7 @@ import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
+import fm.qian.michael.widget.dialog.LoadingDialog;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopPlayListWindow;
 import fm.qian.michael.widget.pop.PopShareWindow;
@@ -74,6 +77,7 @@ import static fm.qian.michael.common.UserInforConfig.USERMUSICNAME;
 import static fm.qian.michael.common.UserInforConfig.USERTMEING;
 import static fm.qian.michael.service.MqService.CMDNAME;
 import static fm.qian.michael.service.MqService.CMDNOTIF;
+import static fm.qian.michael.service.MqService.ERROR_UP;
 import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*
@@ -109,6 +113,8 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     private boolean isDown;
 
     private Disposable mDisposable;//脉搏
+
+    private LoadingDialog loadingDialog;
 
     @BindView(R.id.image_poster)
     ImageView imagePoster;
@@ -330,10 +336,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     @Override
     public void initView() {
         super.initView();
-
+        loadingDialog = new LoadingDialog(this);
         setTitleTv("专辑");
 
-        int h = DisplayUtils.getScreenHeight(this)/2;
+        int h = DisplayUtils.getScreenWidth(this);
         ViewGroup.LayoutParams params = imagePoster.getLayoutParams();
         params.height = h;
         CommonUtils.setMargins(musicSeekBar,0,h-DisplayUtils.getDimen(R.dimen.margin_6),0,0);
@@ -360,11 +366,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 //        if(!CheckUtil.isEmpty(name)){
 //            setTitleTv(name);
 //        }
+      //  loadingDialog.show("");
 
         if(GlobalVariable.ZERO.equals(opType)){ //
             comAllList = new ArrayList<>();
             id = UserInfoManger.getInstance().getFirstaudio();
             if(!CheckUtil.isEmpty(id)){
+                loadingDialog.show("");
                 UseData.setInit(GlobalVariable.ONE);//初始化状态
 
                 List<ComAll> comAlls = new ArrayList<>();
@@ -402,6 +410,14 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     id = comAll.getId();
                    // autio();
                     setMessage();
+
+                    if(!isLogin()){
+                        if(isPay()){
+                            NToast.shortToastBaseApp("付费专辑需登录播放");
+                        }
+                    }
+                }else {
+                    MusicPlayerManger.synthesizeMake(null,0);
                 }
 
             }
@@ -415,7 +431,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             if(MusicPlayerManger.isPlaying()){
                 layout_play.setSelected(true);
             }else {
-
+                loadingDialog.show("");
             }
 
             comAll = MusicPlayerManger.getCommAll();
@@ -437,7 +453,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             if(MusicPlayerManger.isPlaying()){
                 layout_play.setSelected(true);
             }else {
-
+                loadingDialog.show("");
             }
 
             comAll = MusicPlayerManger.getCommAll();
@@ -544,10 +560,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
         }
 
         if( set == 0){//循环播放
+            NToast.shortToastBaseApp("列表循环");
             layoutPlayType.setBackgroundResource(R.drawable.xunhuan);
         }else if(set == 1){//单曲
+            NToast.shortToastBaseApp("单曲循环");
             layoutPlayType.setBackgroundResource(R.drawable.xunhuanone);
         }else if(set == 2){//随机
+            NToast.shortToastBaseApp("随机播放");
             layoutPlayType.setBackgroundResource(R.drawable.random);
         }
         MusicPlayerManger.playPattern(set);//设置播放模式
@@ -591,6 +610,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
         f.addAction(MqService.PAUSE_ACTION_APP);//定时器发的刷新图标
 
         f.addAction(MqService.UPDATA_ID);//换歌了
+        f.addAction(MqService.ERROR_UP);//出错
         f.addAction(MqService.UPDATA_PAUSE);//暂停
         f.addAction(CMDNOTIF);//外控设备 启动 播放  但是  此时 service  已经 un
         registerReceiver(mPlaybackStatus, new IntentFilter(f));
@@ -718,7 +738,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     private void setDelAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示");
-        builder.setMessage("当前非WiFi网络是否确定下载？");
+        builder.setMessage(getString(R.string.WiFi));
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -797,6 +817,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             dispose();
 
         }else if(MqService.SEND_PROGRESS.equals(action)){
+            loadingDialog.diss();
             layout_play.setSelected(true);
             isFristSet = true;
             doSomething();
@@ -828,9 +849,13 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
         }else if(MqService.MUSIC_LODING.equals(action)){
 
+            loadingDialog.show("");
+
         }else if(MqService.PAUSE_ACTION_APP.equals(action)){
          //   SPUtils.putInt(USERTMEING,0);
             setSetTimeImg();
+        }else if(ERROR_UP.equals(action)){
+            loadingDialog.diss();
         }
     }
 

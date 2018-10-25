@@ -90,7 +90,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
 
         <LinearLayout
@@ -121,7 +121,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
         <LinearLayout
             style="@style/m_style_layout_three"
@@ -151,7 +151,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/color_F86"
                     android:textSize="@dimen/size_12"
-                    android:layout_marginRight="@dimen/margin_3"
+                    android:layout_marginRight="@dimen/margin_5"
                     android:text="@string/未绑定"
                     />
 
@@ -162,7 +162,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
         <LinearLayout
             style="@style/m_style_layout_three"
@@ -193,7 +193,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
         <LinearLayout
             style="@style/m_style_layout_three"
@@ -224,7 +224,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
         <LinearLayout
             style="@style/m_style_layout_three"
@@ -255,7 +255,7 @@
 
         </LinearLayout>
         <View
-            style="@style/view_line"
+            style="@style/view_line_color_one"
             />
 
         <TextView

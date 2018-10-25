@@ -92,7 +92,7 @@ public class LoadingDialog {
         }
 
         public LoadingDialog creatDialog(){
-
+        if(null == mDialog){
             mDialog = new Dialog(mContext, R.style.dialog);
 
             View view = LayoutInflater.from(mContext).inflate(R.layout.loading_dialog_layout, null);
@@ -119,8 +119,11 @@ public class LoadingDialog {
             dialogWindow.setAttributes(params);
 
             if(isShow){
-              //  mDialog.show();
+                //  mDialog.show();
             }
+
+        }
+
 
 
             return this;
@@ -176,15 +179,16 @@ public class LoadingDialog {
 
         public void show(String s){
             creatDialog();
-            mDialog.show();
+            if(!mDialog.isShowing()){
+                mDialog.show();
+            }
             setTvDialog(s);
         }
 
         public void diss(){
             if(null != mDialog){
-                if(mDialog.isShowing()){
+                if(mDialog.isShowing())
                     mDialog.dismiss();
-                }
             }
         }
 

@@ -66,7 +66,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
     LinearLayout jiaZai_layout_btn;
 
     private String kind;
-    private String url = "https://mp.weixin.qq.com/s/D7IAC6En5sh2ludnL29RPw";
+    private String url = "https://www.qian.fm/agreement.htm";
     //private String url = "https://v.qq.com/x/page/q07671x669h.html?ptag=qqbrowser";
     private String id;
 
@@ -203,7 +203,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
         webSetting.setBuiltInZoomControls(true);
         webSetting.setUseWideViewPort(true);
         webSetting.setSupportMultipleWindows(false);
-        // webSetting.setLoadWithOverviewMode(true);
+        webSetting.setLoadWithOverviewMode(true);
         webSetting.setAppCacheEnabled(true);
         // webSetting.setDatabaseEnabled(true);
         webSetting.setDomStorageEnabled(true);
@@ -261,6 +261,10 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
                     setWebLoad(url);
                 }
             },WebTBSParticularsActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+        }else if(GlobalVariable.FOUR.equals(type)){
+            setTitleTv("服务协议");
+            url = "https://www.qian.fm/agreement.htm";
+            setWebLoad(url);
         }
 
     }

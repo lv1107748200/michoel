@@ -56,6 +56,8 @@ import fm.qian.michael.widget.pop.PopInputWindow;
 import fm.qian.michael.widget.single.DownManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 
+import static fm.qian.michael.utils.NetStateUtils.isWifi;
+
 /*
  * lv   2018/9/10
  */
@@ -113,21 +115,13 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                     return;
                 }
                 if(!CheckUtil.isEmpty(selList)){
-                    DownManger.setIdAndPath(selList,null,new DownManger.ResultCallback() {
-                        @Override
-                        public void onSuccess(Object baseDownloadTaskSparseArray) {
-                            if(null != quickAdapter){
-                                quickAdapter.notifyDataSetChanged();
-                                NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
-                            }
+                        if(isWifi(this)){
+                            down(selList);
+                        }else {
+                            setDelAlertDialog(1);//选择下载
                         }
-                        @Override
-                        public void onError(String errString) {
-
-                        }
-                    });
                 }else {
-                    NToast.shortToastBaseApp("请选择");
+                    NToast.shortToastBaseApp(getString(R.string.请选择));
                 }
 
                 break;
@@ -170,7 +164,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                             if(!CheckUtil.isEmpty(text)){
                                 user_broadcast("update",text);
                             }else {
-                                NToast.shortToastBaseApp("请输入名称");
+                                NToast.shortToastBaseApp("请输入播单名称");
                             }
 
 
@@ -194,24 +188,13 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                 if(isSelMore)
                     return;
+
                 if(!CheckUtil.isEmpty(comAllList)){
-                    DownManger.setIdAndPath(comAllList,null,
-                            new DownManger.ResultCallback() {
-
-                                @Override
-                                public void onSuccess(Object baseDownloadTaskSparseArray) {
-                                    if(null != quickAdapter){
-                                        quickAdapter.notifyDataSetChanged();
-                                        NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
-                                    }
-
-                                }
-
-                                @Override
-                                public void onError(String errString) {
-
-                                }
-                            });
+                if(isWifi(this)){
+                    down(comAllList);
+                }else {
+                    setDelAlertDialog(0);//全部下载
+                }
                 }
 
                 break;
@@ -259,7 +242,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 if(!CheckUtil.isEmpty(selList)) {
                     selList.clear();
                 }
-
+                sel_all_Layout.setSelected(false);
                 quickAdapter.notifyDataSetChanged();
 
                 break;
@@ -757,6 +740,50 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
         dialog.show();
     }
 
-    //下载相关
+    //非wifi网络下的提醒
+    private void setDelAlertDialog(final int showType){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage(getString(R.string.WiFi));
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(showType == 0){//添加波丹后下载
+                    down(comAllList);
+                }else if(showType == 1){
+                    down(selList);
+                }
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
+
+    //下载管理
+    private void down(List<ComAll> list){
+        if(!CheckUtil.isEmpty(list)){
+            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+                @Override
+                public void onSuccess(Object baseDownloadTaskSparseArray) {
+                    if(null != quickAdapter){
+                        quickAdapter.notifyDataSetChanged();
+                        NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
+                    }
+                }
+                @Override
+                public void onError(String errString) {
+
+                }
+            });
+        }else {
+            NToast.shortToastBaseApp(getString(R.string.请选择));
+        }
+    }
 }

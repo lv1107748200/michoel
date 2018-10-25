@@ -322,10 +322,26 @@
         <item name="android:textColor">@color/color_292</item>
         <item name="android:textSize">@dimen/size_15</item>
     </style>
+
+
     <style name="Text4" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_292</item>
-        <item name="android:textSize">@dimen/size_12</item>
+        <item name="android:textSize">@dimen/size_14</item>
     </style>
+    <style name="Text4_one" parent="BaseTextStyle">
+        <item name="android:textColor">@color/color_292</item>
+        <item name="android:textSize">@dimen/size_13</item>
+    </style>
+    <style name="Text4_one_one" parent="BaseTextStyle">
+        <item name="android:textColor">@color/color_292</item>
+        <item name="android:textSize">@dimen/size_15</item>
+    </style>
+    <style name="Text4_two" parent="BaseTextStyle">
+        <item name="android:textColor">@color/color_A3A</item>
+        <item name="android:textSize">@dimen/size_13</item>
+    </style>
+
+
     <style name="Text5" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_A3A</item>
         <item name="android:textSize">@dimen/size_15</item>
@@ -356,7 +372,7 @@
     </style>
     <style name="Text12" parent="BaseTextStyle">
     <item name="android:textColor">@color/color_666</item>
-    <item name="android:textSize">@dimen/size_12</item>
+    <item name="android:textSize">@dimen/size_14</item>
     </style>
     <style name="Text13" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_292</item>
@@ -364,7 +380,7 @@
     </style>
     <style name="Text14" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_636</item>
-        <item name="android:textSize">@dimen/size_12</item>
+        <item name="android:textSize">@dimen/size_13</item>
     </style>
     <style name="Text15" parent="BaseTextStyle">
         <item name="android:textColor">@color/color_636</item>
@@ -395,7 +411,7 @@
     <style name="view_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/line_hight</item>
-        <item name="android:background">@color/color_line</item>
+        <item name="android:background">@color/color_line_one</item>
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginLeft">0dp</item>
     </style>
@@ -406,7 +422,13 @@
         <item name="android:layout_marginRight">0dp</item>
         <item name="android:layout_marginLeft">0dp</item>
     </style>
-
+    <style name="view_line_color_one">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/line_hight</item>
+        <item name="android:background">@color/color_line_one</item>
+        <item name="android:layout_marginRight">0dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+    </style>
 
 
     <style name="view_line_v">
@@ -465,7 +487,7 @@
     </style>
 
     <style name="m_style_image_one">
-        <item name="android:layout_width">@dimen/margin_11</item>
+        <item name="android:layout_width">@dimen/margin_7</item>
         <item name="android:layout_height">@dimen/margin_11</item>
         <item name="android:background">@drawable/myjt1</item>
     </style>
@@ -499,6 +521,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/margin_5</item>
+        <item name="android:paddingRight">@dimen/margin_5</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
+    </style>
+    <style name="m_er_recycle_style_p_b">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/color_back</item>
         <item name="android:paddingLeft">@dimen/margin_5</item>
         <item name="android:paddingRight">@dimen/margin_5</item>
         <item name="android:overScrollMode">never</item>
@@ -539,19 +570,26 @@
         <item name="android:layout_height">@dimen/dp_20</item>
     </style>
 
-    <style name="sel_text_style">
-        <item name="android:layout_marginLeft">@dimen/dp_4</item>
+    <style name="sel_text_style" parent="Text4_two">
+        <item name="android:layout_marginLeft">@dimen/margin_2</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxLines">1</item>
-        <item name="android:textSize">@dimen/sp_10</item>
+        <item name="android:textSize">@dimen/size_12</item>
         <item name="android:textColor">@color/color_A3A</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="sel_img_style">
-        <item name="android:layout_marginLeft">@dimen/dp_18</item>
-        <item name="android:layout_width">@dimen/dp_10</item>
-        <item name="android:layout_height">@dimen/dp_10</item>
+        <item name="android:layout_marginLeft">@dimen/margin_6</item>
+        <item name="android:layout_width">@dimen/margin_16</item>
+        <item name="android:layout_height">@dimen/margin_16</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="sel_img_style_one">
+        <item name="android:layout_width">@dimen/margin_16</item>
+        <item name="android:layout_height">@dimen/margin_16</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
 
     <style name="bottom_layout_style">
@@ -562,6 +600,12 @@
         <item name="android:paddingLeft">@dimen/dp_36</item>
         <item name="android:paddingRight">@dimen/dp_16</item>
         <item name="android:background">@drawable/press_one</item>
+    </style>
+
+    <style name="vosice_layout">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 </resources>

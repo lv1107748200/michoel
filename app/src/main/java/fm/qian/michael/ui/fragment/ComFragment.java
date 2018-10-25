@@ -40,6 +40,8 @@ import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 
+import static fm.qian.michael.utils.CommonUtils.getNumberIndex;
+
 /*
  * lv   2018/9/11
  */
@@ -126,6 +128,9 @@ public class ComFragment extends BaseRecycleViewFragment {
                                 helper.setGone(R.id.k_four,false);
                             }
 
+                            helper.setGone(R.id.item_tv_num,true);
+                            helper.setText(R.id.item_tv_num, getNumberIndex(helper.getLayoutPosition()+1));
+
                             helper.setText(R.id.item_ming_tv,rankMore.getTitle());
 
                             if(CheckUtil.isEmpty(rankMore.getBroad())){
@@ -206,7 +211,8 @@ public class ComFragment extends BaseRecycleViewFragment {
                             }else {
                                 helper.setGone(R.id.k_four,false);
                             }
-
+                            helper.setGone(R.id.item_tv_num,true);
+                            helper.setText(R.id.item_tv_num,  getNumberIndex(helper.getLayoutPosition()+1));
 
                             helper.setText(R.id.item_ming_tv,rankMore.getTitle());
 

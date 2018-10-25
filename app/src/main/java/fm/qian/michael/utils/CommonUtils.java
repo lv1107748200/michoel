@@ -408,6 +408,7 @@ public class CommonUtils {
         Intent intent = new Intent();
         intent.setClass(context,PlayActivity.class);
 
+        context.startActivity(intent);
 
         if(!CheckUtil.isEmpty(what)){
             UseData.setInit(what);
@@ -424,7 +425,7 @@ public class CommonUtils {
         MusicPlayerManger.synthesizeMake(list,num);
 
 
-        context.startActivity(intent);
+
         return intent;
     }
 
@@ -448,6 +449,15 @@ public class CommonUtils {
         stringBuffer.deleteCharAt(stringBuffer.length() - 1);
 
       return stringBuffer.toString();
+    }
+
+    public static String getNumberIndex(int what){
+        String num = what +"";
+        if(num.length() == 1){
+            num = "0"+num;
+        }
+
+        return num;
     }
 
 

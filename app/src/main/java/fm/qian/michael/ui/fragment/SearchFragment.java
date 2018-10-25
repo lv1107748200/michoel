@@ -615,7 +615,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
     private void setDelAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(mFontext);
         builder.setTitle("提示");
-        builder.setMessage("当前非WiFi网络是否确定下载？");
+        builder.setMessage(getString(R.string.WiFi));
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

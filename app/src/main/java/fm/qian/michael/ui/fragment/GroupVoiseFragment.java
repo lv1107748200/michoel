@@ -94,6 +94,7 @@ import io.reactivex.functions.Consumer;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICID;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICNAME;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICTYPE;
+import static fm.qian.michael.utils.CommonUtils.getNumberIndex;
 import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*
@@ -312,7 +313,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 if(!CheckUtil.isEmpty(selList)) {
                     selList.clear();
                 }
-
+                sel_all_Layout.setSelected(false);
                 quickAdapter.notifyDataSetChanged();
 
                 break;
@@ -454,7 +455,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                                 helper.setGone(R.id.sel_image, false);
                             }
 
-                            helper.setText(R.id.item_tv_num, helper.getLayoutPosition() + "");
+                            helper.setText(R.id.item_tv_num, getNumberIndex(helper.getLayoutPosition()));
 
                             helper.setText(R.id.item_ming_tv, rankMore.getTitle());
 
@@ -590,6 +591,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //            }
 //        });
     }
+    public final static String CSS_STYLE ="<style>* {font-size:15px;line-height:20px;}p {color:#666666;}</style>";
     private void setWebView(WebView webview,String content) {
         webview.getSettings().setJavaScriptEnabled(true);
         webview.getSettings().setBuiltInZoomControls(true);
@@ -602,7 +604,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             webview.getSettings().setMixedContentMode(webview.getSettings()
                     .MIXED_CONTENT_ALWAYS_ALLOW);  //注意安卓5.0以上的权限
         }
-        webview.loadDataWithBaseURL(null,CommonUtils.getNewContent(content),
+        webview.loadDataWithBaseURL(null,CSS_STYLE+CommonUtils.getNewContent(content),
                 "text/html", "UTF-8", null);
     }
     private boolean isPay(boolean is){
@@ -886,7 +888,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     private void setDelAlertDialog(final int showType){
         AlertDialog.Builder builder = new AlertDialog.Builder(mFontext);
         builder.setTitle("提示");
-        builder.setMessage("当前非WiFi网络是否确定下载？");
+        builder.setMessage(getString(R.string.WiFi));
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

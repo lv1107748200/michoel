@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/layer_list_one"
+                android:background="@drawable/loop_color_eight"
                 >
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="@dimen/margin_55"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/layer_list_one"
+                android:background="@drawable/loop_color_eight"
                 >
                 <android.support.v7.widget.RecyclerView
                     android:layout_marginTop="@dimen/margin_55"

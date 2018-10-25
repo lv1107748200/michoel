@@ -217,7 +217,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/two"
-                    android:textSize="@dimen/size_10"
+                    android:textSize="@dimen/size_12"
                     android:textColor="@color/color_A3A"
                     android:gravity="center"
                     android:layout_marginTop="@dimen/margin_10"

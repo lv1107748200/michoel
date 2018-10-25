@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_back"
+    >
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -13,7 +15,7 @@
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_50"
-            android:background="@color/white"
+            android:background="@color/color_back"
             app:srlFinishDuration="200"
             app:srlEnableLastTime="true"
             app:srlClassicsSpinnerStyle="FixedBehind"
@@ -27,12 +29,12 @@
             />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_list"
-            style="@style/m_er_recycle_style_w"
+            style="@style/m_er_recycle_style_p_b"
             />
         <com.scwang.smartrefresh.layout.footer.ClassicsFooter
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/color_back"
             app:srlClassicsSpinnerStyle="Translate"
             />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

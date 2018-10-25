@@ -68,6 +68,8 @@ public class SearchLayout extends FrameLayout implements
     ImageView image_scan;
     @BindView(R.id.item_recycler)
     RecyclerView item_recycler;
+    @BindView(R.id.search_line)
+            View search_line;
 
 
     TagFlowLayout id_flowlayout;
@@ -319,6 +321,10 @@ public class SearchLayout extends FrameLayout implements
           }
       }).execute();
 
+    }
+
+    public void setSearch_line(int i) {
+        this.search_line.setVisibility(i);
     }
 
     public void setNv(int i){

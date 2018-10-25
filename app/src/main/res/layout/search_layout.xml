@@ -81,6 +81,7 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/search_line"
         android:layout_marginTop="@dimen/margin_11"
         style="@style/view_line"
        />

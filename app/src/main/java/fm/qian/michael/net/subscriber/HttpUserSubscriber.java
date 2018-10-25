@@ -77,7 +77,7 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
                         }
                     }else if(code == -2){
 
-                        NToast.shortToastBaseApp("用户登录过期，需重新登陆");
+                        NToast.shortToastBaseApp("用户登录过期，需重新登录");
 
                         if(null != callback){
                             if(callback.getContext() != null){

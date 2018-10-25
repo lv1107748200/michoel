@@ -77,7 +77,7 @@ public class QuickAdapter extends BaseQuickAdapter<Object, BaseViewHolder> {
 
     private int wight(){
          wight = DisplayUtils.getWideP(3,0
-                ,DisplayUtils.getDimen(R.dimen.margin_20));
+                ,DisplayUtils.getDimen(R.dimen.margin_15));
 
         return wight;
     }

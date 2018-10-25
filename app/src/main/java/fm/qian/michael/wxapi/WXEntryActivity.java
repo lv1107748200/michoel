@@ -166,7 +166,7 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
                 String msg = k.getMsg();
 
                 if("succ_yes".equals(msg)){
-                    NToast.shortToastBaseApp("登陆成功");
+                    NToast.shortToastBaseApp("登录成功");
 
                   //  SPUtils.putString(USERNAME,userInfo.getUsername(),true);
                  //   SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);

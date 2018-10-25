@@ -19,14 +19,13 @@
             />
         <TextView
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/margin_11"
+            android:layout_marginLeft="@dimen/margin_11"
             android:id="@+id/item_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|center"
-            android:textColor="@color/color_292"
-            android:textSize="@dimen/sp_11"
+            style="@style/Text4_one_one"
             />
     </LinearLayout>
 

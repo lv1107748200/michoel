@@ -2,6 +2,7 @@ package fm.qian.michael.ui.activity;
 
 
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +36,7 @@ import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
+import fm.qian.michael.utils.SpanUtils;
 import fm.qian.michael.widget.RoundedImage.RoundedImageView;
 import fm.qian.michael.widget.custom.ClearWriteEditText;
 import fm.qian.michael.widget.single.UserInfoManger;
@@ -97,10 +99,13 @@ public class LoginActivity extends BaseIntensifyActivity {
     @BindView(R.id.verification_code_img)//图片验证
     ImageView verification_code_img;
 
+    @BindView(R.id.help_tv)
+    TextView help_tv;
+
 
     @OnClick({R.id.base_left_layout, R.id.base_right_layout,
             R.id.send_verification_code,R.id.weixin_login_layout
-    ,R.id.de_login_sign,R.id.verification_code_img})
+    ,R.id.de_login_sign,R.id.verification_code_img,R.id.help_tv})
     public  void  onClick(View view){
         switch (view.getId()){
             case R.id.base_left_layout:
@@ -134,6 +139,11 @@ public class LoginActivity extends BaseIntensifyActivity {
                 CommonUtils.weixinLogin(this,GlobalVariable.ZERO,true);
 
                 break;
+            case R.id.help_tv:
+                Intent intent = new Intent(this, WebTBSParticularsActivity.class);
+                intent.putExtra(WebTBSParticularsActivity.WEBTYPE, GlobalVariable.FOUR);
+                startActivity(intent);
+                break;
         }
     }
 
@@ -144,6 +154,15 @@ public class LoginActivity extends BaseIntensifyActivity {
     @Override
     public void initView() {
         super.initView();
+
+        SpanUtils spanUtils = new SpanUtils();
+
+        help_tv.setText(spanUtils.
+                append("我已阅读并同意")
+                .append("《钱儿频道软件服务协议》")
+                .setForegroundColor(ContextCompat.getColor(this,R.color.color_F86))
+                .setUnderline()
+                .create());
 
         Intent intent = getIntent();
         type = intent.getStringExtra(LOGIN);
@@ -241,12 +260,12 @@ public class LoginActivity extends BaseIntensifyActivity {
         }
 
         if(CheckUtil.isEmpty(phone)){
-            NToast.shortToastBaseApp("电话号码");
+            NToast.shortToastBaseApp("电话号码错误");
             de_login_phone.setShakeAnimation();
             return;
         }
         if(CheckUtil.isEmpty(yzm)){
-            NToast.shortToastBaseApp("图形验证码");
+            NToast.shortToastBaseApp("图形验证码错误");
             de_login_image.setShakeAnimation();
             return;
         }
@@ -305,12 +324,12 @@ public class LoginActivity extends BaseIntensifyActivity {
         String code = et_verification_code.getText().toString();
 
         if(CheckUtil.isEmpty(phone)){
-            NToast.shortToastBaseApp("电话号码");
+            NToast.shortToastBaseApp("电话号码错误");
             de_login_phone.setShakeAnimation();
             return;
         }
         if(CheckUtil.isEmpty(code)){
-            NToast.shortToastBaseApp("短信验证码");
+            NToast.shortToastBaseApp("短信验证码错误");
             et_verification_code.setShakeAnimation();
             return;
         }
@@ -334,7 +353,7 @@ public class LoginActivity extends BaseIntensifyActivity {
                 UserInfo userInfo = k.getData();
 
                 String msg = k.getMsg();
-                NToast.shortToastBaseApp("登陆成功");
+                NToast.shortToastBaseApp("登录成功");
 
            //     SPUtils.putString(USERNAME,userInfo.getUsername(),true);
          //       SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
@@ -366,17 +385,17 @@ public class LoginActivity extends BaseIntensifyActivity {
         String code = et_verification_code.getText().toString();
 
         if(CheckUtil.isEmpty(phone)){
-            NToast.shortToastBaseApp("电话号码");
+            NToast.shortToastBaseApp("电话号码错误");
             de_login_phone.setShakeAnimation();
             return;
         }
         if(CheckUtil.isEmpty(yzm)){
-            NToast.shortToastBaseApp("图形验证码");
+            NToast.shortToastBaseApp("图形验证码错误");
             de_login_image.setShakeAnimation();
             return;
         }
         if(CheckUtil.isEmpty(code)){
-            NToast.shortToastBaseApp("短信验证码");
+            NToast.shortToastBaseApp("短信验证码错误");
             et_verification_code.setShakeAnimation();
             return;
         }
@@ -402,7 +421,7 @@ public class LoginActivity extends BaseIntensifyActivity {
                 String msg = k.getMsg();
 
                 if("succ_yes".equals(msg)){
-                    NToast.shortToastBaseApp("登陆成功");
+                    NToast.shortToastBaseApp("登录成功");
 
                  //   SPUtils.putString(USERNAME,userInfo.getUsername(),true);
                   //  SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);

@@ -61,6 +61,11 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
     TextView itemTv;
     SelectableRoundedImageView itemImage;
 
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_head_group;
+    }
+
 
     @Override
     public void init() {
@@ -184,8 +189,8 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
                             if (p < 0) {
                                 p = DisplayUtils.getDimen(R.dimen.item_margin_four);
                             }
-                            helper.itemView.setPadding(0, 0, 0, 0);
-                            helper.itemView.findViewById(R.id.haolou_layout).setPadding(p, 0, p, 0);
+                            helper.itemView.setPadding(p, 0, p, 0);
+                           // helper.itemView.findViewById(R.id.haolou_layout).setPadding(p, 0, p, 0);
 
                             if (item instanceof ComAll) {
                                 helper.setText(R.id.title_tv_news, ((ComAll) item).getTitle());
@@ -258,10 +263,11 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
 
     private int wight2(){
         int  wight = DisplayUtils.getWideP(2,0
-                ,DisplayUtils.getDimen(R.dimen.margin_80));
+                ,DisplayUtils.getDimen(R.dimen.margin_44));
 
+        int w = wight/10;
         // NLog.e(NLog.TAGOther,"宽度： --->" + wight);
-        return wight;
+        return  w * 8;
     }
 
     @Override

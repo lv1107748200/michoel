@@ -3,6 +3,7 @@ package fm.qian.michael.service;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -17,6 +18,7 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.audiofx.AudioEffect;
+import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -126,7 +128,7 @@ public class MqService extends Service {
     public static final String LOCK_SCREEN = "fm.qian.michael.lock";
     public static final String SEND_PROGRESS = "fm.qian.michael.progress";
     public static final String MUSIC_LODING = "fm.qian.michael.loading";
-    public static final String BUFFER_UP = "fm.qian.michael.bufferup";
+    public static final String ERROR_UP = "fm.qian.michael.errorup";
     private static final String SHUTDOWN = "fm.qian.michael.shutdown";
     public static final String SETQUEUE = "fm.qian.michael.setqueue";
 
@@ -315,6 +317,7 @@ public class MqService extends Service {
     //初始化 更新 播放列表  每次更新 都按第一次进来处理 isFirstLoad 设置为 true
     public void updata(List<ComAll> comAll,int num){
         synchronized (this) {
+            press = -1;//进度复原
             isFirstLoad = true;
             playNumber = num;
             if(!CheckUtil.isEmpty(comAll)){
@@ -330,7 +333,7 @@ public class MqService extends Service {
     public void play() {
 
         if(!isCanPlay()){
-            NToast.shortToastBaseApp("需登陆");
+            NToast.shortToastBaseApp("需登录");
             return;
         }
 
@@ -370,7 +373,7 @@ public class MqService extends Service {
         intent.putExtra(AudioEffect.EXTRA_PACKAGE_NAME, getPackageName());
         sendBroadcast(intent);
 
-       // pushAction(MUSIC_LODING);//正在加载
+        pushAction(MUSIC_LODING);//正在加载
         if(isPlaying()){
             pause();//换歌时暂停
         }
@@ -433,7 +436,7 @@ public class MqService extends Service {
 
     public void start(){
         if(!isCanPlay()){
-            NToast.shortToastBaseApp("付费专辑需登陆播放");
+            NToast.shortToastBaseApp("付费专辑需登录播放");
             return;
         }
         isAudio = false;
@@ -803,7 +806,7 @@ public class MqService extends Service {
             } else {
                 if(isFirstLoad){
                     updata(null,0);
-                    play();
+                    play();//外部设备操作
                 }else {
                     start();//外部按钮
                 }
@@ -926,30 +929,43 @@ public class MqService extends Service {
         if(null != bitmap){
             remoteViews.setImageViewBitmap(R.id.image, bitmap);
         }else {
-         //   remoteViews.setImageViewResource(R.id.image, R.drawable.logo);
+            //   remoteViews.setImageViewResource(R.id.image, R.drawable.logo);
             remoteViews.setImageViewResource(R.id.image, R.drawable.placeholder_disk_210);
         }
 
-//        if("0".equals(what)){
-//          //  NLog.e(NLog.PLAYER,"获取 图片 ");
-//          //  mPlayerHandler.post(reqIcon);//执行图片请求
-//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-        if(mNotification == null){
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setContent(remoteViews)
-                    .setSmallIcon(R.drawable.playbg)
-                    .setContentIntent(click);
-//                    .setWhen(mNotificationPostTime);
-            if (CommonUtils.isJellyBeanMR1()) {
-                builder.setShowWhen(false);
-            }
-            mNotification = builder.build();
+
+            NotificationChannel mChannel = new NotificationChannel(mNotificationId+"", "MqService", NotificationManager.IMPORTANCE_LOW);
+            mNotificationManager.createNotificationChannel(mChannel);
+            mNotification = new Notification.Builder(this,mNotificationId+"")
+                    .setCustomContentView(remoteViews)
+                    .setSmallIcon(R.drawable.logo)
+                    .setContentIntent(click)
+                    .build();
+
+            return mNotification;
+
         }else {
-            mNotification.contentView = remoteViews;
+            if(mNotification == null){
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(this,mNotificationId+"").setContent(remoteViews)
+                        .setSmallIcon(R.drawable.logo)
+                        .setContentIntent(click);
+//                    .setWhen(mNotificationPostTime);
+                if (CommonUtils.isJellyBeanMR1()) {
+                    builder.setShowWhen(false);
+                }
+                mNotification = builder.build();
+            }else {
+                mNotification.contentView = remoteViews;
+            }
+
+
+            return mNotification;
         }
 
-        return mNotification;
     }
+
 
     private void cancelNotification() {
         stopForeground(true);
@@ -958,6 +974,12 @@ public class MqService extends Service {
     }
 
     public void pushAction(String ACTION) {
+        NLog.e(NLog.PLAYER,"widget"+"action = " + ACTION);
+        Intent startIntent = new Intent(ACTION);
+        sendBroadcast(startIntent);
+    }
+
+    public void pushAction(String ACTION,boolean is) {
         NLog.e(NLog.PLAYER,"widget"+"action = " + ACTION);
         Intent startIntent = new Intent(ACTION);
         sendBroadcast(startIntent);
@@ -1073,6 +1095,7 @@ public class MqService extends Service {
             @Override
             public void onFailure(Call call, IOException e) {
                 NLog.e(NLog.PLAYER,"path 通过接口获取：onFailure " +e.toString() + e.getMessage());
+                pushAction(ERROR_UP);
             }
 
             @Override

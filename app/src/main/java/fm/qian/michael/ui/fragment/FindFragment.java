@@ -65,7 +65,10 @@ public class FindFragment extends BaseRecycleViewFragment {
 
         }
     }
-
+    @Override
+    protected int getContentViewId() {
+        return R.layout.fragment_find;
+    }
     @Override
     public void initWidget(View view) {
         super.initWidget(view);

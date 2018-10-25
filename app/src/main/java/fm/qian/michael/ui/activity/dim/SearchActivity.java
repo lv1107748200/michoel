@@ -139,8 +139,9 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
         setStatusBar(statusBar);
         idSearch.setSearchCallBack(this);
         idSearch.setNv(View.GONE);
+        idSearch.setSearch_line(View.GONE);
         idSearch.setImageScan(View.VISIBLE);//显示扫描按钮
-        idSearch.setSearch_et_inputHint("请输入关键字");//显示扫描按钮
+        idSearch.setSearch_et_inputHint("输入关键词");//显示扫描按钮
 
         kind = getIntent().getStringExtra("kind");
 
@@ -191,6 +192,7 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
                 LinePagerIndicator indicator = new LinePagerIndicator(context);
                 indicator.setMode(LinePagerIndicator.MODE_EXACTLY);
                 indicator.setColors(Color.parseColor("#F86E78"));
+                indicator.setRoundRadius(DisplayUtils.getDimen(R.dimen.radius));
                 return indicator;
             }
         });

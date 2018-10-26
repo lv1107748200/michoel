@@ -179,17 +179,18 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
             GlideUtil.setGlideImage(this, R.drawable.pause,playImage);
         }
 
+        setBroadcast(this);
     }
 
     @Override
     public void initData() {
 
         List<BottomBarLayout.DataList> dataLists = new ArrayList<>();
-        int[] strings = {fm.qian.michael.R.string.发现, fm.qian.michael.R.string.分类, fm.qian.michael.R.string.文章, fm.qian.michael.R.string.我的};
+        int[] strings = {R.string.发现, R.string.分类, R.string.文章, R.string.我的};
         int[] stringId = {fm.qian.michael.R.drawable.selector_find,
-                fm.qian.michael.R.drawable.selector_category,
-                fm.qian.michael.R.drawable.selector_article,
-                fm.qian.michael.R.drawable.selector_my};
+                R.drawable.selector_category,
+                R.drawable.selector_article,
+                R.drawable.selector_my};
 
         for(int i =0,j=strings.length;i<j;i++){
             BottomBarLayout.DataList dataList = new BottomBarLayout.DataList(stringId[i],strings[i]);
@@ -241,9 +242,9 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
     @Override
     public void setState(boolean is) {
         if(is){
-            NToast.shortToast(this,"网络连接！");
+            EventBus.getDefault().post(new Event.NetEvent(1));
         }else {
-            NToast.shortToast(this,"无网络连接！");
+          //  NToast.shortToastBaseApp("无网络连接！");
         }
 
     }
@@ -285,7 +286,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
                 }
             }else if(MqService.UPDATA_ID.equals(action)){//换歌了
 
-                EventBus.getDefault().post(new Event.PlayEvent());//正在播放刷新
+                EventBus.getDefault().post(new Event.PlayEvent(1));//正在播放刷新
 
             }
 

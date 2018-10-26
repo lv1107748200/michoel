@@ -171,7 +171,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                         }
                     });
                     popInputWindow.setMain_search("请输入播单名称");
-                    popInputWindow.setSet_add_tv_title("更改播单");
+                    popInputWindow.setSet_add_tv_title("更改名称");
 
                     popInputWindow.show(v);
                 }else {
@@ -195,6 +195,8 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 }else {
                     setDelAlertDialog(0);//全部下载
                 }
+                }else {
+                    NToast.shortToastBaseApp(getString(R.string.请选择));
                 }
 
                 break;
@@ -258,9 +260,9 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
     public void initView() {
         super.initView();
 
-//        if(!EventBus.getDefault().isRegistered(this)) {
-//            EventBus.getDefault().register(this);
-//        }
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         setTitleTv("我的播单");
         add_layout.setVisibility(View.GONE);//隐藏添加按钮
@@ -515,7 +517,12 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
     public void onDataSynEvent(Event.PlayEvent event) {
-        upPlay();
+        if(event.getI() == 1){
+           // upPlay();
+        }else if(event.getI() == 2){
+            if(null != quickAdapter)
+                quickAdapter.notifyDataSetChanged();
+        }
     }
     public void upPlay(){
         isPlay = isPlay();
@@ -630,9 +637,9 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                 if(null != popInputWindow)
                     popInputWindow.dismiss();
-                NToast.shortToastBaseApp(k.getMsg());
 
                 if("update".equals(act)){
+                    NToast.shortToastBaseApp("修改成功");
                     setTitleTv(title);
                 }
 
@@ -640,6 +647,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ONE));
 
                 if("del".equals(act)){
+                    NToast.shortToastBaseApp("删除成功");
                     deldelListFile(comAllList);
                     finish();
                 }

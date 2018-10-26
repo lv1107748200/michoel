@@ -76,12 +76,30 @@
                 style="@style/m_image_style_one"
                 android:background="@drawable/add_p"
                 />
-            <ImageView
-                android:id="@+id/down_image"
+
+            <RelativeLayout
+                android:layout_width="@dimen/margin_33"
+                android:layout_height="@dimen/margin_25"
                 android:layout_centerInParent="true"
-                style="@style/m_image_style_one"
-                android:background="@drawable/press_down"
-                />
+                >
+                <ImageView
+                    android:id="@+id/down_image"
+                    android:layout_centerInParent="true"
+                    style="@style/m_image_style_one"
+                    android:background="@drawable/press_down"
+                    />
+                <ImageView
+                    android:id="@+id/down_image_checked"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_width="@dimen/margin_12"
+                    android:layout_height="@dimen/margin_12"
+                    android:background="@drawable/arc_bc_layout_six"
+                    android:src="@drawable/icon_down_check_true"
+                    android:visibility="gone"
+                    />
+            </RelativeLayout>
+
             <ImageView
                 android:id="@+id/image_share"
                 android:layout_alignParentRight="true"

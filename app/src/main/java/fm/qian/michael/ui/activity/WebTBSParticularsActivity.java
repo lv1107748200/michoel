@@ -265,6 +265,14 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
             setTitleTv("服务协议");
             url = "https://www.qian.fm/agreement.htm";
             setWebLoad(url);
+        }else if(GlobalVariable.FIVE.equals(type)){
+            setTitleTv("关于我们");
+            url = "https://www.qian.fm/about.htm";
+            setWebLoad(url);
+        }else if(GlobalVariable.SIX.equals(type)){
+            setTitleTv("联系我们");
+            url = "https://www.qian.fm/contact.htm";
+            setWebLoad(url);
         }
 
     }

@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
+import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.Ver;
@@ -50,7 +51,7 @@ public class SetActivity extends BaseIntensifyActivity {
     @BindView(R.id.item_image)
     SelectableRoundedImageView item_image;
     @OnClick({R.id.base_left_layout, R.id.base_right_layout,R.id.out_login_layout
-    ,R.id.benbenhao_layout})
+    ,R.id.benbenhao_layout,R.id.guanyu_layout,R.id.lianxi_layout})
     public  void  onClick(View view){
         switch (view.getId()){
             case R.id.base_left_layout:
@@ -66,8 +67,30 @@ public class SetActivity extends BaseIntensifyActivity {
                 setDelAlertDialog();
                 break;
             case R.id.benbenhao_layout:
+
                 goToMarket(this,"fm.qian.michael");
+
+
                 break;
+            case R.id.guanyu_layout:
+                if(true){
+                    Intent intent = new Intent(this, WebTBSParticularsActivity.class);
+                    intent.putExtra(WebTBSParticularsActivity.WEBTYPE, GlobalVariable.FIVE);
+                    startActivity(intent);
+                }
+                break;
+
+            case R.id.lianxi_layout:
+                if(true){
+                    Intent intent = new Intent(this, WebTBSParticularsActivity.class);
+                    intent.putExtra(WebTBSParticularsActivity.WEBTYPE, GlobalVariable.SIX);
+                    startActivity(intent);
+                }
+
+                break;
+
+
+
         }
     }
 

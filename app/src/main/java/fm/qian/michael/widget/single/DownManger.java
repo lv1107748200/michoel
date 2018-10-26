@@ -841,6 +841,14 @@ public class DownManger {
                             if(tag.getPosition() > -1){
                                 getInstance().baseQuickAdapter.notifyItemChanged(tag.getPosition());
                             }else {
+
+                                if(tag.getPosition() == -1){
+                                 // tag.getDown_image().setBackgroundResource(R.drawable.down_press);
+                                    tag.getDown_image_checked().setVisibility(View.VISIBLE);
+
+                                    EventBus.getDefault().post(new Event.PlayEvent(2));//在播放页面下载后视图刷新
+                                }
+
                                 tag.getView().setVisibility(View.VISIBLE);
                                 tag.getView().setActivated(true);
                                 tag.getTextView().setText("已下载");

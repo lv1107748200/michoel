@@ -286,6 +286,8 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
 
     @Override
     public void Refresh() {
+
+        initMesage();
         pageNo = 1;
         setUserInfo("list",pageNo+ "");
 

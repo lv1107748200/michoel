@@ -74,7 +74,7 @@ public class PopPlayListWindow extends BasePopupWindow {
                     String name = main_search.getText().toString();
                     if(CheckUtil.isEmpty(name))
                     {
-                        NToast.shortToastBaseApp("请输入名字");
+                        NToast.shortToastBaseApp("请输入播单名称");
                         return;
                     }
 
@@ -209,7 +209,7 @@ public class PopPlayListWindow extends BasePopupWindow {
 
             @Override
             public void onSuccess(Object comAll) {
-                NToast.shortToastBaseApp("播单添加成功");
+                NToast.shortToastBaseApp("已添加至播单，请前往我的播单查看");
 
                 if(null != popPlayListWindowCallBack){
                     popPlayListWindowCallBack.state(0);

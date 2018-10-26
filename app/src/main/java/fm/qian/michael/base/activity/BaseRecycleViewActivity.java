@@ -22,8 +22,10 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.R;
+import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 
 /*
  * lv   2018/9/8   仅有 recycle  的下拉刷新
@@ -70,6 +72,14 @@ public class BaseRecycleViewActivity extends BaseIntensifyActivity {
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
                 public void onRefresh(final RefreshLayout refreshlayout) {
+
+                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+
+                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+                        refreshlayout.finishRefresh();
+                        return;
+                    }
+
                     isUpOrDown = false;//向下
                     Refresh();
                 }
@@ -77,6 +87,14 @@ public class BaseRecycleViewActivity extends BaseIntensifyActivity {
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(RefreshLayout refreshlayout) {
+
+                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+
+                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+                        refreshLayout.finishLoadMore();
+                        return;
+                    }
+
                     isUpOrDown = true;//向下
                     loadMore();
                 }

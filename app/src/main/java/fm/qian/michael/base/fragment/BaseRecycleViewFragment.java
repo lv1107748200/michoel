@@ -19,6 +19,9 @@ import java.util.Locale;
 import java.util.Random;
 
 import butterknife.BindView;
+import fm.qian.michael.base.BaseApplation;
+import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 
 /*
  * lv   2018/9/7  下拉刷新标准版
@@ -62,6 +65,14 @@ public class BaseRecycleViewFragment extends BaseFragment {
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
                 public void onRefresh(final RefreshLayout refreshlayout) {
+
+                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+
+                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+                        refreshlayout.finishRefresh();
+                        return;
+                    }
+
                      isUpOrDown = false;//向下
 
                     if(isJYLogin()){
@@ -81,6 +92,13 @@ public class BaseRecycleViewFragment extends BaseFragment {
             refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
                 @Override
                 public void onLoadMore(RefreshLayout refreshLayout) {
+
+                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+
+                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+                        refreshLayout.finishLoadMore();
+                        return;
+                    }
 
                     isUpOrDown = true;
 

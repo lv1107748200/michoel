@@ -88,7 +88,9 @@ public class SearchLayout extends FrameLayout implements
                 if(null != searchCallBack){
                     if(!CheckUtil.isEmpty(search_et_input.getText().toString())){
                         search_et_input.setText("");
-                        searchCallBack.del();
+                        searchCallBack.del(1);
+                    }else if(nv.getVisibility() == VISIBLE){
+                        searchCallBack.del(2);
                     }
                 }
 
@@ -216,7 +218,7 @@ public class SearchLayout extends FrameLayout implements
                    save();
                 }else {
                     if(null != searchCallBack) {
-                        searchCallBack.del();
+                        searchCallBack.del(1);
                     }
                 }
 
@@ -241,6 +243,10 @@ public class SearchLayout extends FrameLayout implements
 
 
         });
+    }
+
+    public List<Base>  getStringList(){
+        return stringList;
     }
 
     public void setItem_recycler(){
@@ -340,7 +346,7 @@ public class SearchLayout extends FrameLayout implements
     public interface SearchCallBack{
         void textCallBack(String text);
         void show(int i);
-        void del();
+        void del(int type);
         void scan();
     }
 }

@@ -23,6 +23,10 @@ import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,6 +37,7 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.BaseDownViewHolder;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.http.HttpCallback;
@@ -136,7 +141,9 @@ public class SearchFragment extends BaseRecycleViewFragment {
     @Override
     public void init() {
         super.init();
-
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         ini();
         initView();
     }
@@ -440,14 +447,28 @@ public class SearchFragment extends BaseRecycleViewFragment {
                         quickAdapter.replaceData(comAlls);
                     }else {
                         quickAdapter.replaceData(new ArrayList<>());
-                        quickAdapter.setEmptyView(getEmpty());
+                        quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
                     }
                 }
             }
         },SearchFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
 
     }
+    @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
+    public void onDataSynEvent(Event.PlayEvent event) {
+        if(event.getI() == 1){
 
+        }else if(event.getI() == 2){
+            switch (type){
+                case TWO:
+                    if(null != quickAdapter)
+                        quickAdapter.notifyDataSetChanged();
+                    break;
+            }
+
+        }
+
+    }
 
     //检索 id 转换
     private void getIdDown(List<ComAll> comAlls){
@@ -487,7 +508,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                 if(CheckUtil.isEmpty(comAlls)){
                     getRefreshLayout().finishRefresh();
                     quickAdapter.replaceData(new ArrayList<>());
-                    quickAdapter.setEmptyView(getEmpty());
+                    quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
                 }else {
                     DownManger.setIdDown(comAlls, new DownManger.ResultCallback<List<ComAll>>() {
                         @Override
@@ -526,7 +547,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                     quickAdapter.replaceData(comAlls);
                 }else {
                     quickAdapter.replaceData(new ArrayList<>());
-                    quickAdapter.setEmptyView(getEmpty());
+                    quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
                 }
             }
         }

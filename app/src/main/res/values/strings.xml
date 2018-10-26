@@ -8,7 +8,7 @@
     <string name="title_activity_login">LoginActivity</string>
 
     <string name="Login">登录</string>
-    <string name="please_login">请请登陆!</string>
+    <string name="please_login">请请登录!</string>
 
     <string name="phone_number">请输入手机号</string>
     <string name="password">密码</string>
@@ -107,7 +107,7 @@
     <string name="本月故事">本月故事</string>
     <string name="本月专辑">本月专辑</string>
     <string name="微信登陆">微信登录</string>
-    <string name="登陆">登陆</string>
+    <string name="登陆">登录</string>
     <string name="注册">注册</string>
     <string name="one">微信登录，快速同步钱儿频道收听数据</string>
     <string name="two">我已阅读并同意《钱儿频道软件服务协议》</string>
@@ -117,13 +117,21 @@
     <string name="获取验证码">获取验证码</string>
     <string name="已绑定">已绑定</string>
     <string name="未绑定">绑定后同步购买收听记录</string>
-    <string name="需登陆">需登录</string>
+    <string name="需登陆">请登录后重试</string>
     <string name="已登录">已登录</string>
     <string name="成功添加下载任务">成功添加下载任务</string>
     <string name="请选择">请选择</string>
     <string name="已下载">已下载</string>
     <string name="下载中">下载中</string>
-    <string name="WiFi">当前非WiFi网络环境是否确定下载？</string>
+    <string name="WiFi">下载将消耗流量，是否继续？</string>
+    <string name="付费">付费内容暂不支持</string>
+    <string name="无网络">无网络连接，请连接至网络</string>
+    <string name="empty"></string>
+    <string name="emptyone">没找到相关内容，请换个关键词试一下</string>
+
+
+    <string name="input_allow">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
 
     <string name="tips_scan_code">将二维码/条形码放入框内，即可自动扫码</string>
     <string name="what">输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单输入名称新建播单</string>

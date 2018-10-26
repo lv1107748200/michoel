@@ -29,6 +29,7 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseFragment;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.Video;
 import fm.qian.michael.net.entry.response.Base;
@@ -44,6 +45,8 @@ import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -92,6 +95,10 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
     @Override
     public void init() {
         super.init();
+
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         idSearch.setSearchCallBack(this);
         idSearch.setNv(View.GONE);
@@ -167,14 +174,22 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
     @Override
     public void show(int i) {
         getRefreshLayout().setVisibility(i);
+
+        if(null != idSearch){
+            if(CheckUtil.isEmpty(idSearch.getStringList())){
+                search_hotwords();
+            }
+        }
     }
     @Override
-    public void del() {
+    public void del(int num) {
         idSearch.setNv(View.GONE);
         getRefreshLayout().setVisibility(View.VISIBLE);
-        pageNo = 1;
-        tagText = "";
-        getRefreshLayout().autoRefresh();
+        if(num == 1){
+            pageNo = 1;
+            tagText = "";
+            getRefreshLayout().autoRefresh();
+        }
     }
 
     @Override
@@ -183,6 +198,11 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
     }
     @Override
     public void Refresh() {
+        if(null != idSearch){
+            if(CheckUtil.isEmpty(idSearch.getStringList())){
+                search_hotwords();
+            }
+        }
         pageNo = 1;
         articlelist(tagText+"",pageNo+"");
     }
@@ -222,7 +242,7 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
                         quickAdapter.replaceData(baseList);
                     }else {
                         quickAdapter.replaceData(new ArrayList<>());
-                        quickAdapter.setEmptyView(getEmpty());
+                        quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
                     }
                 }
 
@@ -250,8 +270,29 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
         },ArticleFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
 
     }
+    @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
+    public void onDataSynEvent(Event.NetEvent event) {
+        if(event.getI() == 1){
+            if(null != quickAdapter){
+                if(CheckUtil.isEmpty(quickAdapter.getData())){
+                    getRefreshLayout().autoRefresh();
+                }else {
+                    if(null != idSearch){
+                        if(CheckUtil.isEmpty(idSearch.getStringList())){
+                            search_hotwords();
+                        }
+                    }
+                }
+            }else {
+                if(null != idSearch){
+                    if(CheckUtil.isEmpty(idSearch.getStringList())){
+                        search_hotwords();
+                    }
+                }
+            }
 
+        }else if(event.getI() == 2){
 
-
-
+        }
+    }
 }

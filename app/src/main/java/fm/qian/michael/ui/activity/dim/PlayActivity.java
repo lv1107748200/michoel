@@ -126,6 +126,10 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     @BindView(R.id.layout_play_type)
     ImageView layoutPlayType;//播放方式
 
+    @BindView(R.id.down_image_checked)
+    ImageView down_image_checked;//播放方式
+    @BindView(R.id.down_image)
+    ImageView down_image;//播放方式
     @BindView(R.id.musicSeekBar)
     SeekBar musicSeekBar;
     @BindView(R.id.time_lift_tv)
@@ -273,7 +277,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
 
                     if(isPay()){
-                        NToast.shortToastBaseApp("付费音频不能下载");
+                        NToast.shortToastBaseApp(getString(R.string.付费));
                         return;
                     }
                     if(DownManger.isDownloaded(comAll.getUrl())){
@@ -296,7 +300,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 //                    return;
 //                }
                 if(isPay()){
-                    NToast.shortToastBaseApp("付费音频不能分享");
+                    NToast.shortToastBaseApp(getString(R.string.付费));
                     return;
                 }
                 if(null == popShareWindow){
@@ -323,8 +327,11 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                     return;
                 }
                 if(isPay()){
-                    NToast.shortToastBaseApp("付费音频");
+                    NToast.shortToastBaseApp(getString(R.string.付费));
                     return;
+                }
+                if(GlobalVariable.FIVE.equals(opType)){
+
                 }
                 isDown = false;
                 addPlayerList();//仅仅加入波胆
@@ -667,16 +674,23 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             kFour.setActivated(true);
             itemDownTv.setText(getString(R.string.已下载));
 
+            down_image_checked.setVisibility(View.VISIBLE);
+           //down_image.setBackgroundResource(R.drawable.down_press);
+
         }else if (statue == FileDownloadStatus.progress||statue == FileDownloadStatus.started || statue == FileDownloadStatus.connected ) {
 
-            DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,kFour,itemDownTv));
+            DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,down_image,down_image_checked,kFour,itemDownTv));
             kFour.setVisibility(View.VISIBLE);
             kFour.setActivated(true);
             itemDownTv.setText(getString(R.string.下载中));
 
+            down_image_checked.setVisibility(View.GONE);
+
         }else {
             kFour.setVisibility(View.GONE);
             kFour.setActivated(false);
+
+            down_image_checked.setVisibility(View.GONE);
 
         }
     }
@@ -697,7 +711,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                         String path = DownManger.createPath(comAll.getUrl());
                         int id = FileDownloadUtils.generateId(comAll.getUrl(), path);
 
-                        DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,kFour,itemDownTv));
+                        DownManger.updateViewHolder(id,new BaseDownViewHolder(id,-1,down_image,down_image_checked,kFour,itemDownTv));
 
                     }
 

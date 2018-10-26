@@ -12,6 +12,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 
+import fm.qian.michael.R;
+import fm.qian.michael.base.BaseApplation;
+import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.Observer;
@@ -37,11 +41,18 @@ public class HttpUtils {
     public static void toSubscribe(Observable o,
                                    Observer s,
                                    ObservableTransformer transformer){
-        o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(transformer)
-                .subscribe(s);
+
+        if(NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            o.subscribeOn(Schedulers.io())
+                    .unsubscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(transformer)
+                    .subscribe(s);
+        }else {
+            NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+        }
+
+
     }
     //添加线程管理并订阅
     public static RequestBody buildRequestBody(Object data){

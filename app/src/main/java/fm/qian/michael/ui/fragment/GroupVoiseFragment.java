@@ -246,7 +246,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 }
 
                 if(GlobalVariable.ONE.equals(album.getIspay())){ // 0不是  1是
-                    NToast.shortToastBaseApp("付费专辑不能分享");
+                    NToast.shortToastBaseApp(getString(R.string.付费));
                     return;
                 }
 
@@ -611,7 +611,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         if(null != album){
             if(GlobalVariable.ONE.equals(album.getIspay())){
                 if(is)
-                NToast.shortToastBaseApp("付费专辑不能操作");
+                NToast.shortToastBaseApp(getString(R.string.付费));
                 return true;
             }else {
                 return false;
@@ -626,7 +626,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     private boolean isPay(){
         if(null != album){
             if(GlobalVariable.ONE.equals(album.getIspay())){
-                    NToast.shortToastBaseApp("付费专辑不能操作");
+                    NToast.shortToastBaseApp(getString(R.string.付费));
                 return true;
             }else {
                 return false;
@@ -756,7 +756,13 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
     public void onDataSynEvent(Event.PlayEvent event) {
-         upPlay();
+        if(event.getI() == 1){
+            upPlay();
+        }else if(event.getI() == 2){
+            if(null != quickAdapter)
+                quickAdapter.notifyDataSetChanged();
+        }
+
     }
     public void upPlay(){
         isPlay = isPlay();
@@ -816,7 +822,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                         layout_fav.setEnabled(true);
 
                         if(("del").equals(act)){
-                            NToast.shortToastBaseApp("取消收藏成功");
+                            NToast.shortToastBaseApp("取消收藏");
                             layout_fav.setSelected(false);
                             EventBus.getDefault().post(new Event.FavEvent(2,album.getId()));
                         }else if("add".equals(act)){

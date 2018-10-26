@@ -43,6 +43,7 @@ public class BaseActivity extends AbstractBaseActivity{
     @Inject
     public BaseService baseService;
     Unbinder unbinder;
+    private  NetworkConnectChangedReceiver networkConnectChangedReceiver;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,7 +141,7 @@ public class BaseActivity extends AbstractBaseActivity{
     //设置网络监听广播
     public void setBroadcast(NetworkConnectChangedReceiver.BroadcastCallBack broadcast){
 
-        NetworkConnectChangedReceiver networkConnectChangedReceiver = new NetworkConnectChangedReceiver();
+        networkConnectChangedReceiver = new NetworkConnectChangedReceiver();
         networkConnectChangedReceiver.setBroadcastCallBack(broadcast);
 
         IntentFilter filter = new IntentFilter();
@@ -169,6 +170,9 @@ public class BaseActivity extends AbstractBaseActivity{
         EventBus.getDefault().unregister(this);//解除订阅
         if(null != unbinder){
             unbinder.unbind();
+        }
+        if(null != networkConnectChangedReceiver){
+            unregisterReceiver(networkConnectChangedReceiver);
         }
         super.onDestroy();
     }

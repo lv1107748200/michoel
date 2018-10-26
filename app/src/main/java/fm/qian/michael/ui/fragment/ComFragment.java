@@ -11,6 +11,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +22,7 @@ import java.util.List;
 import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.entry.response.RankMore;
@@ -85,6 +90,9 @@ public class ComFragment extends BaseRecycleViewFragment {
     public void init() {
         super.init();
 
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         initView();
     }
 
@@ -314,6 +322,23 @@ public class ComFragment extends BaseRecycleViewFragment {
         ranklist();
     }
 
+    @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
+    public void onDataSynEvent(Event.PlayEvent event) {
+        if(event.getI() == 1){
+
+        }else if(event.getI() == 2){
+            switch (type){
+                case ONE:
+                case THREE:
+                    if(null != quickAdapter)
+                        quickAdapter.notifyDataSetChanged();
+                    break;
+            }
+
+        }
+
+    }
+
     private void ranklist(){
         baseService.ranklist(tid, day, pageNo+"",new HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>>() {
             @Override
@@ -343,7 +368,7 @@ public class ComFragment extends BaseRecycleViewFragment {
                         quickAdapter.replaceData(k);
                     }else {
                         quickAdapter.replaceData(new ArrayList<>());
-                        quickAdapter.setEmptyView(getEmpty());
+                        quickAdapter.setEmptyView(getEmpty("暂无数据"));
                     }
                 }
 

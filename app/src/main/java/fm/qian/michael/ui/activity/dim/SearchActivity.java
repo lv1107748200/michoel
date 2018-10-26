@@ -41,6 +41,10 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTit
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.SimplePagerTitleView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +60,7 @@ import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.base.activity.PermissionCallback;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.Base;
 import fm.qian.michael.net.entry.response.ComAll;
@@ -131,6 +136,10 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
     @Override
     public void initView() {
         super.initView();
+
+        if(!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
 
         isMake = true;
 
@@ -249,17 +258,27 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
 
     @Override
     public void show(int i) {
+        if(null != idSearch){
+            if(CheckUtil.isEmpty(idSearch.getStringList())){
+                search_hotwords();
+            }
+        }
+
         search_main_layout.setVisibility(i);
     }
 
     @Override
-    public void del() {
+    public void del(int num) {
         idSearch.setNv(View.GONE);
         search_main_layout.setVisibility(View.VISIBLE);
-        searchText = "";
+        if(num == 1){
+            searchText = "";
 
-        searchFragmentAdater.getItem(xViewPagerMain.getCurrentItem()).set(searchText);
-        searchFragmentAdater.getItem(xViewPagerMain.getCurrentItem()).load();
+            searchFragmentAdater.getItem(xViewPagerMain.getCurrentItem()).set(searchText);
+            searchFragmentAdater.getItem(xViewPagerMain.getCurrentItem()).load();
+        }else if(num == 2){
+
+        }
     }
 
     @Override
@@ -326,6 +345,21 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
 
             }
         },SearchActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND) //在ui线程执行
+    public void onDataSynEvent(Event.NetEvent event) {
+        if(event.getI() == 1){
+
+            if(null != idSearch){
+                if(CheckUtil.isEmpty(idSearch.getStringList())){
+                    search_hotwords();
+                }
+            }
+
+        }else if(event.getI() == 2){
+
+        }
     }
 
     @Override

@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_25"
             android:textColor="@color/color_000"
-            android:text="手机号登陆"
+            android:text="手机号登录"
             />
 
         <FrameLayout
@@ -154,6 +154,7 @@
                     <fm.qian.michael.widget.custom.ClearWriteEditText
                         android:id="@+id/de_login_image"
                         android:hint="请输入图形验证码"
+                        android:digits="@string/input_allow"
                         style="@style/cw_et" />
 
                     
@@ -181,6 +182,7 @@
 
                 <fm.qian.michael.widget.custom.ClearWriteEditText
                     android:id="@+id/et_verification_code"
+                    android:inputType="number"
                     android:hint="请输入短信验证码"
                     style="@style/cw_et" />
 

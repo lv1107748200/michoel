@@ -44,6 +44,9 @@ public class SectionAdapter extends BaseSectionQuickAdapter<MySection, BaseViewH
 
         helper.setGone(R.id.item_tv, false);
 
+//        ImageView imageView = helper.getView(R.id.item_image);
+//        imageView.setAdjustViewBounds(true);
+
         if(item.t instanceof Base){
             GlideUtil.setGlideImageMake(helper.itemView.getContext(),((Base) item.t).getCover(),
                     (ImageView) helper.getView(R.id.item_image));

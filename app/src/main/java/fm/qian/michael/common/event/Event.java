@@ -85,13 +85,17 @@ public class Event {
     //正在播放刷新
     public static class PlayEvent{
         private String id;
-        private int i; //1 添加 2删除
+        private int i; //1 播放刷新 2在播放页面下载后视图刷新
 
         public PlayEvent() {
 
         }
 
-        public PlayEvent(int i,String id) {
+        public PlayEvent(int i) {
+            this.i = i;
+        }
+
+        public PlayEvent(int i, String id) {
             this.id = id;
             this.i = i;
         }
@@ -104,5 +108,21 @@ public class Event {
             return i;
         }
 
+    }
+    //网络变化
+    public static class NetEvent{
+        private int i; //1 搜索
+
+        public NetEvent(int i) {
+            this.i = i;
+        }
+
+        public int getI() {
+            return i;
+        }
+
+        public void setI(int i) {
+            this.i = i;
+        }
     }
 }

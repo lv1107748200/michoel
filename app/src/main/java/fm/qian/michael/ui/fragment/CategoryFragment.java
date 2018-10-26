@@ -34,6 +34,7 @@ import fm.qian.michael.ui.adapter.SectionAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.ItemDecoration.RecyclerViewSpacesItemDecoration;
 
 import org.greenrobot.eventbus.EventBus;
@@ -101,7 +102,7 @@ public class CategoryFragment extends BaseRecycleViewFragment {
         getRvList().setLayoutManager(new GridLayoutManager(getActivity(),3));
 
         mData = DataServer.getSampleData();
-        sectionAdapter = new SectionAdapter(R.layout.item_image_and_text, R.layout.item_head_one, mData);
+        sectionAdapter = new SectionAdapter(R.layout.item_image_and_text_changed_two, R.layout.item_head_one, mData);
 
         sectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -142,6 +143,13 @@ public class CategoryFragment extends BaseRecycleViewFragment {
     }
 
     private void category(){
+
+        if(!NetStateUtils.isNetworkConnected(mFontext)){
+            isError = true;
+        }else {
+            isError = false;
+        }
+
         baseService.category(new HttpCallback<List<Category>, BaseDataResponse<List<Category>>>() {
             @Override
             public void onError(HttpException e) {

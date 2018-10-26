@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/press_one"
+    android:gravity="center|top"
+    android:padding="@dimen/item_margin_two"
+    >
+    <fm.qian.michael.widget.custom.SelectableRoundedImageView
+        android:id="@+id/item_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@color/color_line_one"
+        app:sriv_left_bottom_corner_radius="@dimen/radius"
+        app:sriv_left_top_corner_radius="@dimen/radius"
+        app:sriv_right_bottom_corner_radius="@dimen/radius"
+        app:sriv_right_top_corner_radius="@dimen/radius"
+        />
+    <TextView
+        android:layout_marginTop="@dimen/item_margin_three"
+        android:id="@+id/item_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        style="@style/Text4"
+        />
+</LinearLayout>

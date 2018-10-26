@@ -28,9 +28,10 @@
         <ImageView
             android:layout_gravity="center_vertical"
             android:id="@+id/item_tv_play_image"
-            android:layout_width="@dimen/dp_21"
-            android:layout_height="@dimen/dp_21"
-            android:layout_marginRight="@dimen/dp_10"
+            android:layout_width="@dimen/dp_17"
+            android:layout_height="@dimen/dp_17"
+            android:layout_marginRight="@dimen/dp_12"
+            android:layout_marginLeft="@dimen/dp_2"
             android:background="@drawable/aal"
             android:visibility="gone"
             />

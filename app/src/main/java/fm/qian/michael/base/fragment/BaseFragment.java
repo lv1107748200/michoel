@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hr.bclibrary.utils.CheckUtil;
 
@@ -121,9 +122,13 @@ public class BaseFragment extends AbstractBaseFragment{
     public void everyTime(boolean isVisibleToUser){
 
     }
-    public View getEmpty(){
+    public View getEmpty(String message){
         View view = LayoutInflater.from(mFontext).inflate(R.layout.empty_view,null,false);
 
+        TextView textView = view.findViewById(R.id.emty_tv);
+        if(!CheckUtil.isEmpty(message)){
+            textView.setText(message);
+        }
         return view;
     }
 

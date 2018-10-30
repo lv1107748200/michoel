@@ -56,6 +56,7 @@ import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopPlayListWindow;
 import fm.qian.michael.widget.single.DownManger;
 
+import static fm.qian.michael.utils.DisplayUtils.ImageHight3;
 import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*
@@ -180,16 +181,16 @@ public class SearchFragment extends BaseRecycleViewFragment {
             case ONE:
 
                 layoutManager =  new LinearLayoutManager(mFontext);
-                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text_sp,25){
+                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text_changed_one,25){
                     @Override
                     protected void convert(BaseViewHolder helper, Object item) {
 
-                        if(p < 0){
-                            p = DisplayUtils.getDimen(R.dimen.item_margin_four);
-                            p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
-                        }
-
-                        helper.itemView.setPadding(p,p1,p,p1);
+//                        if(p < 0){
+//                            p = DisplayUtils.getDimen(R.dimen.item_margin_four);
+//                            p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
+//                        }
+//
+//                        helper.itemView.setPadding(p,p1,p,p1);
 
                         helper.setGone(R.id.item_tv,false);
 
@@ -198,6 +199,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
 //                        }
 //
 //                        helper.itemView.setLayoutParams(LayoutParmsUtils.getGroupParms(hight));
+                        LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
 
                         if(item instanceof ComAll){
                             ComAll comAll = (ComAll) item;
@@ -333,18 +335,20 @@ public class SearchFragment extends BaseRecycleViewFragment {
                     @Override
                     protected void convert(BaseViewHolder helper, Object item) {
 
-                        if(p < 0){
-                            p = DisplayUtils.getDimen(R.dimen.item_margin_four);
-                            p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
-                        }
+//                        if(p < 0){
+//                            p = DisplayUtils.getDimen(R.dimen.item_margin_four);
+//                            p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
+//                        }
+//
+//                        helper.itemView.setPadding(p,p1,p,p1);
 
-                        helper.itemView.setPadding(p,p1,p,p1);
+//                        if(hight < 0){
+//                            hight = wight2();
+//                        }
+//
+//                        LayoutParmsUtils.setHight(hight,helper.getView(R.id.item_image));
 
-                        if(hight < 0){
-                            hight = wight2();
-                        }
-
-                        LayoutParmsUtils.setHight(hight,helper.getView(R.id.item_image));
+                        LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
 
                         if(item instanceof  ComAll){
                             helper.setText(R.id.item_tv,((ComAll) item).getTitle());

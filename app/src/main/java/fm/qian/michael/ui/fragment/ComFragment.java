@@ -46,6 +46,7 @@ import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 
 import static fm.qian.michael.utils.CommonUtils.getNumberIndex;
+import static fm.qian.michael.utils.DisplayUtils.ImageHight3;
 
 /*
  * lv   2018/9/11
@@ -168,7 +169,7 @@ public class ComFragment extends BaseRecycleViewFragment {
             case TWO:
                 tid = GlobalVariable.FOUR;
                 day = "7";
-                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text_sp){
+                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text){
                     @Override
                     protected void convert(BaseViewHolder helper, Object item) {
 
@@ -186,7 +187,7 @@ public class ComFragment extends BaseRecycleViewFragment {
 //                        }
 //                        helper.itemView.setLayoutParams(LayoutParmsUtils.getGroupParms(hight));
 
-
+                        LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
 
                         if(item instanceof  ComAll){
                             ComAll rankMore = (ComAll) item;
@@ -250,7 +251,7 @@ public class ComFragment extends BaseRecycleViewFragment {
             case FOUR:
                 tid = GlobalVariable.FOUR;
                 day = "30";
-                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text_sp){
+                quickAdapter =  new QuickAdapter(R.layout.item_image_and_text){
                     @Override
                     protected void convert(BaseViewHolder helper, Object item) {
 
@@ -268,6 +269,8 @@ public class ComFragment extends BaseRecycleViewFragment {
 //                        }
 //
 //                        helper.itemView.setLayoutParams(LayoutParmsUtils.getGroupParms(hight));
+
+                        LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
 
                         if(item instanceof  ComAll){
                             ComAll rankMore = (ComAll) item;

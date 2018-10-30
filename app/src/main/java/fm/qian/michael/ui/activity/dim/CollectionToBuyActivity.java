@@ -38,6 +38,8 @@ import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.single.UserInfoManger;
 
+import static fm.qian.michael.utils.DisplayUtils.ImageHight3;
+
 /*
  * lv   2018/9/13  收藏  购买
  */
@@ -77,12 +79,12 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
 
         getRvList().setLayoutManager(new LinearLayoutManager(this));
 
-        quickAdapterIma =  new QuickAdapter(R.layout.item_image_and_text_sp,10){
+        quickAdapterIma =  new QuickAdapter(R.layout.item_image_and_text,10){
             @Override
             protected void convert(BaseViewHolder helper, Object item) {
 
                 helper.setGone(R.id.item_tv,false);
-
+                LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
                 if(item instanceof ComAll){
 
                     GlideUtil.setGlideImageMake(helper.itemView.getContext(),((ComAll) item).getCover(),

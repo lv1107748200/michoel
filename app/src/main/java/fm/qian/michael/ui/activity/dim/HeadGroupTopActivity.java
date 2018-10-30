@@ -35,6 +35,9 @@ import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 
+import static fm.qian.michael.utils.DisplayUtils.ImageHight3;
+import static fm.qian.michael.utils.DisplayUtils.imageHight1;
+
 
 /*
  * lv   2018/9/8  专题页
@@ -96,6 +99,7 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
          view = LayoutInflater.from(this).inflate(R.layout.head_top_group,null,false);
         itemTv = view.findViewById(R.id.item_tv);
         itemImage = view.findViewById(R.id.item_image);
+        LayoutParmsUtils.setHight(imageHight1(3,0,0),itemImage);
 
       //  itemTv.setText("呵呵呵金额合计耳机和九二九二二事件发生纠纷军事打击对方来得及");
 
@@ -161,17 +165,17 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
 
             RecyclerView.LayoutManager layoutManager = null;
             layoutManager =  new LinearLayoutManager(this);
-            quickAdapterIma =  new QuickAdapter(R.layout.item_image_and_text_sp){
+            quickAdapterIma =  new QuickAdapter(R.layout.item_image_and_text_changed_one){
                 @Override
                 protected void convert(BaseViewHolder helper, Object item) {
 
-                    if(p < 0){
-                        p = DisplayUtils.getDimen(R.dimen.item_margin_four);
-                        p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
-                    }
-
-                    helper.itemView.setPadding(p,p1,p,p1);
-
+//                    if(p < 0){
+//                        p = DisplayUtils.getDimen(R.dimen.item_margin_four);
+//                        p1 = DisplayUtils.getDimen(R.dimen.item_margin_two);
+//                    }
+//
+//                    helper.itemView.setPadding(p,p1,p,p1);
+                    LayoutParmsUtils.setHight(ImageHight3(),helper.getView(R.id.item_image));
                     helper.setGone(R.id.item_tv,false);
 
 //                    if(hight < 0){

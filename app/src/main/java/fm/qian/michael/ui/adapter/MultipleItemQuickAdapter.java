@@ -72,7 +72,7 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
         addItemType(MultipleItem.BAN, R.layout.item_find_ban);
         addItemType(MultipleItem.HEAD, R.layout.item_head_one);
         addItemType(MultipleItem.IMGANDTEXT, R.layout.item_image_and_text);
-        addItemType(MultipleItem.IMGANDTEXTG2, R.layout.item_image_and_text_changed_one);
+        addItemType(MultipleItem.IMGANDTEXTG2, R.layout.item_image_and_text);
         addItemType(MultipleItem.IMGANDTEXTG4, R.layout.item_image_and_text_set_sp);
         addItemType(MultipleItem.TEXTDATE, R.layout.item_text_layout);
         addItemType(MultipleItem.RANKING, R.layout.item_ranking);
@@ -83,7 +83,11 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
     protected void convert(BaseViewHolder helper, final MultipleItem item) {
         switch (helper.getItemViewType()) {
             case MultipleItem.BAN://轮播图
-                Banner banner1 = helper.itemView.findViewById(fm.qian.michael.R.id.banner);
+
+                helper.itemView.setLayoutParams(
+                        LayoutParmsUtils.getGroupParms(wight3()));
+
+                Banner banner1 = helper.itemView.findViewById(R.id.banner);
 
                 if(item.getObject() instanceof List){
                     final List list = (List) item.getObject();
@@ -152,7 +156,9 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
 //                        ,0,0,0,0));
 
                ImageView imageView = helper.getView(R.id.item_image);
-               imageView.setAdjustViewBounds(true);
+              // imageView.setAdjustViewBounds(true);
+
+                LayoutParmsUtils.setHight(DisplayUtils.ImageHight3(),imageView);
 
                 TextView textView = helper.getView(R.id.item_tv);
 
@@ -204,9 +210,9 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                     TextView titeview = helper.getView(R.id.item_tv);
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        titeview.setTextAppearance(R.style.Text4_one);
+                        titeview.setTextAppearance(R.style.Text4_one_sp);
                     }else {
-                        titeview.setTextAppearance(context, R.style.Text4_one);
+                        titeview.setTextAppearance(context, R.style.Text4_one_sp);
                     }
 
                     titeview.setText(itemBase.getTitle());
@@ -422,7 +428,7 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                         ,LinearLayoutManager.HORIZONTAL,false));
                 if(item.getObject() instanceof List){
                     List list = (List) item.getObject();
-                    final QuickAdapter quickAdapter = new QuickAdapter(R.layout.item_image_and_text_changed_one){
+                    final QuickAdapter quickAdapter = new QuickAdapter(R.layout.item_image_and_text){
                         @Override
                         protected void convert(BaseViewHolder helper, Object item) {
 
@@ -461,5 +467,14 @@ public class MultipleItemQuickAdapter extends BaseMultiItemQuickAdapter<Multiple
                 ,DisplayUtils.getDimen(R.dimen.margin_5));
 
         return (int) (wight*1);
+    }
+
+    private int wight3(){
+        int  wight = DisplayUtils.getWideP(3,0
+                ,DisplayUtils.getDimen(R.dimen.margin_11));
+
+        wight = wight + DisplayUtils.getDimen(R.dimen.margin_6)*2;
+
+        return wight;
     }
 }

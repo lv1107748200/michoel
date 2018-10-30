@@ -76,6 +76,7 @@ import fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
+import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
@@ -95,6 +96,7 @@ import static fm.qian.michael.common.UserInforConfig.USERMUSICID;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICNAME;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICTYPE;
 import static fm.qian.michael.utils.CommonUtils.getNumberIndex;
+import static fm.qian.michael.utils.DisplayUtils.imageHight1;
 import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*
@@ -372,6 +374,8 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         relayout_sel_cancel.setOnClickListener(this);
         xq_layout.setOnClickListener(this);
         gs_layout.setOnClickListener(this);
+
+        LayoutParmsUtils.setHight(imageHight1(3,0,0),itemImage);
 
 
         rvList.setLayoutManager(new LinearLayoutManager(mFontext));

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/press_one"
-    android:gravity="center"
+    android:gravity="center|top"
     android:padding="@dimen/item_margin_two"
     >
     <fm.qian.michael.widget.custom.SelectableRoundedImageView

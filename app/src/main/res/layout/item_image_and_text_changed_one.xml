@@ -6,7 +6,10 @@
     android:layout_height="wrap_content"
     android:background="@drawable/press_one"
     android:gravity="center|top"
-    android:padding="@dimen/item_margin_two"
+    android:paddingTop="@dimen/item_margin_two"
+    android:paddingBottom="@dimen/item_margin_two"
+    android:paddingLeft="@dimen/item_margin_four"
+    android:paddingRight="@dimen/item_margin_four"
     >
     <fm.qian.michael.widget.custom.SelectableRoundedImageView
         android:id="@+id/item_image"

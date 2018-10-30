@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.WindowManager;
 
+import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 
 import fm.qian.michael.base.BaseApplation;
@@ -163,6 +164,24 @@ public class DisplayUtils {
     }
 
     public static int getWideP(int ge,int pssding,int ether){
+
+        int weid = getDisplayWidth(BaseApplation.getBaseApp())  - ((ge-1)*pssding + 2 * ether);
+
+        return weid/ge;
+
+    }
+    private static int wight = -1;
+
+    public static int ImageHight3(){
+
+        if(wight<0){
+            wight = DisplayUtils.getWideP(3,0
+                    ,DisplayUtils.getDimen(R.dimen.margin_11));
+        }
+
+        return wight;
+    }
+    public static int imageHight1(int ge,int pssding,int ether){
 
         int weid = getDisplayWidth(BaseApplation.getBaseApp())  - ((ge-1)*pssding + 2 * ether);
 

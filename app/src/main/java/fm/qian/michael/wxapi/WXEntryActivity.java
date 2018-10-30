@@ -233,7 +233,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
         baseService.user_bind(userInfo, new HttpCallback<Object, BaseDataResponse<Object>>() {
             @Override
             public void onError(HttpException e) {
-
+                NToast.shortToastBaseApp(e.getMsg());
+                finish();
             }
 
             @Override

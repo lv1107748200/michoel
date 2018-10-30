@@ -39,6 +39,8 @@ import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 
+import static fm.qian.michael.utils.DisplayUtils.imageHight1;
+
 /*
  * lv   2018/9/19  普通专辑
  */
@@ -147,14 +149,14 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
             itemTv = view.findViewById(R.id.item_tv);
             itemImage = view.findViewById(R.id.item_image);
 
-
+            LayoutParmsUtils.setHight(imageHight1(3,0,0),itemImage);
 
             RecyclerView.LayoutManager layoutManager = null;
 
             switch (tid) {
                 case GlobalVariable.TWO://视频
                     layoutManager = new GridLayoutManager(mFontext, 2);
-                    quickAdapterIma = new QuickAdapter(R.layout.item_image_and_text_changed_one) {
+                    quickAdapterIma = new QuickAdapter(R.layout.item_image_and_text) {
                         @Override
                         protected void convert(BaseViewHolder helper, Object item) {
 

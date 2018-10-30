@@ -353,7 +353,12 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                 GlideUtil.setGlideImage(mFontext
                         , userInfo.getLogo()
                         ,roundedImageView,R.drawable.myicon);
-                nickname.setText(userInfo.getNickname());
+                if(!CheckUtil.isEmpty(userInfo.getNickname())){
+                    nickname.setText(userInfo.getNickname());
+                }else {
+                    nickname.setText(UserInfoManger.getInstance().getUserName());
+                }
+
 
             }
         }.setContext(mFontext),MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));

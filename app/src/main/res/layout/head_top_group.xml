@@ -10,8 +10,7 @@
         <fm.qian.michael.widget.custom.SelectableRoundedImageView
             android:id="@+id/item_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_125"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:scaleType="fitXY"
             app:sriv_left_bottom_corner_radius="0dp"
             app:sriv_left_top_corner_radius="0dp"

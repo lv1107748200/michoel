@@ -16,13 +16,7 @@ import fm.qian.michael.R;
 
 public class GlideUtil {
 
-    public static void setGlideImage(Context context, String url, ImageView imageView){
-        if(imageView == null)
-            return;
-        Glide.with(context)
-                .load(url)//
-                .into(imageView);
-    }
+
     public static void setGlideImage(Context context, int url, ImageView imageView){
         if(imageView == null)
             return;
@@ -30,12 +24,26 @@ public class GlideUtil {
                 .load(url)//
                 .into(imageView);
     }
+
+    public static void setGlideImage(Context context, String url, ImageView imageView){
+        if(imageView == null)
+            return;
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .priority(Priority.HIGH);
+        Glide.with(context)
+                .load(url)//
+                .apply(options)
+                .into(imageView);
+    }
+
     public static void setGlideImage(Context context, String url, ImageView imageView, int id){
         if(imageView == null)
             return;
         RequestOptions options = new RequestOptions()
                 .placeholder(id)
                 .error(id)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .priority(Priority.HIGH);
         Glide.with(context)
                 .load(url)//
@@ -49,6 +57,7 @@ public class GlideUtil {
 
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.hold)
+                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(R.drawable.hold)
                 .priority(Priority.HIGH);
         Glide.with(context)

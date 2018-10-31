@@ -14,6 +14,9 @@ import com.bumptech.glide.module.AppGlideModule;
 
 import java.io.File;
 
+import fm.qian.michael.utils.NLog;
+
+import static com.hr.bclibrary.utils.SdcardUtil.getDiskFileDir;
 import static com.hr.bclibrary.utils.SdcardUtil.getStorageDirectory;
 
 /*
@@ -23,19 +26,22 @@ import static com.hr.bclibrary.utils.SdcardUtil.getStorageDirectory;
 public class CacheGlideModule extends AppGlideModule {
 
     @Override
+    public boolean isManifestParsingEnabled() {
+//        return super.isManifestParsingEnabled();
+        return false;
+    }
+
+    @Override
     public void applyOptions(Context context, GlideBuilder builder) {
         //定义缓存大小为100M
-        int  diskCacheSize =  100 * 1024 * 1024;
+        int  diskCacheSize =  300 * 1024 * 1024;
 
         //自定义缓存 路径 和 缓存大小
-        String diskCachePath = getStorageDirectory() + File.separator + "glideCache";
+        String diskCachePath = getDiskFileDir(context) + File.separator + "glideCache";
 
+       // NLog.e(NLog.TAGDOWN,"图片缓存地址--->" + diskCachePath);
 
         builder.setDiskCache(new DiskLruCacheFactory( diskCachePath , diskCacheSize ));
     }
 
-    @Override
-    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
-        super.registerComponents(context, glide, registry);
-    }
 }

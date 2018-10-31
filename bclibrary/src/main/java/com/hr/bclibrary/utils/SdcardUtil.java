@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class SdcardUtil {
     private static final String EXTERNAL_STORAGE_PERMISSION = "android.permission.WRITE_EXTERNAL_STORAGE";
 
-    //获取应用根目录
+    //获取应用根目录/storage/emulated/0
     public static String getStorageDirectory() {
         if (hasSdcard())
             return Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -169,7 +169,29 @@ public class SdcardUtil {
 
         return cacheDir.getAbsolutePath();
     }
+// FIXME: 2018/10/31
+    private static String defaultDownRoot; ///sdcard/Android/data/<application package>/file/down
+    public static String getDiskFileDir(Context context) { //连续访问文件 耗时严重
 
+        if(!CheckUtil.isEmpty(defaultDownRoot)){
+            return defaultDownRoot;
+        }
+        String cachePath;
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable()) {
+
+                cachePath = context.getExternalFilesDir("down").getAbsolutePath();
+
+        } else {
+
+            cachePath = context.getFilesDir().getAbsolutePath();
+
+        }
+
+        defaultDownRoot = cachePath;
+
+        return cachePath;
+    }
 
 //
     public static String getDefaultSaveRootPath(Context context) {

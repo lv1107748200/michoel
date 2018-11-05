@@ -6,7 +6,7 @@ android {
         applicationId "fm.qian.michael"
         minSdkVersion externalMinSdkVersion
         targetSdkVersion externalTargetSdkVersion
-        versionCode 1
+        versionCode 4
         versionName "v1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -143,4 +143,8 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.9.2'
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.5.0'
+
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
+    implementation 'com.github.Blincheng:EToast2:v2.1.1'
 }

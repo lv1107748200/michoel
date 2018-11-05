@@ -5,12 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <View
-        android:id="@+id/status_bar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        />
     <include layout="@layout/title_layout"/>
 
     <net.lucode.hackware.magicindicator.MagicIndicator

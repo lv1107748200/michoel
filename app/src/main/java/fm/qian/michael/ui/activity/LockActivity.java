@@ -80,6 +80,11 @@ public class LockActivity extends BaseActivity {
 
 
     @Override
+    public boolean isStatusBar() {
+        return true;
+    }
+
+    @Override
     public void initTitle() {
         super.initTitle();
         setStatusBar(statu_view);

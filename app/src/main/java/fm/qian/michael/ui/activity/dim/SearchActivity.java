@@ -95,8 +95,6 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
 
     private int hight = -1;
 
-    @BindView(R.id.status_bar)
-    View statusBar;
     @BindView(R.id.id_search)
     SearchLayout idSearch;
     @BindView(R.id.magic_indicator)
@@ -145,7 +143,7 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
 
         setTitleTv(getString(R.string.自选));
 
-        setStatusBar(statusBar);
+        //setStatusBar(statusBar);
         idSearch.setSearchCallBack(this);
         idSearch.setNv(View.GONE);
         idSearch.setSearch_line(View.GONE);

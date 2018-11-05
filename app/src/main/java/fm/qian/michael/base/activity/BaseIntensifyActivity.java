@@ -16,15 +16,15 @@ import fm.qian.michael.R;
 public class BaseIntensifyActivity extends BaseActivity {
 
 
-    @BindView(R.id.status_bar)
-    View statusBar;
+//    @BindView(R.id.status_bar)
+//    View statusBar;
     @BindView(R.id.title_tv)
     TextView titleTv;
 
     @Override
     public void initView() {
         super.initView();
-        setStatusBar(statusBar);
+       // setStatusBar(statusBar);
     }
 
     public void setTitleTv(String tv) {

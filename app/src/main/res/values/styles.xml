@@ -1,5 +1,18 @@
 <resources>
-
+    <style name="NoAnimation">
+        <item name="android:activityOpenEnterAnimation">@null</item>
+        <item name="android:activityOpenExitAnimation">@null</item>
+        <item name="android:activityCloseEnterAnimation">@null</item>
+        <item name="android:activityCloseExitAnimation">@null</item>
+        <item name="android:taskOpenEnterAnimation">@null</item>
+        <item name="android:taskOpenExitAnimation">@null</item>
+        <item name="android:taskCloseEnterAnimation">@null</item>
+        <item name="android:taskCloseExitAnimation">@null</item>
+        <item name="android:taskToFrontEnterAnimation">@null</item>
+        <item name="android:taskToFrontExitAnimation">@null</item>
+        <item name="android:taskToBackEnterAnimation">@null</item>
+        <item name="android:taskToBackExitAnimation">@null</item>
+    </style>
     <style name="MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@android:color/transparent</item>
         <item name="android:listDivider">@android:color/transparent</item>
@@ -51,6 +64,13 @@
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@drawable/playbg</item>
     </style>
+
+    <style name="MainSplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@drawable/playbg</item>
+    </style>
+
     <style name="InitHProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
         <!-- 最大高度50dp，最小高度10dp，进度值确定，Drawable样式文件引用 -->
         <item name="android:indeterminate">false</item>

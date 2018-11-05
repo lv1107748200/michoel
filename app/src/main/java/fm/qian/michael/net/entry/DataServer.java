@@ -73,26 +73,26 @@ public class DataServer {
 
             list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
             list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
 
 
-            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","主题推荐")));
-            list.add(new MultipleItem(MultipleItem.RECY, MultipleItem.FOUR));
-            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","排行榜")));
-            list.add(new MultipleItem(MultipleItem.RANKING, MultipleItem.FOUR));
-            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","精彩视频")));
-            list.add(new MultipleItem(MultipleItem.RECY, MultipleItem.FOUR));
-            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","更多推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
-            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","主题推荐")));
+//            list.add(new MultipleItem(MultipleItem.RECY, MultipleItem.FOUR));
+//            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","排行榜")));
+//            list.add(new MultipleItem(MultipleItem.RANKING, MultipleItem.FOUR));
+//            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","精彩视频")));
+//            list.add(new MultipleItem(MultipleItem.RECY, MultipleItem.FOUR));
+//            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","更多推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
+//            list.add(new MultipleItem(MultipleItem.IMGANDTEXT, MultipleItem.FOUR, new Video("","今日推荐")));
 
         return list;
     }

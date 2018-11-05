@@ -8,21 +8,18 @@ import fm.qian.michael.base.activity.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import fm.qian.michael.base.activity.BaseActivity;
 
 
 /*
  * lv   2018/9/8
  */
 public class ComActivity extends BaseActivity {
-    @BindView(fm.qian.michael.R.id.status_bar)
-    View statusBar;
-    @BindView(fm.qian.michael.R.id.title_tv)
+    @BindView(R.id.title_tv)
     TextView titleTv;
-    @OnClick({fm.qian.michael.R.id.base_left_layout})
+    @OnClick({R.id.base_left_layout})
     public  void  onClick(View view){
         switch (view.getId()){
-            case fm.qian.michael.R.id.base_left_layout:
+            case R.id.base_left_layout:
                 finish();
                 break;
         }
@@ -30,13 +27,13 @@ public class ComActivity extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return fm.qian.michael.R.layout.activity_com;
+        return R.layout.activity_com;
     }
 
     @Override
     public void initTitle() {
         super.initTitle();
-        setStatusBar(statusBar);
+        //setStatusBar(statusBar);
         titleTv.setText("播放");
     }
 

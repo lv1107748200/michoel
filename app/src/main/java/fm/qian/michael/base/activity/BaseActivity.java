@@ -26,6 +26,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import com.hr.bclibrary.utils.CheckUtil;
+import com.jaeger.library.StatusBarUtil;
+
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.net.base.BaseService;
@@ -33,6 +35,8 @@ import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
 import fm.qian.michael.widget.single.UserInfoManger;
+
+import static fm.qian.michael.utils.StatusBarUtil.setStatusTextColor;
 
 
 /**
@@ -63,9 +67,16 @@ public class BaseActivity extends AbstractBaseActivity{
     public void setContentView(View view) {
         super.setContentView(view);
         unbinder =  ButterKnife.bind(this);
+        if(isStatusBar()){
+            setStatusTextColor(true,this);
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),0);
+        }
         initTitle();
         initView();
         initData();
+    }
+    public boolean isStatusBar(){
+        return true;
     }
 
     /**

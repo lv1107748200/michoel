@@ -1,8 +1,10 @@
 package fm.qian.michael.base;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
@@ -19,6 +21,7 @@ import com.tencent.smtt.sdk.QbSdk;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.service.MusicPlayerManger;
+import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 
 /**
@@ -27,6 +30,7 @@ import fm.qian.michael.widget.single.DownManger;
 
 public class BaseApplation extends Application {
     private static BaseApplation baseApp = null;
+    private static Activity sActivity = null;
     private AppComponent mAppComponent;
 
     static {
@@ -92,6 +96,48 @@ public class BaseApplation extends Application {
         };
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(),  cb);
+
+        if(!NToast.isNotificationEnabled(this)){
+            this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                    Log.d("YWK",activity+"onActivityCreated");
+                    sActivity=activity;
+                }
+
+                @Override
+                public void onActivityStarted(Activity activity) {
+                    Log.d("YWK",activity+"onActivityStarted");
+                    sActivity=activity;
+
+                }
+
+                @Override
+                public void onActivityResumed(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityPaused(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityStopped(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+                }
+
+                @Override
+                public void onActivityDestroyed(Activity activity) {
+
+                }
+            });
+        }
     }
 
     public static BaseApplation getBaseApp() {
@@ -111,6 +157,10 @@ public class BaseApplation extends Application {
             }
         }
         return null;
+    }
+
+    public static Activity getActivity(){
+        return sActivity;
     }
 
 }

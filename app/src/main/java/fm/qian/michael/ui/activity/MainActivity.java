@@ -1,15 +1,15 @@
 package fm.qian.michael.ui.activity;
 
-import android.Manifest;
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.ServiceConnection;
 import android.os.Build;
-import android.os.IBinder;
+
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.View;
@@ -23,16 +23,13 @@ import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 import com.zzhoujay.richtext.RichText;
 
 import fm.qian.michael.R;
-import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.base.activity.BaseExitActivity;
-import fm.qian.michael.base.activity.PermissionCallback;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
 import fm.qian.michael.db.TasksManagerModel;
 import fm.qian.michael.db.TasksManagerModel_Table;
 import fm.qian.michael.db.UseData;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
+
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
@@ -62,17 +59,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import fm.qian.michael.base.activity.BaseExitActivity;
-import fm.qian.michael.ui.activity.dim.PlayActivity;
-import fm.qian.michael.ui.activity.dim.SearchActivity;
-import fm.qian.michael.ui.adapter.MainAdapter;
-import fm.qian.michael.ui.fragment.ArticleFragment;
-import fm.qian.michael.ui.fragment.CategoryFragment;
-import fm.qian.michael.ui.fragment.FindFragment;
-import fm.qian.michael.ui.fragment.MyFragment;
-import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
-import fm.qian.michael.widget.custom.BottomBarLayout;
-import fm.qian.michael.widget.custom.XCViewPager;
 import fm.qian.michael.widget.single.UserInfoManger;
 
 import static fm.qian.michael.service.MqService.CMDNOTIF;
@@ -98,9 +84,6 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
     LinearLayout layout_lift;
     @BindView(R.id.layout_right)
     LinearLayout layout_right;
-
-    @BindView(R.id.status_bar)
-    View statusBar;
 
     @OnClick({R.id.search_layout, R.id.layout_lift,R.id.layout_right})
     public void onClick(View view){
@@ -144,8 +127,33 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         return R.layout.activity_main;
     }
 
+//    @Override
+//    protected void onCreate(@Nullable Bundle savedInstanceState) {
+//
+//        if((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0){
+//            //获取ActivityManager
+//            ActivityManager mAm = (ActivityManager)getSystemService(ACTIVITY_SERVICE);
+//            //获得当前运行的task
+//            List<ActivityManager.RunningTaskInfo> taskList = mAm.getRunningTasks(100);
+//            for (ActivityManager.RunningTaskInfo rti : taskList) {
+//                //找到当前应用的task，并启动task的栈顶activity，达到程序切换到前台
+//                if(rti.topActivity.getPackageName().equals(getPackageName())) {
+//                    mAm.moveTaskToFront(rti.id,0);
+//                    return;
+//                }
+//            }
+//        }else {
+//            Intent intent = new Intent(this,SplashActivity.class);
+//            startActivity(intent);
+//        }
+//       // setTheme(R.style.MyTheme);
+//        super.onCreate(savedInstanceState);
+//    }
     @Override
     public void initTitle() {
+        if(!NToast.isNotificationEnabled(this)){
+            setDelAlertDialog();
+        }
         mPlaybackStatus = new PlaybackStatus(this);
         IntentFilter f = new IntentFilter();
         f.addAction(MqService.SEND_PROGRESS);//开始播放获取进度
@@ -168,7 +176,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         bottomLayout.setBottomCallBack(this);
         bottomLayout.setViewPager(xViewPagerMain);
 
-        setStatusBar(statusBar);
+        //setStatusBar(statusBar);
 
         setPermission();
         // setBroadcast(this);
@@ -335,6 +343,28 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         }
     }
 
+    private void setDelAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("通知栏权限未打开，请在在设置中打开？");
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Intent intent = new Intent(Settings.ACTION_SETTINGS);
+                startActivity(intent);
+            }
+        });
+        builder.setCancelable(true);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+    }
     @Override
     protected void onDestroy() {
         UseData.setSTimeing(0);//本次播放停止直接 取消定时

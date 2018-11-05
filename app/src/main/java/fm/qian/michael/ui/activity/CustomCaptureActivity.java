@@ -17,9 +17,7 @@ package fm.qian.michael.ui.activity;
 
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
 
 import com.king.zxing.CaptureActivity;
 

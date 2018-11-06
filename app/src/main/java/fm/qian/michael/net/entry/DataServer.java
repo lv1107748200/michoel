@@ -73,11 +73,11 @@ public class DataServer {
 
             list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
             list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
-//            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
+            list.add(new MultipleItem(MultipleItem.TEXTDATE, MultipleItem.FOUR, new Video("","今日推荐")));
 
 
 //            list.add(new MultipleItem(MultipleItem.HEAD, MultipleItem.FOUR, new Video("","主题推荐")));

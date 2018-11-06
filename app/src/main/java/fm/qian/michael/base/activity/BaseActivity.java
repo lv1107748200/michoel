@@ -68,8 +68,8 @@ public class BaseActivity extends AbstractBaseActivity{
         super.setContentView(view);
         unbinder =  ButterKnife.bind(this);
         if(isStatusBar()){
-            setStatusTextColor(true,this);
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),0);
+            //setStatusTextColor(true,this);
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),40);
         }
         initTitle();
         initView();

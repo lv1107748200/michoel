@@ -166,6 +166,37 @@
             />
         <LinearLayout
             style="@style/m_style_layout_three"
+            android:id="@+id/xz_layout"
+            >
+            <LinearLayout
+                style="@style/m_style_layout_six"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="本地下载"
+                    style="@style/m_text_style_one"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|right"
+                >
+
+                <ImageView style="@style/m_style_image_one" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <View
+            style="@style/view_line_color_one"
+            />
+        <LinearLayout
+            style="@style/m_style_layout_three"
             android:id="@+id/sczj_layout"
             >
             <LinearLayout

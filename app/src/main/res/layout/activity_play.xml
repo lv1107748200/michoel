@@ -50,18 +50,18 @@
 
                 </RelativeLayout>
 
-                <SeekBar
-                    android:id="@+id/musicSeekBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxHeight="@dimen/margin_4"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="0dp"
-                    android:paddingTop="0dp"
-                    android:paddingBottom="0dp"
-                    android:progressDrawable="@drawable/layer_list_three"
-                    android:thumb="@drawable/selected_radius_two"
-                    />
+                <!--<SeekBar-->
+                    <!--android:id="@+id/musicSeekBar"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:maxHeight="@dimen/margin_4"-->
+                    <!--android:paddingStart="0dp"-->
+                    <!--android:paddingEnd="0dp"-->
+                    <!--android:paddingTop="0dp"-->
+                    <!--android:paddingBottom="0dp"-->
+                    <!--android:progressDrawable="@drawable/layer_list_three"-->
+                    <!--android:thumb="@drawable/selected_radius_two"-->
+                    <!--/>-->
             </RelativeLayout>
 
             <include layout="@layout/item_play_mc"/>

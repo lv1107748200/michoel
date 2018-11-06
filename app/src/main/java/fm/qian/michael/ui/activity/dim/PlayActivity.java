@@ -353,7 +353,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
         int h = DisplayUtils.getScreenWidth(this);
         ViewGroup.LayoutParams params = imagePoster.getLayoutParams();
         params.height = h;
-        CommonUtils.setMargins(musicSeekBar,0,h-DisplayUtils.getDimen(R.dimen.margin_6),0,0);
+       // CommonUtils.setMargins(musicSeekBar,0,h-DisplayUtils.getDimen(R.dimen.margin_6),0,0);
 
 
         Intent intent = getIntent();

@@ -236,14 +236,14 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
     @Override
     public void onBottomTab(int num) {
 
-        if(num == 0){
-            layout_lift.setVisibility(View.VISIBLE);
-            layout_right.setVisibility(View.VISIBLE);
-        }else {
-            layout_lift.setVisibility(View.GONE);
-            layout_right.setVisibility(View.GONE);
-
-        }
+//        if(num == 0){
+//            layout_lift.setVisibility(View.VISIBLE);
+//            layout_right.setVisibility(View.VISIBLE);
+//        }else {
+//            layout_lift.setVisibility(View.GONE);
+//            layout_right.setVisibility(View.GONE);
+//
+//        }
 
     }
     //网络状态广播

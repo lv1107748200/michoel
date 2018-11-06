@@ -166,6 +166,9 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                 intent.setClass(getContext(),SetActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.xz_layout:
+
+                break;
         }
 
 

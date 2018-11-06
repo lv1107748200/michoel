@@ -125,6 +125,9 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
 
             user_album();
         }else {
+            View headView = LayoutInflater.from(this).inflate(R.layout.item_head_tbgmjl_layout,null,false);
+
+            quickAdapterIma.addHeaderView(headView);
             user_favorite_list();
         }
 

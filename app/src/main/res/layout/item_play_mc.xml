@@ -16,10 +16,11 @@
         <!--android:thumb="@drawable/selected_radius_two"-->
         <!--/>-->
     <!--信息显示-->
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_9"
+        android:orientation="horizontal"
         >
         <TextView
             android:id="@+id/time_lift_tv"
@@ -27,7 +28,23 @@
             android:layout_height="wrap_content"
             style="@style/Text7"
             android:text="00:00"
-            android:layout_alignParentLeft="true"
+            android:layout_gravity="center_vertical"
+            />
+
+
+        <SeekBar
+            android:layout_weight="1"
+            android:id="@+id/musicSeekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/margin_4"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_10"
+            android:paddingTop="0dp"
+            android:paddingBottom="0dp"
+            android:progressDrawable="@drawable/layer_list_three"
+            android:thumb="@drawable/selected_radius_two"
+            android:layout_gravity="center_vertical"
             />
 
         <TextView
@@ -36,9 +53,9 @@
             android:layout_height="wrap_content"
             style="@style/Text7"
             android:text="00:00"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
             />
-    </RelativeLayout>
+    </LinearLayout>
 
     <!--相关操作-->
     <LinearLayout

@@ -423,7 +423,15 @@ public class SearchFragment extends BaseRecycleViewFragment {
         baseService.search(type+"", searchText, pageNo+"",
                 new HttpCallback<List<ComAll>,
                 BaseDataResponse<List<ComAll>>>() {
-            @Override
+                    @Override
+                    public void onNotNet() {
+                        if(isUpOrDown){
+                            getRefreshLayout().finishLoadMore();
+                        }else {
+                            getRefreshLayout().finishRefresh();
+                        }
+                    }
+                    @Override
             public void onError(HttpException e) {
                 if(isUpOrDown){
                     if(type ==  TWO){
@@ -608,32 +616,36 @@ public class SearchFragment extends BaseRecycleViewFragment {
     //添加波胆
     private void addPlayerList(){
 
-        if(null == popPlayListWindow){
-            popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
-                    .setOutSideTouchable(true)
-                    .setFocusable(true)
-                    .setAnimation(R.style.popup_hint_anim)
-                    .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.hr.bclibrary.utils.DisplayUtils.dip2px(mFontext,80)))
-                    .build());
-            popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
-                @Override
-                public List<ComAll> getSelComAll() {
-                    return selList;
-                }
-
-                @Override
-                public void state(int what) {
-                    if(isDown){
-                        down(selList);
+        if(isDown){
+            down(selList);
+        }else {
+            if(null == popPlayListWindow){
+                popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
+                        .setOutSideTouchable(true)
+                        .setFocusable(true)
+                        .setAnimation(R.style.popup_hint_anim)
+                        .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.hr.bclibrary.utils.DisplayUtils.dip2px(mFontext,80)))
+                        .build());
+                popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
+                    @Override
+                    public List<ComAll> getSelComAll() {
+                        return selList;
                     }
 
-                }
-            });
-        }else {
+                    @Override
+                    public void state(int what) {
+                        if(isDown){
+                            down(selList);
+                        }
 
+                    }
+                });
+            }else {
+
+            }
+            popPlayListWindow.user_broadcastall();
+            popPlayListWindow.show(buttomLayout);
         }
-        popPlayListWindow.user_broadcastall();
-        popPlayListWindow.show(buttomLayout);
     }
 
     //非wifi网络下的提醒
@@ -663,7 +675,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+            DownManger.setIdAndPath(0,null,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){

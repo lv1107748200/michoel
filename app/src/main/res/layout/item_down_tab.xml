@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+
+    <LinearLayout
+        android:duplicateParentState="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:id="@+id/tv_title"
+            android:duplicateParentState="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="@dimen/size_15"
+            android:textColor="@drawable/selector_tv_color_one"
+            android:layout_marginBottom="@dimen/margin_6"
+            android:layout_marginTop="@dimen/margin_6"
+            />
+
+        <View
+            android:duplicateParentState="true"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_3"
+            android:background="@drawable/selector_line_color_one"
+            android:layout_marginLeft="@dimen/margin_6"
+            android:layout_marginRight="@dimen/margin_6"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:duplicateParentState="true"
+        android:id="@+id/tv_num"
+        android:layout_marginRight="@dimen/margin_24"
+        android:layout_marginLeft="@dimen/margin_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textSize="@dimen/size_13"
+        android:textColor="@drawable/selector_tv_color_one"
+        />
+
+</LinearLayout>

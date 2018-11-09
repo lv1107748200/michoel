@@ -110,15 +110,6 @@ public class SearchActivity extends BaseIntensifyActivity implements SearchLayou
     private String t;
 
 
-    @OnClick({R.id.base_left_layout})
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
-        }
-    }
-
     private String kind;
     private String searchText = "";
     @Override

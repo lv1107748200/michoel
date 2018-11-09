@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/relayout_manger"
+            android:paddingBottom="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingLeft="@dimen/dp_11"
+            android:paddingRight="@dimen/dp_11"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <LinearLayout
+                android:id="@+id/play_all_Layout"
+                android:layout_alignParentLeft="true"
+                android:layout_width="@dimen/margin_150"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    style="@style/image_sel_style_ss"
+                    android:background="@drawable/pl_playall"
+                    />
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="全部播放"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_292"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/manger_layout"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/margin_150"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:layout_centerVertical="true"
+                android:orientation="horizontal"
+                >
+                <ImageView
+                    style="@style/image_sel_style_ss"
+                    android:background="@drawable/ic_mag_vedio"
+                    />
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="管理"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_292"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relayout_sel_cancel"
+            android:paddingBottom="@dimen/dp_20"
+            android:paddingTop="@dimen/dp_20"
+            android:paddingLeft="@dimen/dp_11"
+            android:paddingRight="@dimen/dp_11"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            >
+
+            <LinearLayout
+                android:id="@+id/sel_all_Layout"
+                android:layout_alignParentLeft="true"
+                android:layout_width="@dimen/margin_150"
+                android:layout_height="wrap_content"
+                android:gravity="center|left"
+                android:layout_centerVertical="true"
+                >
+
+                <ImageView
+                    style="@style/image_sel_style_s" />
+
+                <TextView
+                    android:layout_marginLeft="@dimen/dp_8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/全选"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_292"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cancel_layout"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/margin_150"
+                android:layout_height="wrap_content"
+                android:gravity="center|right"
+                android:layout_centerVertical="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/取消"
+                    android:textSize="@dimen/sp_15"
+                    android:textColor="@color/color_292"
+                    />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+
+
+    <View
+        style="@style/view_line"
+        />
+
+</LinearLayout>

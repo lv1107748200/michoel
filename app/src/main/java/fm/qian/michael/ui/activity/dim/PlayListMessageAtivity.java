@@ -98,9 +98,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
     private PopInputWindow popInputWindow;
 
-    @OnClick({R.id.base_left_layout,
-            R.id.base_right_layout
-    ,R.id.down_layout,R.id.del_layout})
+    @OnClick({R.id.down_layout,R.id.del_layout})
     public void On(View view){
         switch (view.getId()) {
             case R.id.base_left_layout:
@@ -684,23 +682,23 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
 
                 EventBus.getDefault().post(new Event.LoginEvent(GlobalVariable.ONE));
                 setUserInfo("list",bid);//删除成功后
-
+                NToast.shortToastBaseApp("删除成功");
             }
         }.setContext(this), PlayListMessageAtivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
     private void deldelListFile(List<ComAll> comAlls){
-        DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
-            @Override
-            public void onSuccess(Object o) {
-                NToast.shortToastBaseApp("删除成功");
-            }
-
-            @Override
-            public void onError(String errString) {
-
-            }
-        });
+//        DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
+//            @Override
+//            public void onSuccess(Object o) {
+//                NToast.shortToastBaseApp("删除成功");
+//            }
+//
+//            @Override
+//            public void onError(String errString) {
+//
+//            }
+//        });
     }
 
     //在进入播放页面时保存相关信息
@@ -777,7 +775,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+            DownManger.setIdAndPath(0,null,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){

@@ -203,6 +203,14 @@ public class FindFragment extends BaseRecycleViewFragment {
     private void index(){
         baseService.index(new HttpCallback<Index, BaseDataResponse<Index>>() {
             @Override
+            public void onNotNet() {
+                getRefreshLayout().finishRefresh();
+                if(null != multipleItemAdapter){
+                    multipleItemAdapter.replaceData(new ArrayList<MultipleItem>());
+                    multipleItemAdapter.setEmptyView(getError(""));
+                }
+            }
+            @Override
             public void onError(HttpException e) {
                 getRefreshLayout().finishRefresh();
                 NLog.e(NLog.TAG,e.getMsg());
@@ -278,6 +286,10 @@ public class FindFragment extends BaseRecycleViewFragment {
 
     private void recommend(){
         baseService.recommend(pageNo+"", new HttpCallback<List<Base>, BaseDataResponse<List<Base>>>() {
+            @Override
+            public void onNotNet() {
+                    getRefreshLayout().finishLoadMore();
+            }
             @Override
             public void onError(HttpException e) {
                 getRefreshLayout().finishLoadMore();

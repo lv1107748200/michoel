@@ -24,8 +24,6 @@ public class MultiPlayer implements MediaPlayer.OnErrorListener,
 
     private final WeakReference<MqService> mService;
 
-    private String pathttt;
-
     public MultiPlayer(WeakReference<MqService> mService) {
         this.mService = mService;
     }
@@ -59,12 +57,7 @@ public class MultiPlayer implements MediaPlayer.OnErrorListener,
 
     private void setPath(String s){
         try {
-
-            if(createPath(s)){
-                mCurrentMediaPlayer.setDataSource(pathttt);
-            }else {
                 mCurrentMediaPlayer.setDataSource(s);
-            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -175,10 +168,12 @@ public class MultiPlayer implements MediaPlayer.OnErrorListener,
         if (TextUtils.isEmpty(url)) {
             return false;
         }
-        pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp(),MqService.pathSong);
+        String
+       // pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp(),MqService.pathSong);
+        pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp()) + File.separator + MqService.pathSong;;
         pathttt = FileDownloadUtils.generateFilePath(pathttt,SdcardUtil.md5(url));
 
-        boolean is = fileIsExists( pathttt);
+        boolean is = fileIsExists(pathttt);
 
        // MLog.E("执行 createPath" + pathttt + "  存在否  " +is);
         return is;

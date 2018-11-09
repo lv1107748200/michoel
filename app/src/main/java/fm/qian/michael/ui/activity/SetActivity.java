@@ -50,7 +50,7 @@ public class SetActivity extends BaseIntensifyActivity {
     TextView tv_banbenhao;
     @BindView(R.id.item_image)
     SelectableRoundedImageView item_image;
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout,R.id.out_login_layout
+    @OnClick({R.id.out_login_layout
     ,R.id.benbenhao_layout,R.id.guanyu_layout,R.id.lianxi_layout})
     public  void  onClick(View view){
         switch (view.getId()){
@@ -58,7 +58,6 @@ public class SetActivity extends BaseIntensifyActivity {
                 finish();
                 break;
             case R.id.base_right_layout:
-
                 break;
             case R.id.out_login_layout:
                 if(!isLogin()){

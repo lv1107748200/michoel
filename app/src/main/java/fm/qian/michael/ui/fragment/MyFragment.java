@@ -24,6 +24,7 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleScFragment;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.UserInforConfig;
 import fm.qian.michael.common.event.Event;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.response.ComAll;
@@ -34,6 +35,7 @@ import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.ui.activity.SetActivity;
 import fm.qian.michael.ui.activity.UserAcrtivity;
 import fm.qian.michael.ui.activity.dim.CollectionToBuyActivity;
+import fm.qian.michael.ui.activity.dim.DownActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
 import fm.qian.michael.ui.activity.dim.PlayListMessageAtivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
@@ -42,6 +44,7 @@ import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.NotificationUitls;
+import fm.qian.michael.utils.SPUtils;
 import fm.qian.michael.widget.RoundedImage.RoundedImageView;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopLoginWindow;
@@ -82,7 +85,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
     TextView nickname,tv_bind_wx;
 
     LinearLayout wodexinxi_layout,baobaoxinxi_layout,
-            sczj_layout,ygmzj_layout,bdwx_layout,sz_layout,user_layout;
+            sczj_layout,ygmzj_layout,bdwx_layout,sz_layout,user_layout,xz_layout;
 
     @Override
     public void onClick(View view) {
@@ -94,18 +97,8 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                 if(isLogin()){
                     NToast.shortToastBaseApp(getString(R.string.已登录));
                     return;
-                }
-
-                if(popLoginWindow == null){
-                    popLoginWindow = new PopLoginWindow(new CustomPopuWindConfig.Builder(mFontext)
-                            .setOutSideTouchable(false)
-                            .setFocusable(true)
-                            .setAnimation(R.style.popup_hint_anim)
-                            .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
-                            .build(),mFontext);
-                    popLoginWindow.show(user_layout);
                 }else {
-                    popLoginWindow.show(user_layout);
+                    WLoaignMake(false);
                 }
 
                 break;
@@ -167,7 +160,8 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.xz_layout:
-
+                intent.setClass(getContext(),DownActivity.class);
+                startActivity(intent);
                 break;
         }
 
@@ -203,6 +197,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
         ygmzj_layout = view.findViewById(R.id.ygmzj_layout);
         bdwx_layout = view.findViewById(R.id.bdwx_layout);
         sz_layout = view.findViewById(R.id.sz_layout);
+        xz_layout = view.findViewById(R.id.xz_layout);
 
         user_layout.setOnClickListener(this);
         wodexinxi_layout.setOnClickListener(this);
@@ -211,6 +206,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
         ygmzj_layout.setOnClickListener(this);
         bdwx_layout.setOnClickListener(this);
         sz_layout.setOnClickListener(this);
+        xz_layout.setOnClickListener(this);
 
 
 
@@ -345,6 +341,19 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
 
         baseService.user_info(userInfo, new HttpCallback<UserInfo, BaseDataResponse<UserInfo>>() {
             @Override
+            public void onNotNet() {
+                NToast.shortToastBaseApp(mFontext.getString(R.string.无网络));
+                GlideUtil.setGlideImage(mFontext
+                        , UserInfoManger.getInstance().getLogo()
+                        ,roundedImageView,R.drawable.myicon);
+                if(!CheckUtil.isEmpty(UserInfoManger.getInstance().getNickName())){
+                    nickname.setText(UserInfoManger.getInstance().getNickName());
+                }else {
+                    nickname.setText(UserInfoManger.getInstance().getUserName());
+                }
+            }
+
+            @Override
             public void onError(HttpException e) {
                 NToast.shortToastBaseApp(e.getMsg());
             }
@@ -362,6 +371,8 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
                     nickname.setText(UserInfoManger.getInstance().getUserName());
                 }
 
+                SPUtils.putString(UserInforConfig.USERLOGO,userInfo.getLogo(),false);
+                SPUtils.putString(UserInforConfig.USERNICKNAME,userInfo.getNickname(),false);
 
             }
         }.setContext(mFontext),MyFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
@@ -385,6 +396,15 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
         baseService.user_broadcastall(
                 data,
                 new HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>>() {
+                    @Override
+                    public void onNotNet() {
+                        if(isUpOrDown){
+                            getRefreshLayout().finishLoadMore();
+                        }else {
+                            getRefreshLayout().finishRefresh();
+                        }
+                    }
+
                     @Override
                     public void onError(HttpException e) {
                         NToast.shortToastBaseApp(e.getMsg());

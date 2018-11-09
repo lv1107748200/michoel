@@ -35,14 +35,6 @@ public class BaseRecycleViewActivity extends BaseIntensifyActivity {
     public int pageNo = 1;
     public boolean isUpOrDown = false;//上拉下拉
 
-    @OnClick({R.id.base_left_layout})
-    public  void  onlick(View view){
-        switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
-        }
-    }
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -73,12 +65,12 @@ public class BaseRecycleViewActivity extends BaseIntensifyActivity {
                 @Override
                 public void onRefresh(final RefreshLayout refreshlayout) {
 
-                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
-
-                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
-                        refreshlayout.finishRefresh();
-                        return;
-                    }
+//                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+//
+//                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+//                        refreshlayout.finishRefresh();
+//                        return;
+//                    }
 
                     isUpOrDown = false;//向下
                     Refresh();
@@ -88,12 +80,12 @@ public class BaseRecycleViewActivity extends BaseIntensifyActivity {
                 @Override
                 public void onLoadMore(RefreshLayout refreshlayout) {
 
-                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
-
-                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
-                        refreshLayout.finishLoadMore();
-                        return;
-                    }
+//                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+//
+//                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+//                        refreshLayout.finishLoadMore();
+//                        return;
+//                    }
 
                     isUpOrDown = true;//向下
                     loadMore();

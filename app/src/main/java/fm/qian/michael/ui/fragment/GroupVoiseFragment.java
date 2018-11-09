@@ -58,6 +58,7 @@ import fm.qian.michael.common.BaseDownViewHolder;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.entity.DownStaus;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.DownTasksModel;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.base.BaseResponse;
@@ -120,6 +121,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
   //  private QuickAdapter quickAdapter;//list
     private MultipleItemPayOrAdapter quickAdapter;
     private Album  album;
+    private DownTasksModel downTasksModel;
 
     private List<ComAll> comAllList;
     private List<ComAll> selList;
@@ -145,7 +147,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             layout_share,layout_select,
             layout_orderdesc,sel_all_Layout,
             cancel_layout,xq_layout,gs_layout,xq_gs_layout;
-    RelativeLayout relayout_sel_cancel;
+    RelativeLayout relayout_sel_cancel,make_relatlayout;
 
     @OnClick({R.id.add_layout,R.id.down_layout,R.id.play_layout})
     public void Onclick(View view){
@@ -362,6 +364,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         xq_layout = headView.findViewById(R.id.xq_layout);
         gs_layout = headView.findViewById(R.id.gs_layout);
         xq_gs_layout = headView.findViewById(R.id.xq_gs_layout);
+        make_relatlayout = headView.findViewById(R.id.make_relatlayout);
 
 
         layout_fav.setOnClickListener(this);
@@ -571,9 +574,16 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
             }else {
                 xq_gs_layout.setVisibility(View.GONE);
             }
-        }else {
-
-
+        }else if(!CheckUtil.isEmpty(downTasksModel)) {
+            GlideUtil.setGlideImageMake(mFontext,downTasksModel.getCover(),
+                    itemImage);
+            if(!CheckUtil.isEmpty(downTasksModel.getBrief())){
+                RichText.from(downTasksModel.getBrief()).bind(this).into(itemTv);
+            }
+            if(!CheckUtil.isEmpty(comAllList)){
+                quickAdapter.replaceData(comAllList);
+            }
+            make_relatlayout.setVisibility(View.GONE);
         }
 
     }
@@ -677,6 +687,10 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         this.album = k.getInfo();
         this.comAllList = k.getList();
     }
+    public void setK(DownTasksModel k) {
+        this.downTasksModel = k;
+        this.comAllList = k.getComAlls();
+    }
 
     //排序
     private void setpaixv(){
@@ -760,9 +774,12 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
     public void onDataSynEvent(Event.PlayEvent event) {
-        if(event.getI() == 1){
+
+        int i = event.getI();
+
+        if(i == 1){
             upPlay();
-        }else if(event.getI() == 2){
+        }else if(i == 2){
             if(null != quickAdapter)
                 quickAdapter.notifyDataSetChanged();
         }
@@ -778,16 +795,16 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
     }
     private boolean isPlay(){
-        String iddd = UseData.getUseData().getZBId();
-
-      //  NLog.e(NLog.TAGOther,"iddd--->"+iddd);
-
-        if(!CheckUtil.isEmpty(iddd)){
-            if(iddd.equals(id)){
-                return true;
-            }
-        }
-        return false;
+//        String iddd = UseData.getUseData().getZBId();
+//
+//      //  NLog.e(NLog.TAGOther,"iddd--->"+iddd);
+//
+//        if(!CheckUtil.isEmpty(iddd)){
+//            if(iddd.equals(id)){
+//                return true;
+//            }
+//        }
+        return true;
     }
 
 //    private View getFootView(){
@@ -846,7 +863,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(list,null,new DownManger.ResultCallback() {
+            DownManger.setIdAndPath(comAllList.size(),album,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){
@@ -866,32 +883,37 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     //添加波胆
     private void addPlayerList(){
 
-        if(null == popPlayListWindow){
-            popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
-                    .setOutSideTouchable(true)
-                    .setFocusable(true)
-                    .setAnimation(R.style.popup_hint_anim)
-                    .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
-                    .build());
-            popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
-                @Override
-                public List<ComAll> getSelComAll() {
-                    return selList;
-                }
-
-                @Override
-                public void state(int what) {
-                    if(isDown){
-                        down(selList);
+        if(isDown){
+            down(selList);
+        }else {
+            if(null == popPlayListWindow){
+                popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(mFontext)
+                        .setOutSideTouchable(true)
+                        .setFocusable(true)
+                        .setAnimation(R.style.popup_hint_anim)
+                        .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
+                        .build());
+                popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
+                    @Override
+                    public List<ComAll> getSelComAll() {
+                        return selList;
                     }
 
-                }
-            });
-        }else {
+                    @Override
+                    public void state(int what) {
+                        if(isDown){
+                            down(selList);
+                        }
 
+                    }
+                });
+            }else {
+
+            }
+            popPlayListWindow.user_broadcastall();
+            popPlayListWindow.show(buttomLayout);
         }
-        popPlayListWindow.user_broadcastall();
-        popPlayListWindow.show(buttomLayout);
+
     }
 
     //非wifi网络下的提醒

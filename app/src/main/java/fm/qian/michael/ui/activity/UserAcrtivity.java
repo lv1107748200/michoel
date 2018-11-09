@@ -91,7 +91,7 @@ public class UserAcrtivity extends BaseIntensifyActivity {
     @BindView(R.id.layout_sr)
     LinearLayout layoutSr;
 
-    @OnClick({R.id.base_left_layout, R.id.user_layout,
+    @OnClick({R.id.user_layout,
             R.id.wodexinxi_layout, R.id.baobaoxinxi_layout, R.id.sczj_layout})
     public  void  onClick(View view){
         switch (view.getId()){
@@ -240,6 +240,8 @@ public class UserAcrtivity extends BaseIntensifyActivity {
                 if(null != popSetNameWindow){
                     popSetNameWindow.dismiss();
                 }
+
+                UserInfoManger.getInstance().clear();
 
                 getUserMessage();//设置之后
 

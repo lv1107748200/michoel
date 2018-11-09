@@ -64,17 +64,6 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
     TextView itemTv;
     SelectableRoundedImageView itemImage;
 
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout})
-    public  void  onClick(View view){
-        switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
-            case R.id.base_right_layout:
-
-                break;
-        }
-    }
 
     @Override
     public int getLayout() {
@@ -134,6 +123,16 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
 
     private void  topic(){
         baseService.topic(id,pageNo+"",new HttpCallback<ComAll, BaseResponse<ComAll, List<Base>>>() {
+            @Override
+            public void onNotNet() {
+                super.onNotNet();
+                if(isUpOrDown){
+                    getRefreshLayout().finishLoadMore();
+                }else {
+                    getRefreshLayout().finishRefresh();
+                }
+            }
+
             @Override
             public void onError(HttpException e) {
                 NToast.shortToastBaseApp(e.getMsg());

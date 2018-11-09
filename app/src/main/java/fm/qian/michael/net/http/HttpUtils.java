@@ -42,15 +42,21 @@ public class HttpUtils {
                                    Observer s,
                                    ObservableTransformer transformer){
 
-        if(NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
-            o.subscribeOn(Schedulers.io())
-                    .unsubscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .compose(transformer)
-                    .subscribe(s);
-        }else {
-            NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
-        }
+        o.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(transformer)
+                .subscribe(s);
+
+//        if(NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+//            o.subscribeOn(Schedulers.io())
+//                    .unsubscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .compose(transformer)
+//                    .subscribe(s);
+//        }else {
+//            NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+//        }
 
 
     }

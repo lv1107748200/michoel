@@ -29,6 +29,7 @@ import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.db.DownTasksModel;
 import fm.qian.michael.net.base.BaseResponse;
 import fm.qian.michael.net.entry.Video;
 import fm.qian.michael.net.entry.response.Album;
@@ -62,19 +63,10 @@ public class HeadGroupActivity extends BaseIntensifyActivity {
     public static final int TWO = 2;//视频集合
 
     private String id;
+    private DownTasksModel downTasksModel;
 
     private GroupVoiseFragment   groupVoiseFragment;
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout})
-    public  void  onClick(View view){
-        switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
-            case R.id.base_right_layout:
 
-                break;
-        }
-    }
 
     @Override
     public int getLayout() {
@@ -94,9 +86,15 @@ public class HeadGroupActivity extends BaseIntensifyActivity {
         Intent intent = getIntent();
 
         id = intent.getStringExtra(HEADGROUP);
-
+        downTasksModel = intent.getParcelableExtra("DownTasksModel");
         if(!CheckUtil.isEmpty(id)){
             album();
+        }else if(!CheckUtil.isEmpty(downTasksModel)){
+            setTitleTv(downTasksModel.getTitle());
+            groupVoiseFragment = new GroupVoiseFragment();
+            groupVoiseFragment.setK(downTasksModel);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, groupVoiseFragment).commit();
         }
     }
 

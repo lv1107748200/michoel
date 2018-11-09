@@ -74,6 +74,11 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
+    public boolean isAddGifImage() {
+        return false;
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }

@@ -44,6 +44,8 @@ import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.WebViewUtil;
+import fm.qian.michael.widget.pop.CustomPopuWindConfig;
+import fm.qian.michael.widget.pop.PopShareWindow;
 import fm.qian.michael.widget.web.X5WebView;
 
 /**
@@ -64,22 +66,46 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
     ProgressBar jiaZai_layout;
     @BindView(R.id.jiaZai_layout_btn)
     LinearLayout jiaZai_layout_btn;
-
+    @BindView(R.id.base_right_layout_two)
+    LinearLayout base_right_layout_two;
     private String kind;
     private String url = "https://www.qian.fm/agreement.htm";
     //private String url = "https://v.qq.com/x/page/q07671x669h.html?ptag=qqbrowser";
     private String id;
-
-    @OnClick({R.id.base_left_layout, R.id.again_btn})
+    private PopShareWindow popShareWindow;
+    private ComAll comAll;
+    @OnClick({ R.id.again_btn,R.id.base_right_layout_two})
     public  void  onClick(View view){
         switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
             case R.id.again_btn:
                 setWebLoad(url);//失败时重新打开
                 break;
+            case R.id.base_right_layout_two:
+                if(null == comAll)
+                    return;
+                if(null == popShareWindow){
+                    popShareWindow = new PopShareWindow(this,new CustomPopuWindConfig.Builder(this)
+                            .setOutSideTouchable(true)
+                            .setFocusable(true)
+                            .setTouMing(false)
+                            .setAnimation(R.style.popup_hint_anim)
+                            .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)))
+                            .build());
+                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),comAll.getWxurl()));
+
+                    popShareWindow.show(view);
+                }else {
+                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),comAll.getWxurl()));
+
+                    popShareWindow.show(view);
+                }
+                break;
         }
+    }
+
+    @Override
+    public boolean isAddGifImage() {
+        return true;
     }
 
     @Override
@@ -232,6 +258,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
 
     private void setView(){
         if(GlobalVariable.TWO.equals(type)){
+            base_right_layout_two.setVisibility(View.VISIBLE);
             setTitleTv("视频");
             baseService.video(id, new HttpCallback<ComAll, BaseDataResponse<ComAll>>() {
                 @Override
@@ -241,13 +268,14 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
 
                 @Override
                 public void onSuccess(ComAll comAll) {
-
+                    WebTBSParticularsActivity.this.comAll = comAll;
                    // setTitleTv(comAll.getTitle());
                     url = comAll.getUrl();
                     setWebLoad(url);
                 }
             },WebTBSParticularsActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
         }else if(GlobalVariable.THREE.equals(type)){
+            base_right_layout_two.setVisibility(View.VISIBLE);
             setTitleTv("文章");
             baseService.article(id, new HttpCallback<ComAll, BaseDataResponse<ComAll>>() {
                 @Override
@@ -257,6 +285,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
                 @Override
                 public void onSuccess(ComAll comAll) {
                    // setTitleTv(comAll.getTitle());
+                    WebTBSParticularsActivity.this.comAll = comAll;
                     url = comAll.getWxurl();
                     setWebLoad(url);
                 }

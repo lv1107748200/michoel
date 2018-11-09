@@ -174,7 +174,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="本地下载"
+                    android:text="我的下载"
                     style="@style/m_text_style_one"
                     />
             </LinearLayout>

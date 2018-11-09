@@ -38,6 +38,7 @@ import fm.qian.michael.net.subscriber.HttpSubscriber;
 import fm.qian.michael.net.subscriber.HttpUserSubscriber;
 import fm.qian.michael.net.subscriber.HttpWXUserSubscriber;
 import fm.qian.michael.utils.CommonUtils;
+import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.single.UserInfoManger;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
@@ -70,7 +71,10 @@ public class BaseService {
             HttpCallback<Ver,BaseDataResponse<Ver>> httpCallback
     ,ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.ver(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -85,7 +89,10 @@ public class BaseService {
             HttpCallback<Index,BaseDataResponse<Index>> httpCallback
             ,ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.index(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -100,7 +107,10 @@ public class BaseService {
             HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.ranklist(tid,day,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -115,7 +125,10 @@ public class BaseService {
             HttpCallback<List<Base>, BaseDataResponse<List<Base>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.recommend(p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -131,7 +144,10 @@ public class BaseService {
             HttpCallback<ComAll,BaseResponse<ComAll,List<Base>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.topic(id,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -149,7 +165,10 @@ public class BaseService {
             HttpCallback<Album,BaseResponse<Album,List<ComAll>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.album(id,p, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey(),
                 CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
@@ -167,7 +186,10 @@ public class BaseService {
             HttpCallback<ComAll, BaseDataResponse<ComAll>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.audio(id, UserInfoManger.getInstance().getUserName(),UserInfoManger.getInstance().getSessionkey(),
                 CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
@@ -182,7 +204,10 @@ public class BaseService {
             HttpCallback<ComAll, BaseDataResponse> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.pta(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -198,7 +223,10 @@ public class BaseService {
             HttpCallback<ComAll, BaseDataResponse<ComAll>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.video(id,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -213,7 +241,10 @@ public class BaseService {
             HttpCallback<ComAll, BaseDataResponse<ComAll>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.article(id,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -229,7 +260,10 @@ public class BaseService {
             HttpCallback<List<Base>, BaseDataResponse<List<Base>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.articlelist(q,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -244,7 +278,10 @@ public class BaseService {
             HttpCallback<List<Base>, BaseDataResponse<List<Base>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.search_hotwords(tid,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -258,7 +295,10 @@ public class BaseService {
             HttpCallback<List<Category>, BaseDataResponse<List<Category>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.category(CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -275,7 +315,10 @@ public class BaseService {
             HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.search(t,q,p,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -290,7 +333,10 @@ public class BaseService {
             HttpCallback<ComAll, BaseDataResponse<ComAll>> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  appService.isbn(isbn,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -308,7 +354,10 @@ public class BaseService {
           Reg data,
           HttpCallback<UserInfo,BaseDataResponse<UserInfo>> httpCallback
           , ObservableTransformer transformer){
-
+      if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+          httpCallback.onNotNet();
+          return;
+      }
 //      RequestBody body = HttpUtils.buildRequestBody(data);
       String body = HttpUtils.getStringValue(data);
 
@@ -328,7 +377,10 @@ public class BaseService {
               Reg data,
               HttpCallback<UserInfo,BaseDataResponse<UserInfo>> httpCallback
               , ObservableTransformer transformer){
-
+          if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+              httpCallback.onNotNet();
+              return;
+          }
 //          RequestBody body = HttpUtils.buildRequestBody(data);
           String body = HttpUtils.getStringValue(data);
 
@@ -351,6 +403,10 @@ public class BaseService {
             ,HttpCallback<YZMOrSID, BaseDataResponse<YZMOrSID>> httpCallback
             , ObservableTransformer transformer
     ) {
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  userService.getyzm(sid,random,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -364,7 +420,10 @@ public class BaseService {
             Reg data,
             HttpCallback<Object,BaseDataResponse> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
        // RequestBody body = HttpUtils.buildRequestBody(data);
         String body = HttpUtils.getStringValue(data);
 
@@ -385,7 +444,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<Object,BaseDataResponse<Object>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -407,6 +469,10 @@ public class BaseService {
             HttpCallback<Object, BaseDataResponse> httpCallback
             , ObservableTransformer transformer
     ) {
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  userService.user_tbxiaoe(sessionkey,username,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
         HttpUtils.toSubscribe(
                 observable,
@@ -420,6 +486,11 @@ public class BaseService {
             UserInfo data,
             HttpCallback<UserInfo,BaseDataResponse<UserInfo>> httpCallback
             , ObservableTransformer transformer){
+
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
 
 //        RequestBody body = HttpUtils.buildRequestBody(data);
         String body = HttpUtils.getStringValue(data);
@@ -440,7 +511,10 @@ public class BaseService {
     @SuppressWarnings("unchecked")
     public void user_logo( UserInfo data,File file, HttpCallback<Object,
             BaseDataResponse> httpCallback , ObservableTransformer transformer) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         // 创建 RequestBody，用于封装 请求RequestBody
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse("multipart/form-data"), file);
@@ -485,7 +559,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<List<ComAll>,BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -506,7 +583,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<Object,BaseDataResponse<Object>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -527,7 +607,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<List<ComAll>,BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -547,7 +630,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<ComAll,BaseDataResponse> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -568,7 +654,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<List<ComAll>,BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -589,7 +678,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<Object,BaseDataResponse<Object>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -610,7 +702,10 @@ public class BaseService {
             UserInfo data,
             HttpCallback<List<ComAll>,BaseDataResponse<List<ComAll>>> httpCallback
             , ObservableTransformer transformer){
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         String body = HttpUtils.getStringValue(data);
 
         Map mapType = HttpUtils.jsonToBean(body,Map.class);
@@ -635,7 +730,10 @@ public class BaseService {
             HttpCallback<WXAccessData,WXAccessData> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  wxuserService.access_token(appid,secret,code,"authorization_code");
         HttpUtils.toSubscribe(
                 observable,
@@ -652,7 +750,10 @@ public class BaseService {
             HttpCallback<WXAccessData,WXAccessData> httpCallback
             , ObservableTransformer transformer
     ) {
-
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
         Observable observable =  wxuserService.userinfo(access_token,openid);
         HttpUtils.toSubscribe(
                 observable,

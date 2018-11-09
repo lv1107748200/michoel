@@ -541,6 +541,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:overScrollMode">never</item>
+        <item name="android:fadingEdge">none</item>
     </style>
     <style name="m_er_recycle_style_p_w">
         <item name="android:layout_width">match_parent</item>
@@ -587,6 +588,12 @@
         <item name="android:layout_width">@dimen/dp_18</item>
         <item name="android:layout_height">@dimen/dp_18</item>
         <item name="android:background">@drawable/selector_checked_ten</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="image_sel_style_ss">
+        <item name="android:layout_width">@dimen/dp_18</item>
+        <item name="android:layout_height">@dimen/dp_18</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
 

@@ -196,6 +196,16 @@ public class CollectionToBuyActivity extends BaseRecycleViewActivity {
 
         baseService.user_favorite_list(userInfo, new HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>>() {
                     @Override
+                    public void onNotNet() {
+                        super.onNotNet();
+                        if(isUpOrDown){
+                            getRefreshLayout().finishLoadMore();
+                        }else {
+                            getRefreshLayout().finishRefresh();
+                        }
+                    }
+
+                    @Override
                     public void onError(HttpException e) {
                      CollectionToBuyActivity.this.onError(e);
                     }

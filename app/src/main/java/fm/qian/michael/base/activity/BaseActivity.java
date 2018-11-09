@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-
+import android.widget.ImageView;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -31,9 +31,15 @@ import com.jaeger.library.StatusBarUtil;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.net.base.BaseService;
+import fm.qian.michael.service.MusicPlayerManger;
+import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.DisplayUtils;
+import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
+import fm.qian.michael.widget.pop.CustomPopuWindConfig;
+import fm.qian.michael.widget.pop.PopLoginWindow;
+import fm.qian.michael.widget.single.PlayGifManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 
 import static fm.qian.michael.utils.StatusBarUtil.setStatusTextColor;
@@ -49,6 +55,9 @@ public class BaseActivity extends AbstractBaseActivity{
     Unbinder unbinder;
     private  NetworkConnectChangedReceiver networkConnectChangedReceiver;
 
+    private PopLoginWindow popLoginWindow;
+
+    private View view;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //setStatusBar();
@@ -59,7 +68,7 @@ public class BaseActivity extends AbstractBaseActivity{
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        View view = LayoutInflater.from(this).inflate(layoutResID, null);
+         view = LayoutInflater.from(this).inflate(layoutResID, null);
         setContentView(view);
     }
 
@@ -69,7 +78,7 @@ public class BaseActivity extends AbstractBaseActivity{
         unbinder =  ButterKnife.bind(this);
         if(isStatusBar()){
             //setStatusTextColor(true,this);
-            StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),40);
+            StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),50);
         }
         initTitle();
         initView();
@@ -164,6 +173,18 @@ public class BaseActivity extends AbstractBaseActivity{
     }
     //获取用户信息
     public void WLoaignMake(){
+        if(popLoginWindow == null){
+            popLoginWindow = new PopLoginWindow(new CustomPopuWindConfig.Builder(this)
+                    .setOutSideTouchable(false)
+                    .setFocusable(true)
+                    .setAnimation(R.style.popup_hint_anim)
+                    .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)
+                            - com.hr.bclibrary.utils.DisplayUtils.dip2px(this,80)))
+                    .build(),this);
+            popLoginWindow.show(view);
+        }else {
+            popLoginWindow.show(view);
+        }
         NToast.shortToastBaseApp(getString(R.string.需登陆));
     }
 
@@ -178,6 +199,9 @@ public class BaseActivity extends AbstractBaseActivity{
     }
     @Override
     protected void onDestroy() {
+        if(isAddGifImage())
+        PlayGifManger.remove(this.getLocalClassName());
+
         EventBus.getDefault().unregister(this);//解除订阅
         if(null != unbinder){
             unbinder.unbind();
@@ -244,5 +268,21 @@ public class BaseActivity extends AbstractBaseActivity{
      */
     protected @ColorInt int getStatusBarColor() {
         return Color.WHITE;
+    }
+
+    public void setGif(ImageView playImage){
+        if(null == playImage)
+            return;
+        PlayGifManger.add(this.getLocalClassName(),playImage,this);
+    }
+
+    public void startPlay(){
+        Intent intent = new Intent();
+        intent.setClass(this,PlayActivity.class);
+        startActivity(intent);
+    }
+    public boolean isAddGifImage(){
+
+        return true;
     }
 }

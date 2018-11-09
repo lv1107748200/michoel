@@ -39,9 +39,13 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.common.BaseDownViewHolder;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.DownTasksModel;
+import fm.qian.michael.db.DownTasksModel_Table;
 import fm.qian.michael.db.TasksManagerModel;
 import fm.qian.michael.db.TasksManagerModel_Table;
+import fm.qian.michael.net.entry.response.Album;
 import fm.qian.michael.net.entry.response.ComAll;
+import fm.qian.michael.net.entry.response.ComAll_Table;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.ImgDatasUtils;
@@ -247,6 +251,121 @@ public class DownManger {
 //    }
 
     //任务管理
+    public static void setIdAndPath(final int size, final Album album, final List<ComAll> list,
+                                    final FileDownloadListener fileDownloadListener,
+                                    final ResultCallback resultCallback){
+
+        if(getInstance().workHandler == null){
+            getInstance().init();
+        }
+
+        if(CheckUtil.isEmpty(list))
+            return ;
+
+        getInstance().workHandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                getInstance().setDownloadListener();
+
+                FileDownloader.getImpl().pause(getInstance().taskDownloadListener);
+
+                if(null != album){
+                    DownTasksModel downTasksModel;
+                    downTasksModel = SQLite.select()
+                            .from(DownTasksModel.class)
+                            .where(DownTasksModel_Table.id.eq(album.getId()))
+                            .querySingle();
+                    if(downTasksModel != null){
+
+                    }else {
+                        downTasksModel = new DownTasksModel();
+                        downTasksModel.setId(album.getId());
+                        downTasksModel.setTitle(album.getTitle());
+                        downTasksModel.setBrief(album.getBrief());
+                        downTasksModel.setCover(album.getCover());
+                        downTasksModel.setSizeAll(size+"");
+                        downTasksModel.save();
+                    }
+                }
+
+                for(ComAll comAll: list){
+
+                    String url = comAll.getUrl();
+
+                    if(CheckUtil.isEmpty(url))
+                        return;
+
+                    String path = getInstance().createPath(url);
+                    if(CheckUtil.isEmpty(path))
+                        return;
+
+                    int id = FileDownloadUtils.generateId(url, path);
+
+                  //  NLog.e(NLog.TAGDOWN,"特殊状态 path --- " + path );
+
+                    ComAll comAll1 =  SQLite.select()
+                            .from(ComAll.class)
+                            .where(ComAll_Table.id.eq(comAll.getId()))
+                            .querySingle();
+                    if(comAll1 != null){
+                        if(null != album){
+                            comAll1.setAlbumId(album.getId());
+                        }
+//                        comAll1.setIsDown(id);
+//                        comAll1.setDownPath(path);
+                        comAll1.update();
+                    }else {
+                        comAll.setIsDown(id);
+                        comAll.setDownPath(path);
+                        if(null != album){
+                            comAll.setAlbumId(album.getId());
+                        }
+                        comAll.save();
+                    }
+
+                }
+
+                List<ComAll> listTask =  SQLite.select()
+                        .from(ComAll.class)
+                        .queryList();
+
+                for(ComAll tasksManagerModel : listTask){
+
+                    String url = tasksManagerModel.getUrl();
+                    String path = tasksManagerModel.getDownPath();
+                    int id = tasksManagerModel.getIsDown();
+
+                    if(isDownStatus(id,path) != FileDownloadStatus.completed) {
+
+
+                        BaseDownloadTask task = FileDownloader.getImpl().create(url)
+                                .setListener(getInstance().taskDownloadListener)
+                                .setPath(path);
+                       // NLog.e(NLog.TAGDOWN,"特殊状态 path --- " + path );
+                        getInstance().getTaskSparseArray().put(task.getId(),task);
+
+                        task.asInQueueTask()
+                                .enqueue();
+                    }
+                }
+
+                if(isC){//串行
+                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, true);
+                }else {//并行
+                    FileDownloader.getImpl().start(getInstance().taskDownloadListener, false);
+                }
+
+                if(null != resultCallback){
+                    resultCallback.onCallbackSuccess("成功添加下载任务");
+                }
+
+            }
+        });
+    }
+
+//
+//    //任务管理
     public static void setIdAndPath(final List<ComAll> list,
                                     final FileDownloadListener fileDownloadListener,
                                     final ResultCallback resultCallback){
@@ -512,19 +631,9 @@ public class DownManger {
 
                 for (ComAll comAll : comAlls){
 
-
-                    String path = DownManger.createPath(comAll.getUrl());
-                    int id = FileDownloadUtils.generateId(comAll.getUrl(), path);
+                    String path = comAll.getDownPath();
+                    int id = comAll.getIsDown();
                     int statue = DownManger.isDownStatus(id,path);
-
-                    TasksManagerModel tasksManagerModel =  SQLite.select()
-                            .from(TasksManagerModel.class)
-                            .where(TasksManagerModel_Table.id.eq(id))
-                            .querySingle();
-
-                    if(tasksManagerModel !=null){
-                        tasksManagerModel.delete();
-                    }
 
                     if(statue == FileDownloadStatus.completed){
                         new File(path).delete();
@@ -745,13 +854,9 @@ public class DownManger {
                     super.started(task);
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
                     if (tag != null) {
-                        if(null != getInstance().baseQuickAdapter){
-                            if(tag.getPosition() > -1){
+                        if(tag.getPosition() > -1){
+                            if(null != getInstance().baseQuickAdapter) {
                                 getInstance().baseQuickAdapter.notifyItemChanged(tag.getPosition());
-                            }else {
-                                tag.getView().setVisibility(View.VISIBLE);
-                                tag.getView().setActivated(false);
-                                tag.getTextView().setText("下载中");
                             }
                         }else {
                             tag.getView().setVisibility(View.VISIBLE);
@@ -768,19 +873,17 @@ public class DownManger {
                     super.connected(task, etag, isContinue, soFarBytes, totalBytes);
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
                     if (tag != null) {
-                        if(null != getInstance().baseQuickAdapter){
+
                             if(tag.getPosition() > -1){
-                                getInstance().baseQuickAdapter.notifyItemChanged(tag.getPosition());
+                                if(null != getInstance().baseQuickAdapter) {
+                                    getInstance().baseQuickAdapter.notifyItemChanged(tag.getPosition());
+                                }
                             }else {
                                 tag.getView().setVisibility(View.VISIBLE);
                                 tag.getView().setActivated(false);
                                 tag.getTextView().setText("下载中");
                             }
-                        }else {
-                            tag.getView().setVisibility(View.VISIBLE);
-                            tag.getView().setActivated(false);
-                            tag.getTextView().setText("下载中");
-                        }
+
                     }
 
 
@@ -835,25 +938,18 @@ public class DownManger {
 
                     final BaseDownViewHolder tag = checkCurrentHolder(task);
                     if (tag != null) {
-
-
-                        if(null != getInstance().baseQuickAdapter){
-                            if(tag.getPosition() > -1){
+                        if(tag.getPosition() > -1){
+                            if(null != getInstance().baseQuickAdapter){
                                 getInstance().baseQuickAdapter.notifyItemChanged(tag.getPosition());
-                            }else {
-
-                                if(tag.getPosition() == -1){
-                                 // tag.getDown_image().setBackgroundResource(R.drawable.down_press);
-                                    tag.getDown_image_checked().setVisibility(View.VISIBLE);
-
-                                    EventBus.getDefault().post(new Event.PlayEvent(2));//在播放页面下载后视图刷新
-                                }
-
-                                tag.getView().setVisibility(View.VISIBLE);
-                                tag.getView().setActivated(true);
-                                tag.getTextView().setText("已下载");
                             }
                         }else {
+                            if(tag.getPosition() == -1){
+                                // tag.getDown_image().setBackgroundResource(R.drawable.down_press);
+                                tag.getDown_image_checked().setVisibility(View.VISIBLE);
+
+                                EventBus.getDefault().post(new Event.PlayEvent(2));//在播放页面下载后视图刷新
+                            }
+
                             tag.getView().setVisibility(View.VISIBLE);
                             tag.getView().setActivated(true);
                             tag.getTextView().setText("已下载");
@@ -977,7 +1073,7 @@ public class DownManger {
         if (TextUtils.isEmpty(url)) {
             return null;
         }
-        String path = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp(), MqService.pathSong);
+        String path = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp()) + File.separator + MqService.pathSong;
 
        // NLog.e(NLog.TAGOther,path);
         //"/storage/emulated/0/Android/data/fm.qian.michael/files/song"

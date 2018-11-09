@@ -184,7 +184,7 @@ public class SdcardUtil {
 
         } else {
 
-            cachePath = context.getFilesDir().getAbsolutePath();
+            cachePath = context.getFilesDir().getAbsolutePath() + File.separator + "down";
 
         }
 

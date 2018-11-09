@@ -47,18 +47,6 @@ public class TopListActivity extends BaseIntensifyActivity {
     @BindView(R.id.xViewPager_main)
     XCViewPager xViewPagerMain;
 
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout})
-    public  void  onClick(View view){
-        switch (view.getId()){
-            case R.id.base_left_layout:
-                finish();
-                break;
-            case R.id.base_right_layout:
-
-                break;
-        }
-    }
-
     @Override
     public int getLayout() {
         return  R.layout.activity_top_list;

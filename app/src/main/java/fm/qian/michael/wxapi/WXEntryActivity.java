@@ -37,7 +37,9 @@ import fm.qian.michael.widget.single.UserInfoManger;
 import static fm.qian.michael.common.GlobalVariable.THREE;
 import static fm.qian.michael.common.GlobalVariable.TWO;
 import static fm.qian.michael.common.UserInforConfig.USERBINDWX;
+import static fm.qian.michael.common.UserInforConfig.USERLOGO;
 import static fm.qian.michael.common.UserInforConfig.USERNAME;
+import static fm.qian.michael.common.UserInforConfig.USERNICKNAME;
 import static fm.qian.michael.common.UserInforConfig.USERSESSIONKEY;
 import static fm.qian.michael.wxapi.Constants.APP_ID;
 import static fm.qian.michael.wxapi.Constants.SECRET;
@@ -170,8 +172,8 @@ public class WXEntryActivity extends BaseActivity implements IWXAPIEventHandler 
 
                   //  SPUtils.putString(USERNAME,userInfo.getUsername(),true);
                  //   SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
-//                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
-//                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
+                SPUtils.putString(USERLOGO,userInfo.getLogo(),false);
+                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),false);
                  //   SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
                     UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
                     UserInfoManger.getInstance().clear();//每次登陆清空数据

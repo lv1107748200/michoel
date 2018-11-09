@@ -85,7 +85,7 @@ public class Event {
     //正在播放刷新
     public static class PlayEvent{
         private String id;
-        private int i; //1 播放刷新 2在播放页面下载后视图刷新
+        private int i; //1 播放刷新 2在播放页面下载后视图刷新 3下载中删除专辑
 
         public PlayEvent() {
 

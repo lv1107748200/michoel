@@ -59,6 +59,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import fm.qian.michael.widget.single.PlayGifManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 
 import static fm.qian.michael.service.MqService.CMDNOTIF;
@@ -162,7 +163,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         f.addAction(CMDNOTIF);//外控设备 启动 播放  但是  此时 service  已经 un
         registerReceiver(mPlaybackStatus, new IntentFilter(f));
 
-        GlideUtil.setGlideImage(this, R.drawable.pause,playImage);
+        //GlideUtil.setGlideImage(this, R.drawable.pause,playImage);
     }
 
     @Override
@@ -181,11 +182,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         setPermission();
         // setBroadcast(this);
 
-        if(MusicPlayerManger.isPlaying()){
-            GlideUtil.setGif(this, R.mipmap.playing,playImage);
-        }else {
-            GlideUtil.setGlideImage(this, R.drawable.pause,playImage);
-        }
+        setGif(playImage);
 
         setBroadcast(this);
     }
@@ -223,7 +220,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         bottomLayout.setSelect(0);
         bottomLayout.setBomSel(0);
 
-        autoDown();//检测自动下载
+        //autoDown();//检测自动下载
     }
 
     //点击安全企业
@@ -285,12 +282,14 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
              String action = intent.getAction();
             if (MqService.UPDATA_PAUSE.equals(action)) {
                 if(null != mReference){
-                    GlideUtil.setGlideImage(mReference.get(), R.drawable.pause,playImage);
+                   // GlideUtil.setGlideImage(mReference.get(), R.drawable.pause,playImage);
+                    PlayGifManger.updataPause();
                 }
             }else if(MqService.SEND_PROGRESS.equals(action)){
 
                 if(null != mReference){
-                    GlideUtil.setGif(mReference.get(), R.mipmap.playing,playImage);
+                  //  GlideUtil.setGif(mReference.get(), R.mipmap.playing,playImage);
+                    PlayGifManger.updataPlay();
                 }
             }else if(MqService.UPDATA_ID.equals(action)){//换歌了
 

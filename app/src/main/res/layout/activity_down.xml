@@ -7,23 +7,25 @@
 
     <include layout="@layout/title_layout"/>
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:layout_marginRight="@dimen/item_margin_two"
-        android:layout_marginLeft="@dimen/item_margin_two"
+    <fm.qian.michael.widget.custom.DownTabLayout
+        android:layout_marginRight="@dimen/margin_15"
+        android:layout_marginLeft="@dimen/margin_15"
         android:id="@+id/magic_indicator"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        />
     <View
         style="@style/view_line"
         />
-    <fm.qian.michael.widget.custom.XCViewPager
+    <fm.qian.michael.widget.swipemenulib.CstViewPager
         android:id="@+id/xViewPager_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         >
 
-    </fm.qian.michael.widget.custom.XCViewPager>
+    </fm.qian.michael.widget.swipemenulib.CstViewPager>
 
 
 </LinearLayout>

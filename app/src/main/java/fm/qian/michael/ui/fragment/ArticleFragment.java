@@ -216,6 +216,17 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
     private void articlelist(String q, String p){
         baseService.articlelist(q, p, new HttpCallback<List<Base>, BaseDataResponse<List<Base>>>() {
             @Override
+            public void onNotNet() {
+                if(isUpOrDown){
+                    getRefreshLayout().finishLoadMore();
+                }else {
+                    getRefreshLayout().finishRefresh();
+                }
+                quickAdapter.setEmptyView(getError(""));
+
+            }
+
+            @Override
             public void onError(HttpException e) {
 
                 if(isUpOrDown){

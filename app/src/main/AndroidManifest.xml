@@ -53,7 +53,6 @@
         tools:ignore="ProtectedPermissions" />
 
     <uses-permission android:name="android.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
 
     <application
@@ -173,12 +172,19 @@
             android:launchMode="singleTask"
             >
         </activity>
-        <!-- 下载管理页面 -->
+
         <activity
             android:name=".ui.activity.dim.CollectionToBuyActivity"
             android:screenOrientation="portrait"
             >
         </activity>
+        <!-- 下载管理页面 -->
+        <activity
+            android:name=".ui.activity.dim.DownActivity"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+
 
         <activity android:name=".ui.activity.LockActivity"
             android:excludeFromRecents="true"

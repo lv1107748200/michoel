@@ -56,7 +56,7 @@ public class WebParticularsActivity extends BaseIntensifyActivity implements Tex
     /** 视频全屏参数 */
 
 
-    @OnClick({fm.qian.michael.R.id.base_left_layout, fm.qian.michael.R.id.again_btn})
+    @OnClick({fm.qian.michael.R.id.again_btn})
     public  void  onClick(View view){
         switch (view.getId()){
             case fm.qian.michael.R.id.base_left_layout:

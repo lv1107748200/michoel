@@ -66,12 +66,12 @@ public class BaseRecycleViewFragment extends BaseFragment {
                 @Override
                 public void onRefresh(final RefreshLayout refreshlayout) {
 
-                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
-
-                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
-                        refreshlayout.finishRefresh();
-                        return;
-                    }
+//                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+//
+//                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+//                        refreshlayout.finishRefresh();
+//                        return;
+//                    }
 
                      isUpOrDown = false;//向下
 
@@ -93,12 +93,12 @@ public class BaseRecycleViewFragment extends BaseFragment {
                 @Override
                 public void onLoadMore(RefreshLayout refreshLayout) {
 
-                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
-
-                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
-                        refreshLayout.finishLoadMore();
-                        return;
-                    }
+//                    if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+//
+//                        NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+//                        refreshLayout.finishLoadMore();
+//                        return;
+//                    }
 
                     isUpOrDown = true;
 

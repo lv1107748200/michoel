@@ -103,7 +103,7 @@ public class LoginActivity extends BaseIntensifyActivity {
     TextView help_tv;
 
 
-    @OnClick({R.id.base_left_layout, R.id.base_right_layout,
+    @OnClick({
             R.id.send_verification_code,R.id.weixin_login_layout
     ,R.id.de_login_sign,R.id.verification_code_img,R.id.help_tv})
     public  void  onClick(View view){
@@ -357,8 +357,8 @@ public class LoginActivity extends BaseIntensifyActivity {
 
            //     SPUtils.putString(USERNAME,userInfo.getUsername(),true);
          //       SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
-//                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
-//                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
+                SPUtils.putString(USERLOGO,userInfo.getLogo(),false);
+                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),false);
           //      SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
 
                 UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
@@ -425,8 +425,8 @@ public class LoginActivity extends BaseIntensifyActivity {
 
                  //   SPUtils.putString(USERNAME,userInfo.getUsername(),true);
                   //  SPUtils.putString(USERSESSIONKEY,userInfo.getSessionkey(),true);
-//                SPUtils.putString(USERLOGO,userInfo.getLogo(),true);
-//                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),true);
+                SPUtils.putString(USERLOGO,userInfo.getLogo(),false);
+                SPUtils.putString(USERNICKNAME,userInfo.getNickname(),false);
                   //  SPUtils.putString(USERBINDWX,userInfo.getBindwx(),true);
                     UseData.setLogin(userInfo.getUsername(),userInfo.getSessionkey(),userInfo.getBindwx());
                     UserInfoManger.getInstance().clear();//每次登陆清空数据

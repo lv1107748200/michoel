@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hr.bclibrary.utils.CheckUtil;
+import com.hr.bclibrary.utils.DisplayUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -24,6 +25,8 @@ import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.net.base.BaseService;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.widget.pop.CustomPopuWindConfig;
+import fm.qian.michael.widget.pop.PopLoginWindow;
 import fm.qian.michael.widget.single.UserInfoManger;
 
 /**
@@ -46,6 +49,7 @@ public class BaseFragment extends AbstractBaseFragment{
 
     FrameLayout head_layout;
 
+    private PopLoginWindow popLoginWindow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -131,9 +135,41 @@ public class BaseFragment extends AbstractBaseFragment{
         }
         return view;
     }
+    public View getError(String message){
+        View view = LayoutInflater.from(mFontext).inflate(R.layout.error_net_view,null,false);
 
+        TextView textView = view.findViewById(R.id.emty_tv);
+        if(!CheckUtil.isEmpty(message)){
+            textView.setText(message);
+        }
+        return view;
+    }
     public void WLoaignMake(){
+        if(popLoginWindow == null){
+            popLoginWindow = new PopLoginWindow(new CustomPopuWindConfig.Builder(mFontext)
+                    .setOutSideTouchable(false)
+                    .setFocusable(true)
+                    .setAnimation(R.style.popup_hint_anim)
+                    .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
+                    .build(),mFontext);
+            popLoginWindow.show(baseFgmView);
+        }else {
+            popLoginWindow.show(baseFgmView);
+        }
         NToast.shortToastBaseApp(getString(R.string.需登陆));
+    }
+    public void WLoaignMake(boolean isf){
+        if(popLoginWindow == null){
+            popLoginWindow = new PopLoginWindow(new CustomPopuWindConfig.Builder(mFontext)
+                    .setOutSideTouchable(false)
+                    .setFocusable(true)
+                    .setAnimation(R.style.popup_hint_anim)
+                    .setWith((DisplayUtils.getScreenWidth(mFontext) - DisplayUtils.dip2px(mFontext,80)))
+                    .build(),mFontext);
+            popLoginWindow.show(baseFgmView);
+        }else {
+            popLoginWindow.show(baseFgmView);
+        }
     }
 
     //判断是否登陆

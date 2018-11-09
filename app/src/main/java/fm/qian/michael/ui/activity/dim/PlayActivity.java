@@ -160,7 +160,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     @BindView(R.id.k_four)
     LinearLayout kFour;
 
-    @OnClick({R.id.base_left_layout,R.id.go_home_img,R.id.set_time_img,
+    @OnClick({R.id.go_home_img,R.id.set_time_img,
             R.id.layout_play_type,R.id.add_play_list,
             R.id.down_image,R.id.image_share,R.id.layout_play_list
             ,R.id.layout_play,R.id.layout_down,R.id.layout_up
@@ -338,6 +338,11 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                 break;
 
         }
+    }
+
+    @Override
+    public boolean isAddGifImage() {
+        return false;
     }
 
     @Override
@@ -704,7 +709,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             comAlls.add(comAll);
 
             if(!CheckUtil.isEmpty(comAlls)){
-                DownManger.setIdAndPath(comAlls, null,new DownManger.ResultCallback() {
+                DownManger.setIdAndPath(0,null,comAlls, null,new DownManger.ResultCallback() {
                     @Override
                     public void onSuccess(Object o) {
                         NToast.shortToastBaseApp(o.toString());
@@ -749,7 +754,9 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     }
     //添加波胆
     private void addPlayerList(){
-
+        if(isDown){
+            down();
+        }else {
             if(null == popPlayListWindow){
                 popPlayListWindow = new PopPlayListWindow(this,new CustomPopuWindConfig.Builder(this)
                         .setOutSideTouchable(true)
@@ -776,6 +783,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             }
             popPlayListWindow.user_broadcastall();
             popPlayListWindow.show(goHomeImg);
+        }
 
     }
 

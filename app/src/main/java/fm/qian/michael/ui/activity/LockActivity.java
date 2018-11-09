@@ -127,7 +127,8 @@ public class LockActivity extends BaseActivity {
 
         if(null != comAll){
             id = comAll.getId();
-            autio();
+            //autio();
+            setView();
         }
 
         if(MusicPlayerManger.isPlaying()){
@@ -137,6 +138,13 @@ public class LockActivity extends BaseActivity {
         setInit();
     }
 
+    private void setView(){
+        GlideUtil.setGlideImage(LockActivity.this,comAll.getCover(),item_image);
+
+        tv_title.setText(comAll.getTitle());
+
+        tv_zhuozhe.setText(comAll.getBroad());
+    }
 
 
     private void autio(){
@@ -208,8 +216,9 @@ public class LockActivity extends BaseActivity {
 
             id = duration;
             if(!CheckUtil.isEmpty(id)){
-
-                autio();
+                comAll = MusicPlayerManger.getCommAll();
+                setView();
+               // autio();
             }
 
         }else if(MqService.MUSIC_LODING.equals(action)){

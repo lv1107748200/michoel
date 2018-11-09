@@ -11,6 +11,8 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
+
 import fm.qian.michael.db.AppDatabase;
 
 import static fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter.LIST;
@@ -19,25 +21,35 @@ import static fm.qian.michael.ui.adapter.MultipleItemPayOrAdapter.LIST;
  * lv   2018/9/17 通用版
  */
 @Table(database = AppDatabase.class)
-public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
+public class ComAll extends BaseModel implements Serializable,Parcelable ,MultiItemEntity {
 
     @PrimaryKey
     private String id;
+    @Column
     private String tid;
+    @Column
     private String zid;
+    @Column
     private String cover;
     @Column
     private String title;
     @Column
     private String addtime;
+    @Column
     private String pubdate;
+    @Column
     private String name;
     @Column
     private String brief;
+    @Column
     private String brief_pay;
+    @Column
     private String userpay;
+    @Column
     private String ispay;
+    @Column
     private String price;
+    @Column
     private String shareurl;
     @Column
     private String cover_small;
@@ -53,14 +65,18 @@ public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
     private String playnums;
     @Column
     private String istest;//用于专辑
-
+    @Column
     private String wxurl;
+    @Column
     private String author;
-
+    @Column
     private int isDown;//0 1 2
+    @Column
     private String downPath;//下载保存路径
-
+    @Column
     private String nums;
+    @Column
+    private String albumId;
 
     public String getId() {
         return id;
@@ -270,7 +286,19 @@ public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
         this.nums = nums;
     }
 
+    public String getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(String albumId) {
+        this.albumId = albumId;
+    }
     public ComAll() {
+    }
+
+    @Override
+    public int getItemType() {
+        return LIST;
     }
 
     @Override
@@ -306,6 +334,7 @@ public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
         dest.writeInt(this.isDown);
         dest.writeString(this.downPath);
         dest.writeString(this.nums);
+        dest.writeString(this.albumId);
     }
 
     protected ComAll(Parcel in) {
@@ -335,6 +364,7 @@ public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
         this.isDown = in.readInt();
         this.downPath = in.readString();
         this.nums = in.readString();
+        this.albumId = in.readString();
     }
 
     public static final Creator<ComAll> CREATOR = new Creator<ComAll>() {
@@ -348,9 +378,4 @@ public class ComAll extends BaseModel implements Parcelable ,MultiItemEntity {
             return new ComAll[size];
         }
     };
-
-    @Override
-    public int getItemType() {
-        return LIST;
-    }
 }

@@ -36,6 +36,7 @@ import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -77,7 +78,9 @@ import fm.qian.michael.ui.activity.LockActivity;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.utils.SPUtils;
+import fm.qian.michael.widget.filecache.FileCacheManger;
 import fm.qian.michael.widget.single.DownManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 import okhttp3.Call;
@@ -278,6 +281,8 @@ public class MqService extends Service {
         final PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
         mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, getClass().getName());
         mWakeLock.setReferenceCounted(false);
+
+        FileCacheManger.getInstance().init(this);//初始化历史缓存
     }
 
     @Override
@@ -309,6 +314,7 @@ public class MqService extends Service {
             mWakeLock.release();
         }
 
+        FileCacheManger.close();
         super.onDestroy();
 
 //        mAlarmManager.cancel(mShutdownIntent);
@@ -325,7 +331,7 @@ public class MqService extends Service {
                 this.comAllList.clear();
                 this.comAllList.addAll(comAll);
 
-                mPlayerHandler.post(saveData);
+                mPlayerHandler.post(saveData);//历史保存
             }
         }
     }
@@ -393,11 +399,12 @@ public class MqService extends Service {
     }
     //确认播放调用
     private void playQQQ(String pathSong){
-        if(CheckUtil.isEmpty(pathSong)){
-            setDataSource(comAll.getUrl());//获取链表中数据进行播放
-        }else {
-            setDataSource(pathSong);//直接播放传入地址
-        }
+
+//        if(CheckUtil.isEmpty(pathSong)){
+//           pathSong =  comAll.getUrl();//获取链表中数据进行播放
+//        }
+
+        createPath(pathSong);
     }
 
     //直接进行历史播放
@@ -434,7 +441,51 @@ public class MqService extends Service {
             play();//选集播放
         }
     }
+    //创造本地播放地址
+    public boolean createPath( String url) {
 
+        if (TextUtils.isEmpty(url)) {
+            return false;
+        }
+        String
+                // pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp(),MqService.pathSong);
+                pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp()) + File.separator + MqService.pathSong;;
+        pathttt = FileDownloadUtils.generateFilePath(pathttt,SdcardUtil.md5(url));
+
+        boolean is = fileIsExists(pathttt);
+
+        if(is){
+            setDataSource(pathttt);
+        }else {
+            if(NetStateUtils.isNetworkConnected(this)){
+                setDataSource(url);//直接播放传入地址
+            }else {
+              //next();
+            }
+        }
+
+        // MLog.E("执行 createPath" + pathttt + "  存在否  " +is);
+        return is;
+    }
+    //判断文件是否存在
+    public boolean fileIsExists(String strFile)
+    {
+        try
+        {
+            File f=new File(strFile);
+            if(!f.exists())
+            {
+                return false;
+            }
+
+        }
+        catch (Exception e)
+        {
+            return false;
+        }
+
+        return true;
+    }
     public void setDataSource(final String path) {
         if(CheckUtil.isEmpty(path))
             return;
@@ -776,8 +827,22 @@ public class MqService extends Service {
         path = comAll.getUrl();//播放地址
 
      //   isNUll = false;//播放
-        reqData(comAll.getId());//播放时检测到播放地址为空
+        if(NetStateUtils.isNetworkConnected(this)){
+            if(CheckUtil.isEmpty(comAll.getCover())){
+                reqData(comAll.getId());//播放时检测到播放地址为空
+            }else {
+                if(!CheckUtil.isEmpty(path)){
+                    setPlay();
+                }else {
+                    reqData(comAll.getId());//播放时检测到播放地址为空
+                }
+            }
 
+        }else {
+            if(!CheckUtil.isEmpty(path)){
+                setPlay();
+            }
+        }
         return path;
     }
 
@@ -862,6 +927,7 @@ public class MqService extends Service {
         if(!CheckUtil.isEmpty(comAll.getCover_small())){
             RequestOptions options = new RequestOptions()
                     .error(R.mipmap.logo)
+                    .diskCacheStrategy(DiskCacheStrategy.DATA)
                     .priority(Priority.LOW);
             Glide.with(this)
                     .asBitmap()
@@ -1017,55 +1083,35 @@ public class MqService extends Service {
     //获取去 本地保存的记录
     public void getSave(){
        // isTermination = false;
-        SQLite.select()
-                .from(ComAll.class)
-                .async()
-                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<ComAll>() {
-                    @Override
-                    public void onListQueryResult(QueryTransaction transaction, @NonNull List<ComAll> tResult) {
-                        NLog.e(NLog.PLAYER, "SQLite  onListQueryResult 查询成功");
-                        if(!CheckUtil.isEmpty(tResult)){
-                            NLog.e(NLog.PLAYER, "SQLite  onListQueryResult size"+tResult.size());
 
-                                comAllList.clear();
-                                comAllList.addAll(tResult);
-
-                                playHistory();//主动从数据库获取数据 进行播放
-
-                        }
-
-                    }
-                })
-                .error(new Transaction.Error() {
-                    @Override
-                    public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
-                        NLog.e(NLog.PLAYER, "SQLite  error"+error.getMessage());
-                    }
-                })
-                .execute();
+        mPlayerHandler.post(reqData);//历史保存
 
     }
-
+    //保存数据
     private Runnable saveData = new Runnable() {
         @Override
         public void run() {
 
-            Delete.table(ComAll.class); //清空之前历史纪录
-
-            for (ComAll comAll : comAllList){
-                comAll.save();
-            }
-
-            NLog.e(NLog.PLAYER,"数据库保存完成");
+            NLog.e(NLog.PLAYER,"历史保存 : " + FileCacheManger.set("playHistory",comAllList));
 
         }
     };
-//    private Runnable reqData = new Runnable() {
-//        @Override
-//        public void run() {
-//            reqData(comAll.getId());//播放时检测到播放地址为空
-//        }
-//    };
+    //异步读取
+    private Runnable reqData = new Runnable() {
+        @Override
+        public void run() {
+
+            List<ComAll> comAlls =  FileCacheManger.get("playHistory",ComAll.class);
+            if(!CheckUtil.isEmpty(comAlls)){
+                NLog.e(NLog.PLAYER,"历史读取 : " + comAlls.size());
+
+                comAllList.clear();
+                comAllList.addAll(comAlls);
+
+                playHistory();//主动从数据库获取数据 进行播放
+            }
+        }
+    };
     private Call call;
     private void reqData(String id){
 
@@ -1137,6 +1183,9 @@ public class MqService extends Service {
 
     //上传 播放次数
     private void setReqPta(){
+            if(!NetStateUtils.isNetworkConnected(this)){
+                return;
+            }
 
                 if(null == comAll)
                     return;
@@ -1197,6 +1246,12 @@ public class MqService extends Service {
         setReqPta();//更换地址时
         playQQQ(comAll.getUrl());//获取地址后直接播放
 
+    }
+    //
+    private void setPlay(){
+        pushAction(UPDATA_ID,comAll.getId());
+        setReqPta();//更换地址时
+        playQQQ(comAll.getUrl());//获取地址后直接播放
     }
 
     private final AudioManager.OnAudioFocusChangeListener mAudioFocusListener = new AudioManager.OnAudioFocusChangeListener() {

@@ -20,8 +20,11 @@ public class GlideUtil {
     public static void setGlideImage(Context context, int url, ImageView imageView){
         if(imageView == null)
             return;
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
         Glide.with(context)
                 .load(url)//
+                .apply(options)
                 .into(imageView);
     }
 
@@ -29,7 +32,7 @@ public class GlideUtil {
         if(imageView == null)
             return;
         RequestOptions options = new RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .priority(Priority.HIGH);
         Glide.with(context)
                 .load(url)//
@@ -43,7 +46,7 @@ public class GlideUtil {
         RequestOptions options = new RequestOptions()
                 .placeholder(id)
                 .error(id)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .priority(Priority.HIGH);
         Glide.with(context)
                 .load(url)//
@@ -57,7 +60,7 @@ public class GlideUtil {
 
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.hold)
-                .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
                 .error(R.drawable.hold)
                 .priority(Priority.HIGH);
         Glide.with(context)
@@ -67,6 +70,12 @@ public class GlideUtil {
     }
 
     public static void setGif(Context context,int gif,ImageView imageView){
-        Glide.with( context ).asGif().load( gif ).into( imageView ) ;
+        RequestOptions options = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.NONE);
+        Glide.with( context )
+                .asGif()
+                .load( gif )
+                .apply(options)
+                .into( imageView ) ;
     }
 }

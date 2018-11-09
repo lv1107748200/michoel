@@ -98,6 +98,7 @@ android {
 
 }
 def dbflow_version = "4.2.4"
+def isDug = isDug
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation externalAndroidAppCompatV7
@@ -115,6 +116,10 @@ dependencies {
 
     api project(':bclibrary')
     implementation project(':pictureselect2.2.3:picture_library')
+    if(isDug){
+        implementation project(':JPushExample')
+    }
+
 
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'

@@ -69,4 +69,6 @@ ext {
     externalBuildToolsVersion = "26.0.2"
     externalMinSdkVersion=19
     externalTargetSdkVersion=27
+
+    isDug = true
 }

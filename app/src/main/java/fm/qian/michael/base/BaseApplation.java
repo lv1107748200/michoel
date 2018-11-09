@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.example.jpushdemo.ExampleApplication;
 import com.hr.bclibrary.utils.NLog;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -138,6 +139,9 @@ public class BaseApplation extends Application {
                 }
             });
         }
+
+        //push  初始化
+        ExampleApplication.getInstans().setJPush(this);
     }
 
     public static BaseApplation getBaseApp() {

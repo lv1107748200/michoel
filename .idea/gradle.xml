@@ -8,6 +8,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/JPushExample" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bclibrary" />
             <option value="$PROJECT_DIR$/pictureselect2.2.3" />

@@ -1,0 +1,329 @@
+-- Merging decision tree log ---
+manifest
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:1-169:12
+	package
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:4:5-30
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+	android:versionName
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:6:5-32
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+	xmlns:tools
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:3:5-51
+	xmlns:android
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:2:11-69
+	android:versionCode
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:5:5-30
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+		INJECTED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml
+permission#fm.qian.michael.permission.JPUSH_MESSAGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:10:5-12:47
+	android:protectionLevel
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:12:9-44
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:11:9-64
+uses-permission#fm.qian.michael.permission.JPUSH_MESSAGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:15:5-80
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:15:22-77
+uses-permission#android.permission.RECEIVE_USER_PRESENT
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:16:5-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:16:22-76
+uses-permission#android.permission.INTERNET
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:17:5-67
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:17:22-64
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:18:5-75
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:18:22-72
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:19:5-81
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:19:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:20:5-80
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:20:22-77
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:21:5-22:47
+	tools:ignore
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:22:9-44
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:21:22-70
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:23:5-24:47
+	tools:ignore
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:23:22-81
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:25:5-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:25:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:26:5-76
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:26:22-73
+uses-permission#android.permission.VIBRATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:31:5-66
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:31:22-63
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:32:5-78
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:32:22-75
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:33:5-81
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:33:22-78
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:34:5-76
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:34:22-73
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:35:5-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:35:22-76
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:36:5-89
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:36:22-86
+uses-permission#android.permission.CHANGE_NETWORK_STATE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:37:5-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:37:22-76
+uses-permission#android.permission.GET_TASKS
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:38:5-68
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:38:22-65
+application
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:40:5-168:19
+activity#com.example.jpushdemo.MainActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:43:9-45:20
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:44:13-62
+activity#com.example.jpushdemo.PushSetActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:47:8-115
+	android:label
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:47:71-103
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:47:18-70
+activity#com.example.jpushdemo.SettingActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:49:8-115
+	android:label
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:49:71-103
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:49:18-70
+activity#com.example.jpushdemo.TestActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:51:9-56:20
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:51:69-93
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:51:19-68
+intent-filter#action:name:jpush.testAction+category:name:jpush.testCategory
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:52:13-55:29
+action#jpush.testAction
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:53:17-59
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:53:25-56
+category#jpush.testCategory
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:54:17-63
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:54:27-60
+activity#cn.jpush.android.ui.PopWinActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:59:9-63:20
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:62:13-37
+	android:theme
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:61:13-49
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:60:13-62
+activity#cn.jpush.android.ui.PushActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:66:9-76:20
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:70:13-37
+	android:configChanges
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:68:13-63
+	android:theme
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:69:13-60
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:67:13-60
+intent-filter#action:name:cn.jpush.android.ui.PushActivity+category:name:android.intent.category.DEFAULT+category:name:fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:71:13-75:29
+action#cn.jpush.android.ui.PushActivity
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:72:17-75
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:72:25-72
+category#android.intent.category.DEFAULT
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:73:17-76
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:73:27-73
+category#fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:74:17-60
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:74:27-57
+service#cn.jpush.android.service.PushService
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:80:9-90:19
+	android:process
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:82:13-40
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:83:13-37
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:81:13-64
+intent-filter#action:name:cn.jpush.android.intent.PUSH_TIME+action:name:cn.jpush.android.intent.PushService+action:name:cn.jpush.android.intent.REGISTER+action:name:cn.jpush.android.intent.REPORT
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:84:13-89:29
+action#cn.jpush.android.intent.REGISTER
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:85:17-75
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:85:25-72
+action#cn.jpush.android.intent.REPORT
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:86:17-73
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:86:25-70
+action#cn.jpush.android.intent.PushService
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:87:17-78
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:87:25-75
+action#cn.jpush.android.intent.PUSH_TIME
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:88:17-76
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:88:25-73
+provider#cn.jpush.android.service.DataProvider
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:92:9-97:11
+	android:process
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:95:13-40
+	android:authorities
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:93:13-63
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:96:13-37
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:94:13-65
+service#cn.jpush.android.service.DaemonService
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:101:9-110:19
+	android:enabled
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:103:13-35
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:104:13-36
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:102:13-66
+intent-filter#action:name:cn.jpush.android.intent.DaemonService+category:name:fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:105:13-108:29
+action#cn.jpush.android.intent.DaemonService
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:106:17-80
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:106:25-77
+provider#cn.jpush.android.service.DownloadProvider
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:112:9-116:11
+	android:authorities
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:113:13-67
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:115:13-36
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:114:13-69
+receiver#cn.jpush.android.service.PushReceiver
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:118:9-137:20
+	android:enabled
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:120:13-35
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:121:13-37
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:119:13-65
+intent-filter#action:name:cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY+category:name:fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:122:13-125:29
+	android:priority
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:122:28-51
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:123:17-94
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:123:25-91
+intent-filter#action:name:android.intent.action.USER_PRESENT+action:name:android.net.conn.CONNECTIVITY_CHANGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:126:13-129:29
+action#android.intent.action.USER_PRESENT
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:127:17-77
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:127:25-74
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:128:17-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:128:25-76
+intent-filter#action:name:android.intent.action.PACKAGE_ADDED+action:name:android.intent.action.PACKAGE_REMOVED+data:scheme:package
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:131:13-136:29
+action#android.intent.action.PACKAGE_ADDED
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:132:17-78
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:132:25-75
+action#android.intent.action.PACKAGE_REMOVED
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:133:17-80
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:133:25-77
+data
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:135:17-50
+	android:scheme
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:135:23-47
+receiver#cn.jpush.android.service.AlarmReceiver
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:140:9-99
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:140:73-97
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:140:19-72
+receiver#com.example.jpushdemo.MyReceiver
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:143:9-155:20
+	android:enabled
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:146:13-35
+	android:exported
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:145:13-37
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:144:13-60
+intent-filter#action:name:cn.jpush.android.intent.CONNECTION+action:name:cn.jpush.android.intent.MESSAGE_RECEIVED+action:name:cn.jpush.android.intent.NOTIFICATION_OPENED+action:name:cn.jpush.android.intent.NOTIFICATION_RECEIVED+action:name:cn.jpush.android.intent.REGISTRATION+category:name:fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:147:13-154:29
+action#cn.jpush.android.intent.REGISTRATION
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:148:17-79
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:148:25-76
+action#cn.jpush.android.intent.MESSAGE_RECEIVED
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:149:17-83
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:149:25-80
+action#cn.jpush.android.intent.NOTIFICATION_RECEIVED
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:150:17-88
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:150:25-85
+action#cn.jpush.android.intent.NOTIFICATION_OPENED
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:151:17-86
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:151:25-83
+action#cn.jpush.android.intent.CONNECTION
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:152:17-77
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:152:25-74
+receiver#com.example.jpushdemo.MyJPushMessageReceiver
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:158:9-163:20
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:158:19-78
+intent-filter#action:name:cn.jpush.android.intent.RECEIVE_MESSAGE+category:name:fm.qian.michael
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:159:13-162:29
+action#cn.jpush.android.intent.RECEIVE_MESSAGE
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:160:17-82
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:160:25-79
+meta-data#JPUSH_CHANNEL
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:165:9-84
+	android:value
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:165:49-82
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:165:20-48
+meta-data#JPUSH_APPKEY
+ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:166:9-91
+	android:value
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:166:48-88
+	android:name
+		ADDED from E:\company_project\michoel\JPushExample\debug\AndroidManifest.xml:166:20-47

@@ -42,7 +42,9 @@ import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
 import fm.qian.michael.db.AppDatabase;
 import fm.qian.michael.net.entry.response.ComAll;
+import fm.qian.michael.net.entry.response.ComAll_Table;
 import fm.qian.michael.service.MusicPlayerManger;
+import fm.qian.michael.ui.activity.dim.DownActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
@@ -66,6 +68,7 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
     private ComAll comAll;
     private List<ComAll> comAllList;
     private List<ComAll> selList;
+    private DownActivity downActivity;
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
@@ -160,6 +163,8 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
     @Override
     public void init() {
         super.init();
+        downActivity = (DownActivity) getActivity();
+
         loadingDialog = new LoadingDialog(mFontext);
         if(!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
@@ -209,8 +214,8 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
                         //  NLog.e(NLog.TAGDOWN," 视图 下载id : " + id);
                     }
 
-                    DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getLayoutPosition(),helper.getView(R.id.k_four),
-                            (TextView) helper.getView(R.id.item_down_tv)));
+//                    DownManger.updateViewHolder(id,new BaseDownViewHolder(id,helper.getLayoutPosition(),helper.getView(R.id.k_four),
+//                            (TextView) helper.getView(R.id.item_down_tv)));
 
                     int statue = DownManger.isDownStatus(id, path);
 
@@ -273,8 +278,9 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
                     }
                     helper.setText(R.id.item_time_tv, rankMore.getMinute() + ":" + rankMore.getSecond());
 
-                    GlideUtil.setGlideImageMake(mFontext, rankMore.getCover_small(),
-                            (ImageView) helper.getView(R.id.head_portrait));
+//
+                    DownManger.setImageView((ImageView) helper.getView(R.id.head_portrait),
+                            rankMore.getCover_small(),mFontext);
                 }
             }
         };
@@ -296,7 +302,7 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
         });
         quickAdapter.addHeaderView(headView);
         rvList.setAdapter(quickAdapter);
-
+      //  DownManger.setQAdapter(quickAdapter);
 
     }
 
@@ -304,7 +310,13 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
     public void loadData() {
         super.loadData();
         upPlay();
-        getData();
+
+        if(!CheckUtil.isEmpty(comAllList)){
+            quickAdapter.replaceData(comAllList);
+        }else {
+          //  quickAdapter.setEmptyView(getEmpty("暂无记录"));
+        }
+        //getData();
     }
 
 
@@ -312,7 +324,7 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
     public void everyTime(boolean isVisibleToUser) {
         if(isGetData){
             isGetData = false;
-            getData();
+          //  getData();
         }
     }
 
@@ -374,69 +386,55 @@ public class DownStoryFragment extends BaseFragment implements View.OnClickListe
 
     }
 
-    private void getData(){
-        loadingDialog.show("加载数据");
-        SQLite.select()
-                .from(ComAll.class)
-                .async()
-                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<ComAll>() {
-                    @Override
-                    public void onListQueryResult(QueryTransaction transaction, @NonNull List<ComAll> tResult) {
-                        NLog.e(NLog.PLAYER, "故事下载  onListQueryResult 查询成功");
-                        if(!CheckUtil.isEmpty(tResult)){
-                            NLog.e(NLog.PLAYER, "故事下载  onListQueryResult size: "+tResult.size());
-                            comAllList = tResult;
-                            quickAdapter.replaceData(comAllList);
-                        }else {
-                           // NToast.shortToastBaseApp("暂无记录");
-                            comAllList = new ArrayList<>();
-                            quickAdapter.replaceData(comAllList);
+    public void setQuickAdapter(List<ComAll> comAllList){
+        this.comAllList = comAllList;
+        if(!CheckUtil.isEmpty(comAllList)){
+            if(null != quickAdapter){
+                quickAdapter.replaceData(comAllList);
+            }
+        }else {
+            if(null != quickAdapter){
+                quickAdapter.replaceData(new ArrayList<>());
+                quickAdapter.setEmptyView(getEmpty("暂无记录"));
+            }
+        }
 
-                            quickAdapter.setEmptyView(getEmpty("暂无记录"));
-                        }
-                        loadingDialog.diss();
-                    }
-                })
-                .error(new Transaction.Error() {
-                    @Override
-                    public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
-                        NLog.e(NLog.PLAYER, "故事下载  error"+error.getMessage());
-                        loadingDialog.diss();
-                    }
-                })
-                .execute();
     }
 
     private void delSelect(){
-        FlowManager.getDatabase(AppDatabase.class).beginTransactionAsync(new ITransaction() {
-            @Override
-            public void execute(DatabaseWrapper databaseWrapper) {
-                for(int i=0 , j = selList.size(); i<j; i++){
-                    ComAll comAll = selList.get(i);
-                    comAll.delete();
-                }
-            }
-        }).success(new Transaction.Success() {
-            @Override
-            public void onSuccess(@NonNull Transaction transaction) {
-                del_layout.setEnabled(true);
-                EventBus.getDefault().post(new Event.PlayEvent(4));
-                getData();
-                deldelListFile(selList);
-            }
-        }).error(new Transaction.Error() {
-            @Override
-            public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
-                del_layout.setEnabled(true);
-            }
-        }).build().execute();
+        deldelListFile(selList);
+
+//        FlowManager.getDatabase(AppDatabase.class).beginTransactionAsync(new ITransaction() {
+//            @Override
+//            public void execute(DatabaseWrapper databaseWrapper) {
+//                for(int i=0 , j = selList.size(); i<j; i++){
+//                    ComAll comAll = selList.get(i);
+//                    comAll.delete();
+//                }
+//            }
+//        }).success(new Transaction.Success() {
+//            @Override
+//            public void onSuccess(@NonNull Transaction transaction) {
+//                del_layout.setEnabled(true);
+//                deldelListFile(selList);
+//            }
+//        }).error(new Transaction.Error() {
+//            @Override
+//            public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
+//                del_layout.setEnabled(true);
+//            }
+//        }).build().execute();
     }
 
-    private void deldelListFile(List<ComAll> comAlls){
+    private void deldelListFile(final List<ComAll> comAlls){
+        EventBus.getDefault().post(new Event.UpDownEvent(0));
+
         DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
             @Override
             public void onSuccess(Object o) {
+                del_layout.setEnabled(true);
                 NToast.shortToastBaseApp("删除成功");
+                EventBus.getDefault().post(new Event.UpDownEvent(comAlls,1));
             }
 
             @Override

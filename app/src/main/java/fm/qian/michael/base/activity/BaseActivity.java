@@ -36,7 +36,9 @@ import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
+import fm.qian.michael.widget.dialog.LoadingDialog;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopLoginWindow;
 import fm.qian.michael.widget.single.PlayGifManger;
@@ -56,7 +58,7 @@ public class BaseActivity extends AbstractBaseActivity{
     private  NetworkConnectChangedReceiver networkConnectChangedReceiver;
 
     private PopLoginWindow popLoginWindow;
-
+    private LoadingDialog loadingDialog;
     private View view;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +85,8 @@ public class BaseActivity extends AbstractBaseActivity{
         initTitle();
         initView();
         initData();
+        initView(getIntent());
+        initData(getIntent());
     }
     public boolean isStatusBar(){
         return true;
@@ -129,7 +133,12 @@ public class BaseActivity extends AbstractBaseActivity{
     public void initData() {
 
     }
+    public void initView(Intent intent) {
 
+    }
+    public void initData(Intent intent) {
+
+    }
     //设置状态栏状态
     public void setStatusBar(View mStatusBar){
         if(null == mStatusBar)
@@ -196,6 +205,33 @@ public class BaseActivity extends AbstractBaseActivity{
         }
 
         return true;
+    }
+    //判断网络是否连接
+    public boolean isEableNet(){
+
+        boolean isNet = NetStateUtils.isNetworkConnected(this);
+
+                if(isNet){
+
+                }else {
+                    NToast.shortToastBaseApp(getString(R.string.无网络));
+                }
+
+        return isNet;
+    }
+    public void showLoadingDialog(String message){
+
+        if(null == loadingDialog){
+            loadingDialog = new LoadingDialog(this);
+        }
+
+        loadingDialog.show(message);
+
+    }
+
+    public void dissLoadingDialog(){
+        if(null != loadingDialog)
+            loadingDialog.diss();
     }
     @Override
     protected void onDestroy() {

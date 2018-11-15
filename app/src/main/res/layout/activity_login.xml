@@ -141,7 +141,12 @@
                     style="@style/view_line"
                     />
 
-
+            <LinearLayout
+                android:id="@+id/yz_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
                 <LinearLayout
                     android:id="@+id/liner2"
                     android:layout_width="match_parent"
@@ -157,50 +162,54 @@
                         android:digits="@string/input_allow"
                         style="@style/cw_et" />
 
-                    
+
                     <ImageView
                         android:id="@+id/verification_code_img"
                         android:layout_width="@dimen/margin_80"
                         android:layout_height="@dimen/margin_40"
                         android:scaleType="fitXY"
                         />
-                    
+
 
                 </LinearLayout>
 
-            <View
-                style="@style/view_line"
-                />
-            <LinearLayout
-                android:id="@+id/liner3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                >
-
-
-                <fm.qian.michael.widget.custom.ClearWriteEditText
-                    android:id="@+id/et_verification_code"
-                    android:inputType="number"
-                    android:hint="请输入短信验证码"
-                    style="@style/cw_et" />
-
-
-                <TextView
-                    android:text="@string/获取验证码"
-                    android:id="@+id/send_verification_code"
-                    android:layout_width="wrap_content"
+                <View
+                    style="@style/view_line"
+                    />
+                <LinearLayout
+                    android:id="@+id/liner3"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/color_F86"
-                    android:textSize="@dimen/size_15"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    >
+
+
+                    <fm.qian.michael.widget.custom.ClearWriteEditText
+                        android:id="@+id/et_verification_code"
+                        android:inputType="number"
+                        android:hint="请输入短信验证码"
+                        style="@style/cw_et" />
+
+
+                    <TextView
+                        android:text="@string/获取验证码"
+                        android:id="@+id/send_verification_code"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_F86"
+                        android:textSize="@dimen/size_15"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    style="@style/view_line"
                     />
 
             </LinearLayout>
 
-            <View
-                style="@style/view_line"
-                />
+
 
                 <Button
                     android:id="@+id/de_login_sign"

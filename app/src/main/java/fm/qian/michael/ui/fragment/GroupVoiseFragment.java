@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.hr.bclibrary.utils.DisplayUtils;
 import com.liulishuo.filedownloader.BaseDownloadTask;
@@ -35,6 +36,7 @@ import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
+import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 import com.zzhoujay.richtext.RichText;
 
@@ -67,6 +69,7 @@ import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.entry.response.UserInfo;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.net.http.HttpUtils;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.MainActivity;
@@ -215,6 +218,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
                 break;
             case R.id.layout_down://下载
+                if(!isEableNet()){
+                    return;
+                }
                 if(isSelMore)
                     return;
 
@@ -244,7 +250,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //                    WLoaignMake();
 //                    return;
 //                }
-
+                if(!isEableNet()){
+                    return;
+                }
                 if(isPay()){//分享
                     return;
                 }
@@ -480,8 +488,8 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                             }
                             helper.setText(R.id.item_time_tv, rankMore.getMinute() + ":" + rankMore.getSecond());
 
-                            GlideUtil.setGlideImageMake(mFontext, rankMore.getCover_small(),
-                                    (ImageView) helper.getView(R.id.head_portrait));
+                            DownManger.setImageView((ImageView) helper.getView(R.id.head_portrait),
+                                    rankMore.getCover_small(),mFontext);
                         }
                         break;
                 }
@@ -562,7 +570,6 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 
             if(!CheckUtil.isEmpty(comAllList)){
                quickAdapter.replaceData(comAllList);
-               getIdDown();
             }
 
             if(GlobalVariable.ONE.equals(album.getIspay())){
@@ -575,13 +582,25 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                 xq_gs_layout.setVisibility(View.GONE);
             }
         }else if(!CheckUtil.isEmpty(downTasksModel)) {
-            GlideUtil.setGlideImageMake(mFontext,downTasksModel.getCover(),
-                    itemImage);
+//            String pathImage = DownManger.createImagePath(downTasksModel.getCover());
+//            int idImage = FileDownloadUtils.generateId(downTasksModel.getCover(), pathImage);
+//            int statueImage = DownManger.isDownStatus(idImage, pathImage);
+//
+//            if(statueImage == FileDownloadStatus.completed){
+//                GlideUtil.setGlideImageMake(mFontext,pathImage,
+//                        itemImage);
+//            }else {
+//                GlideUtil.setGlideImageMake(mFontext,downTasksModel.getCover(),
+//                        itemImage);
+//            }
+            DownManger.setImageView(itemImage,downTasksModel.getCover(),mFontext);
+
             if(!CheckUtil.isEmpty(downTasksModel.getBrief())){
                 RichText.from(downTasksModel.getBrief()).bind(this).into(itemTv);
             }
             if(!CheckUtil.isEmpty(comAllList)){
-                quickAdapter.replaceData(comAllList);
+                getIdDown();
+//                quickAdapter.replaceData(comAllList);
             }
             make_relatlayout.setVisibility(View.GONE);
         }
@@ -590,20 +609,35 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     //检索 id 转换
     private void getIdDown(){
 
-//        DownManger.setIdDown(comAllList, new DownManger.ResultCallback() {
-//            @Override
-//            public void onSuccess(Object o) {
-//                if(!CheckUtil.isEmpty(comAllList)){
-//                    IdDown = true;
-//                    quickAdapter.replaceData(comAllList);
-//                }
-//            }
-//
-//            @Override
-//            public void onError(String errString) {
-//
-//            }
-//        });
+        if(!CheckUtil.isEmpty(downTasksModel.getAllJson())){
+            List<String> stringList = HttpUtils.jsonToBeanT(downTasksModel.getAllJson(),
+                    new TypeReference<List<String>>() {});
+
+            NLog.e(NLog.TAGDOWN, "数据处理json " + downTasksModel.getAllJson());
+
+            if(!CheckUtil.isEmpty(stringList)){
+
+                List<ComAll> comAlls = new ArrayList<>();
+
+                for(String s : stringList){
+                    for(ComAll comAll : comAllList){
+                        if(s.equals(comAll.getId())){
+                            comAlls.add(comAll);
+                            continue;
+                        }
+                    }
+                }
+
+                comAllList.clear();
+                comAllList.addAll(comAlls);
+
+                quickAdapter.replaceData(comAllList);
+
+            }
+        }else {
+            quickAdapter.replaceData(comAllList);
+        }
+
     }
     public final static String CSS_STYLE ="<style>* {font-size:15px;line-height:20px;}p {color:#666666;}</style>";
     private void setWebView(WebView webview,String content) {
@@ -771,9 +805,19 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
         }
 
     }
+    @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
+    public void onDataSynLogGEvent(Event.LoginEvent event) {
 
+        String id = event.getId();
+
+        //登陆后刷新
+        if(GlobalVariable.TWO.equals(id)){
+            album();
+        }
+
+    }
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
-    public void onDataSynEvent(Event.PlayEvent event) {
+    public void onDataSynEventtG(Event.PlayEvent event) {
 
         int i = event.getI();
 
@@ -815,6 +859,20 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //
 //        return footView;
  //   }
+private void  album(){
+    baseService.album(id, 1 + "", "", "", new HttpCallback<Album, BaseResponse<Album, List<ComAll>>>() {
+        @Override
+        public void onError(HttpException e) {
+            NToast.shortToastBaseApp(e.getMsg());
+        }
+
+        @Override
+        public void onSuccessAll(BaseResponse<Album, List<ComAll>> k) {
+            setK(k);
+            loadData();
+        }
+    }, GroupVoiseFragment.this.bindUntilEvent(FragmentEvent.DESTROY_VIEW));
+}
 
     //收藏的专辑 取消收藏
     private void user_favorite(final String act){
@@ -863,13 +921,15 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(comAllList.size(),album,list,null,new DownManger.ResultCallback() {
+            showLoadingDialog("");
+            DownManger.setIdAndPath(comAllList,album,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){
                         quickAdapter.notifyDataSetChanged();
                         NToast.shortToastBaseApp(getString(R.string.成功添加下载任务));
                     }
+                    dissLoadingDialog();
                 }
                 @Override
                 public void onError(String errString) {
@@ -1022,8 +1082,7 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
 //            result.add(subList);
 //        }
 //        return result;
-//    }
-//    private void  album(){
+//    }    private void  album(){
 //        baseService.album(id, 1 + "", "", "", new HttpCallback<Album, BaseResponse<Album, List<ComAll>>>() {
 //            @Override
 //            public void onError(HttpException e) {

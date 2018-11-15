@@ -60,7 +60,7 @@
         android:id="@+id/btnDelete"
         android:layout_width="60dp"
         android:layout_height="match_parent"
-        android:background="@color/color_F86"
+        android:background="@drawable/loop_color_six_one"
         android:text="删除"
         android:textColor="@android:color/white"/>
 

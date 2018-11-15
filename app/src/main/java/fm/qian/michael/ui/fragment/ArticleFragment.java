@@ -222,7 +222,11 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
                 }else {
                     getRefreshLayout().finishRefresh();
                 }
-                quickAdapter.setEmptyView(getError(""));
+                if(CheckUtil.isEmpty(quickAdapter.getData())){
+                    quickAdapter.setEmptyView(getError(""));
+                }else {
+                    super.onNotNet();
+                }
 
             }
 
@@ -264,6 +268,11 @@ public class ArticleFragment extends BaseRecycleViewFragment implements
     private void search_hotwords(){
 
         baseService.search_hotwords("2", new HttpCallback<List<Base>, BaseDataResponse<List<Base>>>() {
+            @Override
+            public void onNotNet() {
+                //super.onNotNet();
+            }
+
             @Override
             public void onError(HttpException e) {
 

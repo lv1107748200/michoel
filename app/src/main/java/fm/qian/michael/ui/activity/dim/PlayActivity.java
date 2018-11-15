@@ -268,6 +268,9 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
                 }
                 break;
             case R.id.down_image://下载按钮
+                if(!isEableNet()){
+                    return;
+                }
                 if(!isLogin()){
                     WLoaignMake();
                     return;
@@ -299,6 +302,9 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 //                    WLoaignMake();
 //                    return;
 //                }
+                if(!isEableNet()){
+                    return;
+                }
                 if(isPay()){
                     NToast.shortToastBaseApp(getString(R.string.付费));
                     return;
@@ -322,6 +328,9 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
 
                 break;
             case R.id.add_play_list://加入播单
+                if(!isEableNet()){
+                    return;
+                }
                 if(!isLogin()){
                     WLoaignMake();
                     return;
@@ -349,8 +358,16 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
     public int getLayout() {
         return R.layout.activity_play;
     }
+
     @Override
-    public void initView() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(null != intent)
+        initView(intent);
+    }
+
+    @Override
+    public void initView(Intent intent) {
         super.initView();
         loadingDialog = new LoadingDialog(this);
         setTitleTv("专辑");
@@ -361,7 +378,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
        // CommonUtils.setMargins(musicSeekBar,0,h-DisplayUtils.getDimen(R.dimen.margin_6),0,0);
 
 
-        Intent intent = getIntent();
+
         playTuase = intent.getStringExtra(PLAYTUASE);
 
         setInit();
@@ -644,8 +661,11 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             }
         }
 
-        GlideUtil.setGlideImageMake(PlayActivity.this,comAll.getCover(),
-                imagePoster);
+//        GlideUtil.setGlideImageMake(PlayActivity.this,comAll.getCover(),
+//                imagePoster);
+        DownManger.setImageView(imagePoster,comAll.getCover(),this);
+
+       // NLog.e(NLog.PLAYER,"查看 setMessage 执行次数 --->");
 
         setTitleTv(comAll.getTitle());
 
@@ -709,7 +729,7 @@ public class PlayActivity extends BaseIntensifyActivity implements PopTimingSelW
             comAlls.add(comAll);
 
             if(!CheckUtil.isEmpty(comAlls)){
-                DownManger.setIdAndPath(0,null,comAlls, null,new DownManger.ResultCallback() {
+                DownManger.setIdAndPath(null,null,comAlls, null,new DownManger.ResultCallback() {
                     @Override
                     public void onSuccess(Object o) {
                         NToast.shortToastBaseApp(o.toString());

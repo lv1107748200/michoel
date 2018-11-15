@@ -70,9 +70,16 @@ public class HttpUtils {
     }
 
    // private static ObjectMapper objectMapper = null;
-    private static ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);;
+    private static ObjectMapper objectMapper =
+           new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                   JsonAutoDetect.Visibility.ANY);
 
     public static String getStringValue(Object obj) {
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
 
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         if(obj==null)
@@ -89,7 +96,11 @@ public class HttpUtils {
     }
 
     public static  <T> T jsonToBeanT(String s,TypeReference<T> type){
-
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         try {
@@ -102,7 +113,11 @@ public class HttpUtils {
     }
 
     public static <T> T jsonToBean(String json, Class<T> cls)  {
-
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         try {

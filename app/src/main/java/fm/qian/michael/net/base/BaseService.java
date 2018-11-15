@@ -6,6 +6,7 @@ package fm.qian.michael.net.base;
 
 import android.os.Build;
 
+import com.alicom.phonenumberauthsdk.gatewayauth.model.VendorConfig;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import org.json.JSONObject;
@@ -23,12 +24,14 @@ import fm.qian.michael.net.Service.AppService;
 import fm.qian.michael.net.Service.UserService;
 import fm.qian.michael.net.Service.WXUserService;
 import fm.qian.michael.net.entry.request.Reg;
+import fm.qian.michael.net.entry.response.ALiYan;
 import fm.qian.michael.net.entry.response.Album;
 import fm.qian.michael.net.entry.response.Base;
 import fm.qian.michael.net.entry.response.Category;
 import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.entry.response.Index;
 import fm.qian.michael.net.entry.response.UserInfo;
+import fm.qian.michael.net.entry.response.Vendor;
 import fm.qian.michael.net.entry.response.Ver;
 import fm.qian.michael.net.entry.response.WXAccessData;
 import fm.qian.michael.net.entry.response.YZMOrSID;
@@ -715,6 +718,52 @@ public class BaseService {
         HttpUtils.toSubscribe(
                 observable,
                 new HttpUserSubscriber<BaseDataResponse<List<ComAll>>>(httpCallback)
+                ,transformer
+        );
+
+    }
+
+    //网管验证
+    @SuppressWarnings("unchecked")
+    public void user_gateway(
+            Reg data,
+            HttpCallback<List<Vendor>,BaseDataResponse<List<Vendor>>> httpCallback
+            , ObservableTransformer transformer){
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
+//          RequestBody body = HttpUtils.buildRequestBody(data);
+        String body = HttpUtils.getStringValue(data);
+
+        Map mapType = HttpUtils.jsonToBean(body,Map.class);
+        Observable observable =  userService.user_gateway(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
+
+        HttpUtils.toSubscribe(
+                observable,
+                new HttpUserSubscriber<BaseDataResponse<List<Vendor>>>(httpCallback)
+                ,transformer
+        );
+
+    }
+    @SuppressWarnings("unchecked")
+    public void user_gatewayObject(
+            Reg data,
+            HttpCallback<Reg,BaseDataResponse<Reg>> httpCallback
+            , ObservableTransformer transformer){
+        if(!NetStateUtils.isNetworkConnected(BaseApplation.getBaseApp())){
+            httpCallback.onNotNet();
+            return;
+        }
+//          RequestBody body = HttpUtils.buildRequestBody(data);
+        String body = HttpUtils.getStringValue(data);
+
+        Map mapType = HttpUtils.jsonToBean(body,Map.class);
+        Observable observable =  userService.user_gatewayObject(mapType,CommonUtils.getUniquePsuedoID(),APP_CODE_VALUE, Build.VERSION.RELEASE);
+
+        HttpUtils.toSubscribe(
+                observable,
+                new HttpUserSubscriber<BaseDataResponse<Reg>>(httpCallback)
                 ,transformer
         );
 

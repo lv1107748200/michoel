@@ -5,19 +5,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.raizlabs.android.dbflow.annotation.Column;
-import com.raizlabs.android.dbflow.annotation.OneToMany;
+import com.raizlabs.android.dbflow.annotation.ManyToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.ComAll_Table;
 
 /*
- * lv   2018/11/6
+ * lv   2018/11/6 //@ManyToMany(referencedTable = ComAll.class)
+
  */
 @Table(database = AppDatabase.class)
 public class DownTasksModel extends BaseModel implements Parcelable {
@@ -34,18 +34,47 @@ public class DownTasksModel extends BaseModel implements Parcelable {
     private String sizeAll;
     @Column
     private String sizeDown;
+    @Column
+    private String allJson;
+    @Column
+    private String downJson;
 
-    public List<ComAll> comAlls;
 
-    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "comAlls")
+    private List<ComAll> comAlls;
+
+    public String getAllJson() {
+        return allJson;
+    }
+
+    public void setAllJson(String allJson) {
+        this.allJson = allJson;
+    }
+
+    public String getDownJson() {
+        return downJson;
+    }
+
+    public void setDownJson(String downJson) {
+        this.downJson = downJson;
+    }
+
     public List<ComAll> getComAlls() {
-        if (comAlls == null || comAlls.isEmpty()) {
-            comAlls = SQLite.select()
-                    .from(ComAll.class)
-                    .where(ComAll_Table.albumId.eq(id))
-                    .queryList();
-        }
         return comAlls;
+    }
+
+    public void setComAlls(List<ComAll> comAlls) {
+        this.comAlls = comAlls;
+    }
+
+    public void setComAll(ComAll comAll){
+        if(null != comAll){
+            if(null == comAlls){
+                comAlls = new ArrayList<>();
+                comAlls.add(comAll);
+            }else {
+                comAlls.add(comAll);
+            }
+        }
     }
 
     public String getId() {
@@ -97,6 +126,9 @@ public class DownTasksModel extends BaseModel implements Parcelable {
     }
 
 
+    public DownTasksModel() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -110,10 +142,9 @@ public class DownTasksModel extends BaseModel implements Parcelable {
         dest.writeString(this.brief);
         dest.writeString(this.sizeAll);
         dest.writeString(this.sizeDown);
+        dest.writeString(this.allJson);
+        dest.writeString(this.downJson);
         dest.writeTypedList(this.comAlls);
-    }
-
-    public DownTasksModel() {
     }
 
     protected DownTasksModel(Parcel in) {
@@ -123,10 +154,12 @@ public class DownTasksModel extends BaseModel implements Parcelable {
         this.brief = in.readString();
         this.sizeAll = in.readString();
         this.sizeDown = in.readString();
+        this.allJson = in.readString();
+        this.downJson = in.readString();
         this.comAlls = in.createTypedArrayList(ComAll.CREATOR);
     }
 
-    public static final Parcelable.Creator<DownTasksModel> CREATOR = new Parcelable.Creator<DownTasksModel>() {
+    public static final Creator<DownTasksModel> CREATOR = new Creator<DownTasksModel>() {
         @Override
         public DownTasksModel createFromParcel(Parcel source) {
             return new DownTasksModel(source);

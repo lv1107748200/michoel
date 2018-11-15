@@ -61,6 +61,9 @@ public class BaseRecycleViewFragment extends BaseFragment {
             mClassicsHeader.setEnableLastTime(false);//显示时间
             ClassicsFooter classicsFooter = (ClassicsFooter) refreshLayout.getRefreshFooter();
             classicsFooter.setFinishDuration(300);
+            if(!isEnableLoadMore()){
+                refreshLayout.setEnableLoadMore(false);
+            }
 
             refreshLayout.setOnRefreshListener(new OnRefreshListener() {
                 @Override
@@ -146,6 +149,9 @@ public class BaseRecycleViewFragment extends BaseFragment {
 
     public boolean isDamp(){
         return false;
+    }
+    public boolean isEnableLoadMore(){
+        return true;
     }
     public boolean isJYLogin(){
         return false;

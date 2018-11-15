@@ -1,6 +1,10 @@
 package fm.qian.michael.common.event;
 
 
+import java.util.List;
+
+import fm.qian.michael.net.entry.response.ComAll;
+
 /**
  * Created by 吕 on 2018/1/22.
  */
@@ -102,6 +106,37 @@ public class Event {
 
         public String getId() {
             return id;
+        }
+
+        public int getI() {
+            return i;
+        }
+
+    }
+    //upDown;
+    public static class UpDownEvent{
+        private List<ComAll> comAlls;
+        private int i; //1 播放刷新 2在播放页面下载后视图刷新 3下载中删除专辑
+
+        public UpDownEvent() {
+
+        }
+
+        public UpDownEvent(int i) {
+            this.i = i;
+        }
+
+        public UpDownEvent(List<ComAll> comAlls, int i) {
+            this.comAlls = comAlls;
+            this.i = i;
+        }
+
+        public List<ComAll> getComAlls() {
+            return comAlls;
+        }
+
+        public void setComAlls(List<ComAll> comAlls) {
+            this.comAlls = comAlls;
         }
 
         public int getI() {

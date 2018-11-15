@@ -74,31 +74,42 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
     public void initView() {
         super.initView();
         setTitleTv("HeadGroupActivity");
+
+        view = LayoutInflater.from(this).inflate(R.layout.head_top_group,null,false);
+        itemTv = view.findViewById(R.id.item_tv);
+        itemImage = view.findViewById(R.id.item_image);
+        LayoutParmsUtils.setHight(imageHight1(3,0,0),itemImage);
     }
 
     @Override
     public boolean isDamp() {
         return false;
     }
-
     @Override
-    public void initData() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(null != intent){
+
+            initData(intent);
+        }
+
+    }
+    @Override
+    public void initData(Intent intent) {
         super.initData();
 
-         view = LayoutInflater.from(this).inflate(R.layout.head_top_group,null,false);
-        itemTv = view.findViewById(R.id.item_tv);
-        itemImage = view.findViewById(R.id.item_image);
-        LayoutParmsUtils.setHight(imageHight1(3,0,0),itemImage);
+
 
       //  itemTv.setText("呵呵呵金额合计耳机和九二九二二事件发生纠纷军事打击对方来得及");
 
        //View  headView = LayoutInflater.from(this).inflate(R.layout.item_image_and_text,null,false);
 
-        Intent intent = getIntent();
 
         id = intent.getStringExtra(HEADGROUPOTHER);
 
         if(!CheckUtil.isEmpty(id)){
+            isUpOrDown = false;
+            pageNo = 1;
             topic();
         }
     }
@@ -153,15 +164,6 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
     public void setView(List<Base> comAlls,ComAll album){
 
         if(null == quickAdapterIma){
-
-            GlideUtil.setGlideImageMake(HeadGroupTopActivity.this,album.getCover(),
-                    itemImage);
-//            itemTv.setText(album.getBrief());
-            if(!CheckUtil.isEmpty(album.getBrief())){
-                RichText.from(album.getBrief()).bind(this).into(itemTv);
-            }
-            setTitleTv(album.getTitle());
-
             RecyclerView.LayoutManager layoutManager = null;
             layoutManager =  new LinearLayoutManager(this);
             quickAdapterIma =  new QuickAdapter(R.layout.item_image_and_text_changed_one){
@@ -225,6 +227,13 @@ public class HeadGroupTopActivity extends BaseRecycleViewActivity {
             }
 
         }else {
+            GlideUtil.setGlideImageMake(HeadGroupTopActivity.this,album.getCover(),
+                    itemImage);
+//            itemTv.setText(album.getBrief());
+            if(!CheckUtil.isEmpty(album.getBrief())){
+                RichText.from(album.getBrief()).bind(this).into(itemTv);
+            }
+            setTitleTv(album.getTitle());
 
             getRefreshLayout().finishRefresh();
             if(!CheckUtil.isEmpty(comAlls)){

@@ -5,17 +5,49 @@
     android:orientation="vertical"
     android:gravity="center_horizontal"
     >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        >
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_weight="0.3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        >
+        <ImageView
+            android:layout_width="@dimen/margin_150"
+            android:layout_height="@dimen/margin_150"
+            android:background="@drawable/icon_net_error"
+
+            />
+        <TextView
+            android:layout_marginTop="@dimen/margin_20"
+            android:id="@+id/error_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text4_one_one"
+            android:text="不开心，我连不上网啦~~"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text4_two"
+            android:text="请检查网络状态及钱儿频道APP网络连接权限"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Text4_two"
+            android:text="下拉刷新"
+            />
+
+    </LinearLayout>
     
-    <ImageView
-        android:layout_marginTop="@dimen/margin_125"
-        android:layout_width="@dimen/margin_125"
-        android:layout_height="@dimen/margin_185"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/color_8d8"
-        android:text="@string/error_net"
-        />
+
 
 </LinearLayout>

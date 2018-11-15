@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hr.bclibrary.utils.CheckUtil;
 import com.hr.bclibrary.utils.NLog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
@@ -83,6 +84,13 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
             case R.id.base_right_layout_two:
                 if(null == comAll)
                     return;
+
+                String share = comAll.getWxurl();
+
+                if(CheckUtil.isEmpty(share)) {
+                 share = comAll.getUrl();
+                }
+
                 if(null == popShareWindow){
                     popShareWindow = new PopShareWindow(this,new CustomPopuWindConfig.Builder(this)
                             .setOutSideTouchable(true)
@@ -91,14 +99,17 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
                             .setAnimation(R.style.popup_hint_anim)
                             .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)))
                             .build());
-                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),comAll.getWxurl()));
+
+                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),share));
 
                     popShareWindow.show(view);
                 }else {
-                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),comAll.getWxurl()));
+                    popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),share));
 
                     popShareWindow.show(view);
                 }
+
+
                 break;
         }
     }
@@ -113,11 +124,17 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
         return R.layout.activity_web_tbs_particulars;
     }
     @Override
-    public void initView() {
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if(null != intent)
+        initView(intent);
+    }
+    @Override
+    public void initView(Intent intent) {
         super.initView();
         setTitleTv("网页");
 
-        Intent intent = getIntent();
+
 
         type = intent.getStringExtra(WEBTYPE);
         id = intent.getStringExtra(WEBID);
@@ -259,6 +276,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
     private void setView(){
         if(GlobalVariable.TWO.equals(type)){
             base_right_layout_two.setVisibility(View.VISIBLE);
+            base_right_layout.setVisibility(View.GONE);
             setTitleTv("视频");
             baseService.video(id, new HttpCallback<ComAll, BaseDataResponse<ComAll>>() {
                 @Override
@@ -276,6 +294,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
             },WebTBSParticularsActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
         }else if(GlobalVariable.THREE.equals(type)){
             base_right_layout_two.setVisibility(View.VISIBLE);
+            base_right_layout.setVisibility(View.GONE);
             setTitleTv("文章");
             baseService.article(id, new HttpCallback<ComAll, BaseDataResponse<ComAll>>() {
                 @Override

@@ -3,11 +3,17 @@ package fm.qian.michael.ui.activity;
 
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alicom.phonenumberauthsdk.gatewayauth.AlicomAuthHelper;
+import com.alicom.phonenumberauthsdk.gatewayauth.TokenResultListener;
+import com.alicom.phonenumberauthsdk.gatewayauth.model.InitResult;
+import com.alicom.phonenumberauthsdk.gatewayauth.model.VendorConfig;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -15,25 +21,32 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.lang.reflect.Type;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.R;
+import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.request.Reg;
+import fm.qian.michael.net.entry.response.ALiYan;
 import fm.qian.michael.net.entry.response.UserInfo;
+import fm.qian.michael.net.entry.response.Vendor;
 import fm.qian.michael.net.entry.response.WXAccessData;
 import fm.qian.michael.net.entry.response.YZMOrSID;
 import fm.qian.michael.net.http.HttpCallback;
 import fm.qian.michael.net.http.HttpException;
+import fm.qian.michael.net.http.HttpUtils;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
+import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
 import fm.qian.michael.utils.SpanUtils;
@@ -60,7 +73,7 @@ import static fm.qian.michael.common.UserInforConfig.USERSESSIONKEY;
 /*
  * lv   2018/9/26
  */
-public class LoginActivity extends BaseIntensifyActivity {
+public class LoginActivity extends BaseIntensifyActivity implements TokenResultListener {
 
     public static final String LOGIN = "LOGIN";
 
@@ -75,7 +88,13 @@ public class LoginActivity extends BaseIntensifyActivity {
 
     private YZMOrSID yzmOrSID;
     private WXAccessData wxAccessData;//微信绑定是
+    private AlicomAuthHelper authHelper;
+    private boolean isALi;
+    private String simPhone;
+    private String vCode;
 
+    @BindView(R.id.yz_layout)
+    LinearLayout yz_layout;//验证区域
     @BindView(R.id.user_layout)
     LinearLayout user_layout;//用户
     @BindView(R.id.weixin_login_layout)
@@ -118,10 +137,14 @@ public class LoginActivity extends BaseIntensifyActivity {
 
                 if(null != type){
 
-                    if(THREE.equals(type)){
-                        login();
+                    if(isALi){
+                        user_gateway();
                     }else {
-                        user_reg();
+                        if(THREE.equals(type)){
+                            login();
+                        }else {
+                            user_reg();
+                        }
                     }
 
                 }
@@ -132,6 +155,7 @@ public class LoginActivity extends BaseIntensifyActivity {
                 user_sms();
                 break;
             case R.id.verification_code_img://图片验证
+                verification_code_img.setEnabled(false);
                 getyzm();
                 break;
             case R.id.weixin_login_layout://微信登陆
@@ -146,7 +170,6 @@ public class LoginActivity extends BaseIntensifyActivity {
                 break;
         }
     }
-
     @Override
     public int getLayout() {
         return R.layout.activity_login;
@@ -190,14 +213,18 @@ public class LoginActivity extends BaseIntensifyActivity {
                     setTitleTv(getString(R.string.手机号注册));
                     tv_message.setText(getString(R.string.手机号注册));
                    // act = "reg";
-                    getyzm();//手机号注册时
+//                    getyzm();//手机号注册时
+                    initALiuthHelper();
+
 
                     break;
                 case THREE:
                     setTitleTv(getString(R.string.手机号登录));
                     tv_message.setText(getString(R.string.手机号登录));
                    // act = "smslogin";
-                    getyzm();//手机号登陆
+                   // getyzm();//手机号登陆
+                    initALiuthHelper();
+
 
                     break;
                     default:
@@ -208,9 +235,55 @@ public class LoginActivity extends BaseIntensifyActivity {
 
     }
 
+    private void initALiuthHelper(){
+
+
+         authHelper = AlicomAuthHelper.getInstance(BaseApplation.getBaseApp(), this);
+
+        //设置debug模式，debug模式会输出调试log
+        authHelper.setDebugMode(true);
+// 初始化接口，进行网络环境判断和SIM号码读取尝试。
+        InitResult autInitResult = authHelper.init();
+
+        if (autInitResult != null) {
+            NLog.e(NLog.TAG,"---> 版本Version: " + authHelper.getVersion());
+            NLog.e(NLog.TAG,"---> App包名: " + CommonUtils.getPackageName(BaseApplation.getBaseApp()));
+            NLog.e(NLog.TAG,"---> App签名: " );
+
+            // 网络环境是否支持网关认证
+            if (!autInitResult.isCan4GAuth()) {
+                //TODO: do something when can't use 4g auth
+                setRenZhengHou();
+                return;
+            }
+
+            isALi = true;
+            yz_layout.setVisibility(View.INVISIBLE);
+
+            //读取SIM手机号
+            if (!TextUtils.isEmpty(autInitResult.getSimPhoneNumber()) && autInitResult.getSimPhoneNumber().length() == 11) {
+                simPhone = autInitResult.getSimPhoneNumber();
+                if(!CheckUtil.isEmpty(simPhone))
+                de_login_phone.setText(simPhone);
+                //TODO: do something when read sim card Phone number success，such as set Phone number to input edit。
+            }
+        }
+// 业务方调用业务服务端获取vendorConfig 列表
+// List<VendorConfigDTOs> list;
+//结果在tokenLinsten中返回
+    //    authHelper.getAuthToken(list);
+    }
+
+    private void setRenZhengHou(){
+        isALi = false;
+        if(null != yz_layout){
+            yz_layout.setVisibility(View.VISIBLE);
+        }
+        getyzm();//手机号注册时 网管认证失败
+    }
+
     //获取短信验证码时  首先要获取 sid
     private void getyzm(){
-        verification_code_img.setEnabled(false);
 
         String sid = null;
         String random = null;
@@ -328,19 +401,26 @@ public class LoginActivity extends BaseIntensifyActivity {
             de_login_phone.setShakeAnimation();
             return;
         }
-        if(CheckUtil.isEmpty(code)){
-            NToast.shortToastBaseApp("短信验证码错误");
-            et_verification_code.setShakeAnimation();
-            return;
+        if(isALi){
+            code = vCode;
+            reg.setCodetype("gateway");
+        }else {
+            if(CheckUtil.isEmpty(code)){
+                NToast.shortToastBaseApp("短信验证码错误");
+                et_verification_code.setShakeAnimation();
+                return;
+            }
+            if(null == yzmOrSID){
+                NToast.shortToastBaseApp("重新获取图形验证码");
+                return;
+            }
         }
-        if(null == yzmOrSID){
-            NToast.shortToastBaseApp("重新获取图形验证码");
-            return;
-        }
+
 
         reg.setAct(act);
         reg.setUsername(phone);
         reg.setVcode(code);
+
 
         baseService.user_reg(reg, new HttpCallback<UserInfo, BaseDataResponse<UserInfo>>() {
             @Override
@@ -379,7 +459,7 @@ public class LoginActivity extends BaseIntensifyActivity {
             act = "smslogin";//登陆时获取验证码
         }
 
-
+        Reg reg = new Reg();
         String phone = de_login_phone.getText().toString();
         String yzm = de_login_image.getText().toString();
         String code = et_verification_code.getText().toString();
@@ -389,24 +469,31 @@ public class LoginActivity extends BaseIntensifyActivity {
             de_login_phone.setShakeAnimation();
             return;
         }
-        if(CheckUtil.isEmpty(yzm)){
-            NToast.shortToastBaseApp("图形验证码错误");
-            de_login_image.setShakeAnimation();
-            return;
+        if(isALi){
+            code = vCode;
+            reg.setCodetype("gateway");
+        }else {
+            if(CheckUtil.isEmpty(yzm)){
+                NToast.shortToastBaseApp("图形验证码错误");
+                de_login_image.setShakeAnimation();
+                return;
+            }
+            if(CheckUtil.isEmpty(code)){
+                NToast.shortToastBaseApp("短信验证码错误");
+                et_verification_code.setShakeAnimation();
+                return;
+            }
+            if(null == yzmOrSID){
+                NToast.shortToastBaseApp("重新获取图形验证码");
+                return;
+            }
         }
-        if(CheckUtil.isEmpty(code)){
-            NToast.shortToastBaseApp("短信验证码错误");
-            et_verification_code.setShakeAnimation();
-            return;
-        }
-        if(null == yzmOrSID){
-            NToast.shortToastBaseApp("重新获取图形验证码");
-            return;
-        }
-        Reg reg = new Reg();
+
+
         reg.setAct(act);
         reg.setUsername(phone);
         reg.setVcode(code);
+
 
         baseService.login(reg, new HttpCallback<UserInfo, BaseDataResponse<UserInfo>>() {
             @Override
@@ -451,7 +538,73 @@ public class LoginActivity extends BaseIntensifyActivity {
         },LoginActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
     }
 
+    //网关认证
+    private void user_gateway(){
+        String phone = de_login_phone.getText().toString();
 
+        if(CheckUtil.isEmpty(phone)){
+            NToast.shortToastBaseApp("电话号码错误");
+            de_login_phone.setShakeAnimation();
+            return;
+        }
+        Reg reg = new Reg();
+        reg.setAct("init");
+        reg.setOs("android");
+        reg.setPhone(phone);
+
+        baseService.user_gateway(reg, new HttpCallback<List<Vendor>, BaseDataResponse<List<Vendor>>>() {
+            @Override
+            public void onError(HttpException e) {
+                setRenZhengHou();
+                NToast.shortToastBaseApp(e.getMsg());
+            }
+
+            @Override
+            public void onSuccess(List<Vendor> aLiYans) {
+
+                if(null != authHelper){
+                    List<VendorConfig> vendorConfigs = HttpUtils.jsonToBeanT(HttpUtils.getStringValue(aLiYans)
+                            , new TypeReference<List<VendorConfig>>() {});
+
+                    NLog.e(NLog.TAG,"---> json " +vendorConfigs.get(0).toString());
+
+                    if(!CheckUtil.isEmpty(vendorConfigs))
+                    authHelper.getAuthToken(vendorConfigs);
+                }
+
+            }
+        },LoginActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+    }
+    //得到验证码
+    private void user_gatewayObject(final String acc){
+
+        Reg reg = new Reg();
+
+        reg.setAct("verify");
+        reg.setOs("android");
+        reg.setAccesscode(acc);
+
+        baseService.user_gatewayObject(reg, new HttpCallback<Reg, BaseDataResponse<Reg>>() {
+            @Override
+            public void onError(HttpException e) {
+                NToast.shortToastBaseApp(e.getMsg());
+                setRenZhengHou();
+            }
+
+            @Override
+            public void onSuccess(Reg aLiYans) {
+
+                vCode = aLiYans.getVcode();
+
+                if(THREE.equals(type)){
+                    login();
+                }else {
+                    user_reg();
+                }
+
+            }
+        },LoginActivity.this.bindUntilEvent(ActivityEvent.DESTROY));
+    }
 
     private void setMdDisposable(){
         //从0开始发射11个数字为：0-10依次输出，延时0s执行，每1s发射一次。
@@ -485,7 +638,12 @@ public class LoginActivity extends BaseIntensifyActivity {
 
     @Override
     protected void onDestroy() {
+        if(null != authHelper){
+            authHelper.onDestroy();
+            authHelper = null;
+        }
         super.onDestroy();
+
         if(null != mdDisposable){
             mdDisposable.dispose();
             mdDisposable = null;
@@ -507,6 +665,30 @@ public class LoginActivity extends BaseIntensifyActivity {
 
             finish();
         }
+
+    }
+
+    // FIXME: 2018/11/13  阿里免输入验证码校验
+    @Override
+    public void onTokenSuccess(final String s) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                user_gatewayObject(s);
+            }
+        });
+    }
+
+    @Override
+    public void onTokenFailed(String s) {
+        NLog.e(NLog.TAG,"onTokenFailed ---> " + s);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setRenZhengHou();
+            }
+        });
 
     }
 }

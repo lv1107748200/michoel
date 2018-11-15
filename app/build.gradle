@@ -15,6 +15,11 @@ android {
             //设置支持的SO库架构
             abiFilters 'armeabi', 'armeabi-v7a', 'x86','x86_64'
         }
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "165e45ac90d6d5b327bae747", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     packagingOptions {
         exclude 'META-INF/ASL2.0'
@@ -100,7 +105,7 @@ android {
 def dbflow_version = "4.2.4"
 def isDug = isDug
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
     implementation externalAndroidAppCompatV7
     implementation externalAndroidSupportV4
     implementation externalAndroidRecyclerView
@@ -115,9 +120,13 @@ dependencies {
     implementation externalDagger
 
     api project(':bclibrary')
+
+   // api project(':sbecomlibrary')
+
     implementation project(':pictureselect2.2.3:picture_library')
     if(isDug){
-        implementation project(':JPushExample')
+//        configurations.all {exclude group: 'com.android.support', module: 'support-v13'}
+      //implementation project(':JPushExample')
     }
 
 
@@ -154,4 +163,7 @@ dependencies {
     implementation 'com.github.Blincheng:EToast2:v2.1.1'
 
     implementation 'com.jakewharton:disklrucache:2.0.2'
+    implementation 'cn.jiguang.sdk:jpush:3.1.7'  // 此处以JPush 3.1.6 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:1.2.6'  // 此处以JCore 1.2.5 版本为例。
+    implementation 'com.alibaba:fastjson:1.2.5'
 }

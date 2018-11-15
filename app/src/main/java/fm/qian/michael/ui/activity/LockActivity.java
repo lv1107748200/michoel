@@ -139,8 +139,8 @@ public class LockActivity extends BaseActivity {
     }
 
     private void setView(){
-        GlideUtil.setGlideImage(LockActivity.this,comAll.getCover(),item_image);
-
+       // GlideUtil.setGlideImage(LockActivity.this,comAll.getCover(),item_image);
+        DownManger.setImageView(item_image,comAll.getCover(),this);
         tv_title.setText(comAll.getTitle());
 
         tv_zhuozhe.setText(comAll.getBroad());

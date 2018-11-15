@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
-import com.example.jpushdemo.ExampleApplication;
+
 import com.hr.bclibrary.utils.NLog;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.tencent.smtt.sdk.QbSdk;
 
+import cn.jpush.android.api.JPushInterface;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.db.UseData;
 import fm.qian.michael.service.MusicPlayerManger;
@@ -62,7 +63,7 @@ public class BaseApplation extends Application {
                             .readTimeout(15_000) // set read timeout.
                     )).commit();
             FileDownloader.setGlobalPost2UIInterval(50);//设置ui 刷新时间间隔 防止掉帧
-            FileDownloader.getImpl().setMaxNetworkThreadCount(1);//设置最大并行下载数量
+            FileDownloader.getImpl().setMaxNetworkThreadCount(2);//设置最大并行下载数量
 
             DownManger.bindService();
 
@@ -141,7 +142,9 @@ public class BaseApplation extends Application {
         }
 
         //push  初始化
-        ExampleApplication.getInstans().setJPush(this);
+       // ExampleApplication.getInstans().setJPush(this);
+        JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
+        JPushInterface.init(this);
     }
 
     public static BaseApplation getBaseApp() {

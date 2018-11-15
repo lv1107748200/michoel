@@ -1,13 +1,18 @@
 package fm.qian.michael.net.Service;
 
 
+import com.alicom.phonenumberauthsdk.gatewayauth.model.VendorConfig;
+
 import java.util.List;
 import java.util.Map;
 
 import fm.qian.michael.net.base.BaseDataResponse;
+import fm.qian.michael.net.entry.request.Reg;
+import fm.qian.michael.net.entry.response.ALiYan;
 import fm.qian.michael.net.entry.response.Category;
 import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.net.entry.response.UserInfo;
+import fm.qian.michael.net.entry.response.Vendor;
 import fm.qian.michael.net.entry.response.YZMOrSID;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -107,4 +112,14 @@ public interface UserService {
     @FormUrlEncoded
     @POST("app/user_broadcastlist.ashx")
     Observable<Response<BaseDataResponse<List<ComAll>>>> user_broadcastlistAll(@FieldMap Map<String,String> map,@Query(DEVID) String devid,@Query(OS) String os,@Query(VER) String ver);
+
+    // FIXME: 2018/11/13  阿里验证
+    @FormUrlEncoded
+    @POST("app/user_gateway.ashx")
+    Observable<Response<BaseDataResponse<List<Vendor>>>> user_gateway(@FieldMap Map<String,String> map, @Query(DEVID) String devid, @Query(OS) String os, @Query(VER) String ver);
+
+    @FormUrlEncoded
+    @POST("app/user_gateway.ashx")
+    Observable<Response<BaseDataResponse<Reg>>> user_gatewayObject(@FieldMap Map<String,String> map, @Query(DEVID) String devid, @Query(OS) String os, @Query(VER) String ver);
+
 }

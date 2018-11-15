@@ -30,6 +30,7 @@ import fm.qian.michael.db.TasksManagerModel;
 import fm.qian.michael.db.TasksManagerModel_Table;
 import fm.qian.michael.db.UseData;
 
+import fm.qian.michael.net.entry.response.ComAll;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
@@ -221,6 +222,7 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
         bottomLayout.setBomSel(0);
 
         //autoDown();//检测自动下载
+        whatNet();
     }
 
     //点击安全企业
@@ -233,14 +235,14 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
     @Override
     public void onBottomTab(int num) {
 
-//        if(num == 0){
-//            layout_lift.setVisibility(View.VISIBLE);
-//            layout_right.setVisibility(View.VISIBLE);
-//        }else {
-//            layout_lift.setVisibility(View.GONE);
+        if(num == 0){
+            layout_lift.setVisibility(View.VISIBLE);
+          //  layout_right.setVisibility(View.VISIBLE);
+        }else {
+            layout_lift.setVisibility(View.INVISIBLE);
 //            layout_right.setVisibility(View.GONE);
-//
-//        }
+
+        }
 
     }
     //网络状态广播
@@ -250,11 +252,12 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
             EventBus.getDefault().post(new Event.NetEvent(1));
         }else {
           //  NToast.shortToastBaseApp("无网络连接！");
+
         }
 
     }
     @Subscribe(threadMode = ThreadMode.MAIN) //在ui线程执行
-    public void onDataSynEvent(Event.MainActivityEvent event) {
+    public void onDataSynMainActivityEvent(Event.MainActivityEvent event) {
 
         int sel = event.getSel();
 
@@ -300,31 +303,29 @@ public class MainActivity extends BaseExitActivity implements BottomBarLayout.Bo
 
         }
     }
+    //无网络逻辑
+    private void whatNet(){
+       if(!NetStateUtils.isNetworkConnected(this)) {
+            if(isLogin()){
+                NToast.shortToastBaseApp("当前无网络，可以进入已下载内容进行离线播放");
+                bottomLayout.setSelect(3);
+            }
+        }
+    }
 
     private void autoDown(){
         if(NetStateUtils.isWifi(this)){
             SQLite.select()
-                    .from(TasksManagerModel.class)
-                    .orderBy(TasksManagerModel_Table.Idd,true)
+                    .from(ComAll.class)
                     .async()
-                    .queryListResultCallback(new QueryTransaction.QueryResultListCallback<TasksManagerModel>() {
+                    .queryListResultCallback(new QueryTransaction.QueryResultListCallback<ComAll>() {
                         @Override
-                        public void onListQueryResult(QueryTransaction transaction, @NonNull List<TasksManagerModel> tResult) {
+                        public void onListQueryResult(QueryTransaction transaction, @NonNull List<ComAll> tResult) {
                             NLog.e(NLog.TAGDOWN, "来自MainActivity   SQLite  onListQueryResult 查询成功");
                             if(!CheckUtil.isEmpty(tResult)){
                                 NLog.e(NLog.TAGDOWN, "来自MainActivity   SQLite  onListQueryResult 查询成功" + tResult.size());
 
-                                DownManger.addListTask(tResult, new DownManger.ResultCallback() {
-                                    @Override
-                                    public void onSuccess(Object o) {
-                                       // NToast.shortToastBaseApp("自动下载未完成任务");
-                                    }
 
-                                    @Override
-                                    public void onError(String errString) {
-
-                                    }
-                                });
 
                             }else {
 

@@ -346,6 +346,7 @@ public class ComFragment extends BaseRecycleViewFragment {
         baseService.ranklist(tid, day, pageNo+"",new HttpCallback<List<ComAll>, BaseDataResponse<List<ComAll>>>() {
             @Override
             public void onNotNet() {
+                super.onNotNet();
                 if(isUpOrDown){
                     getRefreshLayout().finishLoadMore();
                 }else {

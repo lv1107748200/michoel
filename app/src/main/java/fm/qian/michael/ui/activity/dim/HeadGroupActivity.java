@@ -20,6 +20,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +33,7 @@ import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.common.GlobalVariable;
+import fm.qian.michael.common.event.Event;
 import fm.qian.michael.db.DownTasksModel;
 import fm.qian.michael.net.base.BaseResponse;
 import fm.qian.michael.net.entry.Video;
@@ -65,8 +70,6 @@ public class HeadGroupActivity extends BaseIntensifyActivity {
     private String id;
     private DownTasksModel downTasksModel;
 
-    private GroupVoiseFragment   groupVoiseFragment;
-
 
     @Override
     public int getLayout() {
@@ -80,18 +83,21 @@ public class HeadGroupActivity extends BaseIntensifyActivity {
     }
 
     @Override
-    public void initData() {
+    protected void onNewIntent(Intent intent) {
+        //super.onNewIntent(intent);
+        if(null != intent)
+        initData(intent);
+    }
+    @Override
+    public void initData(Intent intent) {
         super.initData();
-
-        Intent intent = getIntent();
-
         id = intent.getStringExtra(HEADGROUP);
         downTasksModel = intent.getParcelableExtra("DownTasksModel");
         if(!CheckUtil.isEmpty(id)){
             album();
         }else if(!CheckUtil.isEmpty(downTasksModel)){
             setTitleTv(downTasksModel.getTitle());
-            groupVoiseFragment = new GroupVoiseFragment();
+            GroupVoiseFragment   groupVoiseFragment = new GroupVoiseFragment();
             groupVoiseFragment.setK(downTasksModel);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_container, groupVoiseFragment).commit();
@@ -119,7 +125,7 @@ public class HeadGroupActivity extends BaseIntensifyActivity {
 
                 if(GlobalVariable.ONE.equals(album.getTid())){//音频专辑处理
 
-                       groupVoiseFragment = new GroupVoiseFragment();
+                    GroupVoiseFragment   groupVoiseFragment = new GroupVoiseFragment();
                     groupVoiseFragment.setK(k);
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.main_container, groupVoiseFragment).commit();

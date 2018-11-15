@@ -293,7 +293,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
     }
 
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
-    public void onDataSynEvent(Event.LoginEvent event) {
+    public void onDataSynLogMEvent(Event.LoginEvent event) {
 
         String id = event.getId();
 
@@ -342,7 +342,7 @@ public class MyFragment extends BaseRecycleViewFragment implements View.OnClickL
         baseService.user_info(userInfo, new HttpCallback<UserInfo, BaseDataResponse<UserInfo>>() {
             @Override
             public void onNotNet() {
-                NToast.shortToastBaseApp(mFontext.getString(R.string.无网络));
+                super.onNotNet();
                 GlideUtil.setGlideImage(mFontext
                         , UserInfoManger.getInstance().getLogo()
                         ,roundedImageView,R.drawable.myicon);

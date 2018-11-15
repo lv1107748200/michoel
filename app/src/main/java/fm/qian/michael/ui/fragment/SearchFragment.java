@@ -425,6 +425,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                 BaseDataResponse<List<ComAll>>>() {
                     @Override
                     public void onNotNet() {
+                        super.onNotNet();
                         if(isUpOrDown){
                             getRefreshLayout().finishLoadMore();
                         }else {
@@ -481,94 +482,6 @@ public class SearchFragment extends BaseRecycleViewFragment {
         }
 
     }
-
-    //检索 id 转换
-    private void getIdDown(List<ComAll> comAlls){
-
-        if(type == TWO){
-            IdDown = false;
-
-            if(isUpOrDown){
-                if(!CheckUtil.isEmpty(comAlls)){
-                    DownManger.setIdDown(comAlls, new DownManger.ResultCallback<List<ComAll>>() {
-                        @Override
-                        public void onSuccess(List<ComAll> o) {
-                            if(!CheckUtil.isEmpty(o)){
-                                IdDown = true;
-                                    getRefreshLayout().finishLoadMore();
-                                    if(!CheckUtil.isEmpty(o)){
-                                        pageNo ++ ;
-                                        quickAdapter.addData(o);
-                                    }
-                                quickAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onError(String errString) {
-
-                        }
-                    });
-                }else {
-                    getRefreshLayout().finishLoadMore();
-                    NToast.shortToastBaseApp("暂无更多数据");
-                }
-
-
-
-            }else {
-                if(CheckUtil.isEmpty(comAlls)){
-                    getRefreshLayout().finishRefresh();
-                    quickAdapter.replaceData(new ArrayList<>());
-                    quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
-                }else {
-                    DownManger.setIdDown(comAlls, new DownManger.ResultCallback<List<ComAll>>() {
-                        @Override
-                        public void onSuccess(List<ComAll> o) {
-                            if(!CheckUtil.isEmpty(o)){
-                                IdDown = true;
-                                    getRefreshLayout().finishRefresh();
-                                    if(!CheckUtil.isEmpty(o)){
-                                        pageNo ++ ;
-                                        quickAdapter.replaceData(o);
-                                    }
-                                quickAdapter.notifyDataSetChanged();
-                            }
-                        }
-
-                        @Override
-                        public void onError(String errString) {
-
-                        }
-                    });
-                }
-            }
-
-
-        }else {
-            if(isUpOrDown){
-                getRefreshLayout().finishLoadMore();
-                if(!CheckUtil.isEmpty(comAlls)){
-                    pageNo ++ ;
-                    quickAdapter.addData(comAlls);
-                }
-            }else {
-                getRefreshLayout().finishRefresh();
-                if(!CheckUtil.isEmpty(comAlls)){
-                    pageNo ++ ;
-                    quickAdapter.replaceData(comAlls);
-                }else {
-                    quickAdapter.replaceData(new ArrayList<>());
-                    quickAdapter.setEmptyView(getEmpty(getString(R.string.empty)+getString(R.string.emptyone)));
-                }
-            }
-        }
-
-
-
-    }
-
-
 
     private boolean issetSelList(ComAll comAll){
 
@@ -675,7 +588,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(0,null,list,null,new DownManger.ResultCallback() {
+            DownManger.setIdAndPath(null,null,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){

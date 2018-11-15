@@ -59,6 +59,8 @@ public class FindFragment extends BaseRecycleViewFragment {
 
     private String VidoAll;
 
+    private boolean isSusses = false;
+
     @OnClick({})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -200,15 +202,35 @@ public class FindFragment extends BaseRecycleViewFragment {
         recommend();
     }
 
+    @Override
+    public boolean isEnableLoadMore() {
+        return false;
+    }
+
     private void index(){
         baseService.index(new HttpCallback<Index, BaseDataResponse<Index>>() {
             @Override
             public void onNotNet() {
                 getRefreshLayout().finishRefresh();
+//                if(multipleItemAdapter.getData()){
+//                    multipleItemAdapter.replaceData(new ArrayList<MultipleItem>());
+//
+//                }
                 if(null != multipleItemAdapter){
-                    multipleItemAdapter.replaceData(new ArrayList<MultipleItem>());
-                    multipleItemAdapter.setEmptyView(getError(""));
+
+                    if(isSusses){
+                        super.onNotNet();
+                    }else {
+                        multipleItemAdapter.replaceData(new ArrayList<MultipleItem>());
+                        multipleItemAdapter.setEmptyView(getError(""));
+                    }
+
+                }else {
+                    super.onNotNet();
                 }
+
+
+
             }
             @Override
             public void onError(HttpException e) {
@@ -219,11 +241,17 @@ public class FindFragment extends BaseRecycleViewFragment {
 
             @Override
             public void onSuccess(Index index) {
+
+                isSusses = true;
+
                 getRefreshLayout().finishRefresh();
 
                 if(!CheckUtil.isEmpty(index.getFirstaudio())){
                     SPUtils.putString(USERFIRSTAUDIO,index.getFirstaudio(),false);
                 }
+
+                getRefreshLayout().setEnableLoadMore(true);
+
                 pageNo = 1;
                 recommend();
 
@@ -288,7 +316,10 @@ public class FindFragment extends BaseRecycleViewFragment {
         baseService.recommend(pageNo+"", new HttpCallback<List<Base>, BaseDataResponse<List<Base>>>() {
             @Override
             public void onNotNet() {
-                    getRefreshLayout().finishLoadMore();
+                if(isSusses){
+                    super.onNotNet();
+                }
+               getRefreshLayout().finishLoadMore();
             }
             @Override
             public void onError(HttpException e) {

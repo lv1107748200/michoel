@@ -9,10 +9,45 @@ public class Reg {
     private String access_token;
     private String openid;
     private String username;//手机号
+    private String phone;//手机号
     private String vcode;//短信验证码
     private String yzm;//图片验证码
     private String sid;//验证码编号
+    private String os;
+    private String accesscode;
+    private String codetype;
 
+    public String getCodetype() {
+        return codetype;
+    }
+
+    public void setCodetype(String codetype) {
+        this.codetype = codetype;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public void setOs(String os) {
+        this.os = os;
+    }
+
+    public String getAccesscode() {
+        return accesscode;
+    }
+
+    public void setAccesscode(String accesscode) {
+        this.accesscode = accesscode;
+    }
 
     public String getAct() {
         return act;

@@ -113,6 +113,7 @@ public class HeadGroupFragment extends BaseRecycleViewFragment {
         baseService.album(id, pageNo + "", "", "", new HttpCallback<Album, BaseResponse<Album, List<ComAll>>>() {
             @Override
             public void onNotNet() {
+                super.onNotNet();
                 if(isUpOrDown){
                     getRefreshLayout().finishLoadMore();
                 }else {

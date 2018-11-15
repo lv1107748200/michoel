@@ -25,6 +25,8 @@ import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.net.base.BaseService;
 import fm.qian.michael.utils.NToast;
+import fm.qian.michael.utils.NetStateUtils;
+import fm.qian.michael.widget.dialog.LoadingDialog;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopLoginWindow;
 import fm.qian.michael.widget.single.UserInfoManger;
@@ -50,6 +52,8 @@ public class BaseFragment extends AbstractBaseFragment{
     FrameLayout head_layout;
 
     private PopLoginWindow popLoginWindow;
+
+    private LoadingDialog loadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -138,7 +142,7 @@ public class BaseFragment extends AbstractBaseFragment{
     public View getError(String message){
         View view = LayoutInflater.from(mFontext).inflate(R.layout.error_net_view,null,false);
 
-        TextView textView = view.findViewById(R.id.emty_tv);
+        TextView textView = view.findViewById(R.id.error_tv);
         if(!CheckUtil.isEmpty(message)){
             textView.setText(message);
         }
@@ -180,6 +184,34 @@ public class BaseFragment extends AbstractBaseFragment{
         }
 
         return true;
+    }
+    //判断网络是否连接
+    public boolean isEableNet(){
+
+        boolean isNet = NetStateUtils.isNetworkConnected(mFontext);
+
+        if(isNet){
+
+        }else {
+            NToast.shortToastBaseApp(getString(R.string.无网络));
+        }
+
+        return isNet;
+    }
+
+    public void showLoadingDialog(String message){
+
+        if(null == loadingDialog){
+            loadingDialog = new LoadingDialog(mFontext);
+        }
+
+        loadingDialog.show(message);
+
+    }
+
+    public void dissLoadingDialog(){
+        if(null != loadingDialog)
+        loadingDialog.diss();
     }
 
     @Override

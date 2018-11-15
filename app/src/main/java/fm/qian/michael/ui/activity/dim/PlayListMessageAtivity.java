@@ -775,7 +775,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
     //下载管理
     private void down(List<ComAll> list){
         if(!CheckUtil.isEmpty(list)){
-            DownManger.setIdAndPath(0,null,list,null,new DownManger.ResultCallback() {
+            DownManger.setIdAndPath(null,null,list,null,new DownManger.ResultCallback() {
                 @Override
                 public void onSuccess(Object baseDownloadTaskSparseArray) {
                     if(null != quickAdapter){

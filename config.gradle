@@ -54,7 +54,7 @@ ext {
 
     externalGSON = 'com.google.code.gson:gson:2.8.0'
     externalOKIO = 'com.squareup.okio:okio:1.6.0'
-    externaEventBus = 'org.greenrobot:eventbus:3.0.0'
+    externaEventBus = 'org.greenrobot:eventbus:3.1.1'
 
     externaNeenbedanktPluginsAndroidApt = 'com.neenbedankt.gradle.plugins:android-apt:1.8'
 

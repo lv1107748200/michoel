@@ -11,7 +11,12 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hr.bclibrary.utils.CheckUtil;
+import com.liulishuo.filedownloader.model.FileDownloadStatus;
+import com.liulishuo.filedownloader.util.FileDownloadUtils;
+import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.raizlabs.android.dbflow.structure.database.DatabaseWrapper;
+import com.raizlabs.android.dbflow.structure.database.transaction.ITransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
 
@@ -25,6 +30,7 @@ import java.util.List;
 import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.event.Event;
+import fm.qian.michael.db.AppDatabase;
 import fm.qian.michael.db.DownTasksModel;
 import fm.qian.michael.db.DownTasksModel_Table;
 import fm.qian.michael.db.TasksManagerModel;
@@ -50,6 +56,7 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
     private LoadingDialog loadingDialog;
     private QuickAdapter quickAdapter;
     private boolean isGetData = false;
+    List<DownTasksModel> downTasksModelList;
     @Override
     public boolean isDamp() {
         return true;
@@ -79,13 +86,14 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
                 if(item instanceof DownTasksModel){
                     final DownTasksModel comAll = (DownTasksModel) item;
 
-                    if(comAll.comAlls != null){
-                        helper.setText(R.id.item_tv,"共"+comAll.getSizeAll()+"个下载" + comAll.comAlls.size());
+                    if(comAll.getComAlls() != null){
+                        helper.setText(R.id.item_tv,"共"+comAll.getSizeAll()+"个下载" + comAll.getComAlls().size());
                     }else {
                         helper.setText(R.id.item_tv,"共"+comAll.getSizeAll()+"个");
                     }
-                    GlideUtil.setGlideImageMake(mFontext,comAll.getCover(),
-                            (ImageView) helper.getView(R.id.item_image));
+
+                    DownManger.setImageView((ImageView) helper.getView(R.id.item_image),
+                            comAll.getCover(),mFontext);
 
                     helper.setOnClickListener(R.id.btnDelete, new View.OnClickListener() {
                         @Override
@@ -113,19 +121,6 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
 
             }
         };
-//        quickAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                Object item = quickAdapter.getItem(position);
-//
-//                if(item instanceof DownTasksModel){
-//                    Intent intent = new Intent(mFontext,HeadGroupActivity.class);
-//                    intent.putExtra("DownTasksModel",(DownTasksModel)item);
-//                    startActivity(intent);
-//                }
-//            }
-//        });
-
         getRvList().setAdapter(quickAdapter);
 
 
@@ -134,13 +129,19 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
     @Override
     public void loadData() {
         super.loadData();
-        getBenDIList();
+
+        if(!CheckUtil.isEmpty(downTasksModelList)){
+            if(CheckUtil.isEmpty(quickAdapter.getData()))
+            quickAdapter.replaceData(downTasksModelList);
+        }else {
+           // quickAdapter.setEmptyView(getEmpty("暂无记录"));
+        }
+
     }
     @Override
     public void everyTime(boolean isVisibleToUser) {
         if(isGetData){
             isGetData = false;
-            getBenDIList();
         }
     }
     @Subscribe(threadMode = ThreadMode.POSTING) //在ui线程执行
@@ -157,64 +158,51 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
         }
 
     }
-    //
+
+    public void setQuickAdapter(List<DownTasksModel> comAlls){
+        downTasksModelList = comAlls;
+        if(!CheckUtil.isEmpty(downTasksModelList)){
+            if(null != quickAdapter){
+                quickAdapter.replaceData(downTasksModelList);
+            }
+        }else {
+            if(null != quickAdapter){
+                quickAdapter.replaceData(new ArrayList<>());
+                quickAdapter.setEmptyView(getEmpty("暂无记录"));
+            }
+        }
+
+
+    }
+
     private void getBenDIList(){
-        loadingDialog.show("加载数据");
-        SQLite.select()
-                .from(DownTasksModel.class)
-                .async()
-                .queryListResultCallback(new QueryTransaction.QueryResultListCallback<DownTasksModel>() {
-                    @Override
-                    public void onListQueryResult(QueryTransaction transaction, @NonNull List<DownTasksModel> tResult) {
-                        NLog.e(NLog.TAGDOWN, "下载专辑   SQLite  onListQueryResult 查询成功");
-                        if(!CheckUtil.isEmpty(tResult)){
-                            NLog.e(NLog.TAGDOWN, "下载专辑   SQLite  onListQueryResult 查询成功: " + tResult.size());
-//                            DownTasksModel downTasksModel = tResult.get(0);
-//
-//                            NLog.e(NLog.TAGDOWN, "下载专辑  任务: " + downTasksModel.comAlls.size());
 
-                            quickAdapter.replaceData(tResult);
-
-                        }else {
-                            //NToast.shortToastBaseApp("暂无记录");
-
-                            quickAdapter.replaceData(new ArrayList<>());
-                            quickAdapter.setEmptyView(getEmpty("暂无记录"));
-                        }
-                        loadingDialog.diss();
-                    }
-                })
-                .error(new Transaction.Error() {
-                    @Override
-                    public void onError(@NonNull Transaction transaction, @NonNull Throwable error) {
-                        NLog.e(NLog.TAGDOWN, "下载专辑   SQLite  error"+error.getMessage());
-                        loadingDialog.diss();
-                    }
-                })
-                .execute();
     }
 
     private List<ComAll> list;
     private void delData(final DownTasksModel comAll, final int point){
-        list = comAll.comAlls;
-        comAll.async().success(new Transaction.Success() {
-            @Override
-            public void onSuccess(@NonNull Transaction transaction) {
-                quickAdapter.remove(point);
-                if(CheckUtil.isEmpty(quickAdapter.getData())){
-                    quickAdapter.setEmptyView(getEmpty("暂无记录"));
-                }
-                EventBus.getDefault().post(new Event.PlayEvent(3));
-                deldelListFile(list);
-            }
-        }).delete();
-
+        list = comAll.getComAlls();
+//        comAll.async().success(new Transaction.Success() {
+//            @Override
+//            public void onSuccess(@NonNull Transaction transaction) {
+//
+//            }
+//        }).delete();
+        quickAdapter.remove(point);
+        if(CheckUtil.isEmpty(quickAdapter.getData())){
+           // quickAdapter.setEmptyView(getEmpty("暂无记录"));
+        }
+        deldelListFile(list);
     }
-    private void deldelListFile(List<ComAll> comAlls){
+    private void deldelListFile(final List<ComAll> comAlls){
+        EventBus.getDefault().post(new Event.UpDownEvent(0));
         DownManger.delListFile(comAlls, new DownManger.ResultCallback() {
             @Override
             public void onSuccess(Object o) {
                 NToast.shortToastBaseApp("删除成功");
+
+                EventBus.getDefault().post(new Event.UpDownEvent(comAlls,1));
+
             }
 
             @Override

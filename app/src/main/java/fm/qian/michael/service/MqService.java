@@ -76,6 +76,7 @@ import fm.qian.michael.net.http.HttpUtils;
 import fm.qian.michael.receiver.MediaButtonIntentReceiver;
 import fm.qian.michael.ui.activity.LockActivity;
 import fm.qian.michael.utils.CommonUtils;
+import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
 import fm.qian.michael.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
@@ -102,6 +103,7 @@ import static fm.qian.michael.common.UserInforConfig.USERTMEING;
 public class MqService extends Service {
 
     public static final String pathSong = "song";
+    public static final String pathImage = "image";
 
     public static final String UPDATALOGIN = "fm.qian.michael.loginchanged";
     public static final String UPDATA_ID = "fm.qian.michael.playstatechanged";
@@ -403,8 +405,22 @@ public class MqService extends Service {
 //        if(CheckUtil.isEmpty(pathSong)){
 //           pathSong =  comAll.getUrl();//获取链表中数据进行播放
 //        }
+        String pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp()) + File.separator + MqService.pathSong;
+        pathttt = FileDownloadUtils.generateFilePath(pathttt,SdcardUtil.md5(pathSong));
 
-        createPath(pathSong);
+        boolean is = fileIsExists(pathttt);
+
+        if(is){
+            pushAction(UPDATA_ID,comAll.getId());
+            createPath(pathttt);
+        }else {
+            if(NetStateUtils.isNetworkConnected(this)){
+                pushAction(UPDATA_ID,comAll.getId());
+                createPath(pathSong);
+            }else {
+                next();//在没网本地没有情况下直接播放下一集
+            }
+        }
     }
 
     //直接进行历史播放
@@ -443,29 +459,18 @@ public class MqService extends Service {
     }
     //创造本地播放地址
     public boolean createPath( String url) {
-
+        if(!isLogin){
+            if(isPay()){
+                return false;
+            }
+        }
         if (TextUtils.isEmpty(url)) {
             return false;
         }
-        String
-                // pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp(),MqService.pathSong);
-                pathttt = SdcardUtil.getDiskFileDir(BaseApplation.getBaseApp()) + File.separator + MqService.pathSong;;
-        pathttt = FileDownloadUtils.generateFilePath(pathttt,SdcardUtil.md5(url));
-
-        boolean is = fileIsExists(pathttt);
-
-        if(is){
-            setDataSource(pathttt);
-        }else {
-            if(NetStateUtils.isNetworkConnected(this)){
-                setDataSource(url);//直接播放传入地址
-            }else {
-              //next();
-            }
-        }
-
+        setReqPta();//上传播放地址
+        setDataSource(url);
         // MLog.E("执行 createPath" + pathttt + "  存在否  " +is);
-        return is;
+        return true;
     }
     //判断文件是否存在
     public boolean fileIsExists(String strFile)
@@ -841,6 +846,8 @@ public class MqService extends Service {
         }else {
             if(!CheckUtil.isEmpty(path)){
                 setPlay();
+            }else {
+
             }
         }
         return path;
@@ -925,14 +932,28 @@ public class MqService extends Service {
             return;
 
         if(!CheckUtil.isEmpty(comAll.getCover_small())){
+
+            String imagePath = comAll.getCover_small();
+
+            if(NetStateUtils.isNetworkConnected(this)){
+
+            }else {
+                String pathImage = DownManger.createImagePath(imagePath);
+
+                if (fileIsExists(pathImage)) {
+                    //NLog.e(NLog.TAGDOWN," 图下载path --->" + pathImage);
+                    imagePath = pathImage;
+                }
+            }
+
             RequestOptions options = new RequestOptions()
                     .error(R.mipmap.logo)
-                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                     .priority(Priority.LOW);
             Glide.with(this)
                     .asBitmap()
                     .apply(options)
-                    .load(comAll.getCover_small())
+                    .load(imagePath)
                     .into(new SimpleTarget<Bitmap>(){
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -1235,23 +1256,28 @@ public class MqService extends Service {
 
         comAllList.set(playNumber, comAll);
 
-        pushAction(UPDATA_ID,comAll.getId());
+//        pushAction(UPDATA_ID,comAll.getId());
+//
+//        if(!isLogin){
+//            if(isPay()){
+//                return;
+//            }
+//        }
 
-        if(!isLogin){
-            if(isPay()){
-                return;
-            }
-        }
-
-        setReqPta();//更换地址时
+   //     setReqPta();//更换地址时
         playQQQ(comAll.getUrl());//获取地址后直接播放
 
     }
     //
     private void setPlay(){
-        pushAction(UPDATA_ID,comAll.getId());
-        setReqPta();//更换地址时
-        playQQQ(comAll.getUrl());//获取地址后直接播放
+//        pushAction(UPDATA_ID,comAll.getId());
+//        if(!isLogin){
+//            if(isPay()){
+//                return;
+//            }
+//        }
+ //       setReqPta();//更换地址时
+        playQQQ(comAll.getUrl());//获取地址后直接播放(不进行 信息请求)
     }
 
     private final AudioManager.OnAudioFocusChangeListener mAudioFocusListener = new AudioManager.OnAudioFocusChangeListener() {

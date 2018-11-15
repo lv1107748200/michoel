@@ -69,7 +69,7 @@ public class CategoryFragment extends BaseRecycleViewFragment {
     private List<MySection> mData;
     private SectionAdapter sectionAdapter;
 
-    private boolean isError = false;
+    //private boolean isError = false;
 
 
     @OnClick({})
@@ -101,7 +101,7 @@ public class CategoryFragment extends BaseRecycleViewFragment {
 
         getRvList().setLayoutManager(new GridLayoutManager(getActivity(),3));
 
-        mData = DataServer.getSampleData();
+      //  mData = DataServer.getSampleData();
         sectionAdapter = new SectionAdapter(R.layout.item_image_and_text_changed_two, R.layout.item_head_one, mData);
 
         sectionAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -129,37 +129,59 @@ public class CategoryFragment extends BaseRecycleViewFragment {
 
     @Override
     public void everyTime(boolean isVisibleToUser) {
-        if(isVisibleToUser){
-            if(isError){
-                isError = false;
-                category();
-            }
-        }
+//        if(isVisibleToUser){
+//            if(isError){
+//                isError = false;
+//                category();
+//            }
+//        }
     }
 
     @Override
     public boolean isDamp() {
-        return true;
+        return false;
+    }
+
+    @Override
+    public boolean isEnableLoadMore() {
+        return false;
+    }
+
+    @Override
+    public void Refresh() {
+        category();
     }
 
     private void category(){
 
-        if(!NetStateUtils.isNetworkConnected(mFontext)){
-            isError = true;
-        }else {
-            isError = false;
-        }
+//        if(!NetStateUtils.isNetworkConnected(mFontext)){
+//            isError = true;
+//        }else {
+//            isError = false;
+//        }
 
         baseService.category(new HttpCallback<List<Category>, BaseDataResponse<List<Category>>>() {
             @Override
+            public void onNotNet() {
+               // super.onNotNet();
+                getRefreshLayout().finishRefresh();
+                if(CheckUtil.isEmpty(sectionAdapter.getData())){
+                    sectionAdapter.setEmptyView(getError(""));
+                }else {
+                    super.onNotNet();
+                }
+            }
+
+            @Override
             public void onError(HttpException e) {
                 NToast.shortToastBaseApp(e.getMsg());
-
-                isError = true;
+                getRefreshLayout().finishRefresh();
+               // isError = true;
             }
 
             @Override
             public void onSuccess(List<Category> categories) {
+                getRefreshLayout().finishRefresh();
                 List<MySection> list = new ArrayList<>();
                 for(int i =0,j=categories.size(); i< j; i++){
                     Category category = categories.get(i);

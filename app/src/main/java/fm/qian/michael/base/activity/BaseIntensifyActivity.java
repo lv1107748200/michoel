@@ -21,7 +21,7 @@ public class BaseIntensifyActivity extends BaseActivity{
 //    @BindView(R.id.status_bar)
 //    View statusBar;
     LinearLayout base_left_layout;
-    LinearLayout base_right_layout;
+  public   LinearLayout base_right_layout;
     ImageView gif_image;
 
     @BindView(R.id.title_tv)

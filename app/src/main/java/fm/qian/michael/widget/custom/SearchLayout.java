@@ -146,6 +146,7 @@ public class SearchLayout extends FrameLayout implements
                 NLog.e(NLog.TAGOther, "searchText: "  + searchText);
                 if(!CheckUtil.isEmpty(searchText)){
                     search_et_input.setText(searchText);
+                    search_et_input. setSelection(searchText.length());
                     if(null != searchCallBack){
                         searchCallBack.textCallBack(searchText);
                         save();
@@ -282,6 +283,7 @@ public class SearchLayout extends FrameLayout implements
                 NLog.e(NLog.TAGOther, "searchText: "  + searchText);
                 if(!CheckUtil.isEmpty(searchText)){
                     search_et_input.setText(searchText);
+                    search_et_input. setSelection(searchText.length());
                     if(null != searchCallBack){
                         save();
                         searchCallBack.textCallBack(searchText);

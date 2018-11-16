@@ -73,7 +73,7 @@
                 android:layout_marginRight="@dimen/title_margin"
                 android:layout_width="@dimen/margin_22"
                 android:layout_height="@dimen/margin_22"
-                android:background="@drawable/share"
+                android:background="@drawable/myfenxiang"
                 />
         </LinearLayout>
 

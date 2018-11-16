@@ -45,6 +45,8 @@
                 android:singleLine="true"
                 android:background="@drawable/loop_color_four"
                 android:textColorHint="@color/color_A3A"
+                android:imeOptions="actionNone"
+                android:textCursorDrawable="@drawable/text_cursor_color"
                 style="@style/Text3"
                 android:gravity="center"
                 android:padding="@dimen/margin_8"

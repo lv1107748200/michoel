@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hr.bclibrary.utils.CheckUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -96,6 +97,8 @@ public class HttpUtils {
     }
 
     public static  <T> T jsonToBeanT(String s,TypeReference<T> type){
+        if(CheckUtil.isEmpty(s))
+            return null;
         if(null == objectMapper){
             objectMapper =
                     new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
@@ -113,6 +116,10 @@ public class HttpUtils {
     }
 
     public static <T> T jsonToBean(String json, Class<T> cls)  {
+
+        if(CheckUtil.isEmpty(json))
+            return null;
+
         if(null == objectMapper){
             objectMapper =
                     new ObjectMapper().setVisibility(PropertyAccessor.FIELD,

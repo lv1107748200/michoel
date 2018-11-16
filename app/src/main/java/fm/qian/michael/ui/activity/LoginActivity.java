@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import fm.qian.michael.db.UseData;
 import fm.qian.michael.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.request.Reg;
 import fm.qian.michael.net.entry.response.ALiYan;
+import fm.qian.michael.net.entry.response.AccessCodeMsg;
 import fm.qian.michael.net.entry.response.UserInfo;
 import fm.qian.michael.net.entry.response.Vendor;
 import fm.qian.michael.net.entry.response.WXAccessData;
@@ -121,6 +123,8 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
     @BindView(R.id.help_tv)
     TextView help_tv;
 
+    @BindView(R.id.de_login_sign)
+    Button de_login_sign;
 
     @OnClick({
             R.id.send_verification_code,R.id.weixin_login_layout
@@ -259,7 +263,7 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
 
             isALi = true;
             yz_layout.setVisibility(View.INVISIBLE);
-
+            de_login_sign.setText("下一步");
             //读取SIM手机号
             if (!TextUtils.isEmpty(autInitResult.getSimPhoneNumber()) && autInitResult.getSimPhoneNumber().length() == 11) {
                 simPhone = autInitResult.getSimPhoneNumber();
@@ -275,6 +279,8 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
     }
 
     private void setRenZhengHou(){
+        dissLoadingDialog();
+        de_login_sign.setText(getString(R.string.Login));
         isALi = false;
         if(null != yz_layout){
             yz_layout.setVisibility(View.VISIBLE);
@@ -426,10 +432,12 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
             @Override
             public void onError(HttpException e) {
                 NToast.shortToastBaseApp(e.getMsg());
+                dissLoadingDialog();
             }
 
             @Override
             public void onSuccessAll(BaseDataResponse<UserInfo> k) {
+                dissLoadingDialog();
                 UserInfo userInfo = k.getData();
 
                 String msg = k.getMsg();
@@ -498,11 +506,13 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
         baseService.login(reg, new HttpCallback<UserInfo, BaseDataResponse<UserInfo>>() {
             @Override
             public void onError(HttpException e) {
+                dissLoadingDialog();
                 NToast.shortToastBaseApp(e.getMsg());
             }
 
             @Override
             public void onSuccessAll(BaseDataResponse<UserInfo> k) {
+                dissLoadingDialog();
                 UserInfo userInfo = k.getData();
 
                 String msg = k.getMsg();
@@ -547,6 +557,7 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
             de_login_phone.setShakeAnimation();
             return;
         }
+        showLoadingDialog("");
         Reg reg = new Reg();
         reg.setAct("init");
         reg.setOs("android");
@@ -577,11 +588,18 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
     }
     //得到验证码
     private void user_gatewayObject(final String acc){
+        String phone = de_login_phone.getText().toString();
 
+        if(CheckUtil.isEmpty(phone)){
+            NToast.shortToastBaseApp("电话号码错误");
+            de_login_phone.setShakeAnimation();
+            return;
+        }
         Reg reg = new Reg();
 
         reg.setAct("verify");
         reg.setOs("android");
+        reg.setPhone(phone);
         reg.setAccesscode(acc);
 
         baseService.user_gatewayObject(reg, new HttpCallback<Reg, BaseDataResponse<Reg>>() {
@@ -671,11 +689,14 @@ public class LoginActivity extends BaseIntensifyActivity implements TokenResultL
     // FIXME: 2018/11/13  阿里免输入验证码校验
     @Override
     public void onTokenSuccess(final String s) {
-
+        NLog.e(NLog.TAG,"onTokenSuccess ---> " + s);
+        final AccessCodeMsg accessCodeMsg = HttpUtils.jsonToBean(s,AccessCodeMsg.class);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                user_gatewayObject(s);
+                if(null != accessCodeMsg){
+                    user_gatewayObject(accessCodeMsg.getAccessCode());
+                }
             }
         });
     }

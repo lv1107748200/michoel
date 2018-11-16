@@ -6,9 +6,10 @@
     android:padding="@dimen/margin_6"
     >
         <TextView
+            android:id="@+id/tv_tsy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_292"
+            android:textColor="@color/color_A3A"
             android:text="点击封面进入专辑，可取消收藏"
             android:textSize="@dimen/size_15"
             android:gravity="center|left"

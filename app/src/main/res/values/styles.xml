@@ -195,6 +195,8 @@
         <item name="android:paddingTop">@dimen/margin_20</item>
         <item name="android:textSize">@dimen/size_15</item>
         <item name="android:layout_weight">1</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_color</item>
+        <item name="android:imeOptions">actionNone</item>
     </style>
 
     <style name="cw_et_home_search">
@@ -208,6 +210,7 @@
         <item name="android:textColorHint">@color/color_8d8</item>
         <item name="android:cursorVisible">true</item>
         <item name="android:padding">@dimen/margin_10</item>
+        <item name="android:textCursorDrawable">@drawable/text_cursor_color</item>
     </style>
 
     <style name="squareLinearStyle">

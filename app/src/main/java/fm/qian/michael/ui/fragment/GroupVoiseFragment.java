@@ -172,9 +172,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     WLoaignMake();
                     return;
                 }
-                if(isPay()){//下载
-                    return;
-                }
+//                if(isPay()){//下载
+//                    return;
+//                }
 
                 isDown = true;
 
@@ -229,9 +229,9 @@ public class GroupVoiseFragment extends BaseFragment implements View.OnClickList
                     return;
                 }
 
-                if(isPay()){//下载
-                    return;
-                }
+//                if(isPay()){//下载
+//                    return;
+//                }
 
                 if(isWifi(mFontext)){
                     if(!layout_fav.isSelected()) {//未收藏

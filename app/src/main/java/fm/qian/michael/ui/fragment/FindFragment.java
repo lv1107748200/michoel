@@ -79,7 +79,10 @@ public class FindFragment extends BaseRecycleViewFragment {
     @Override
     public void init() {
         super.init();
-        final List<MultipleItem> data = DataServer.getMultipleItemData();
+        List<MultipleItem> data = null;
+        if(isEableNet()){
+             data = DataServer.getMultipleItemData();
+        }
         multipleItemAdapter = new MultipleItemQuickAdapter(getContext(),data);
         final GridLayoutManager manager = new GridLayoutManager(getContext(), 4);
         getRvList().setLayoutManager(manager);
@@ -87,7 +90,7 @@ public class FindFragment extends BaseRecycleViewFragment {
         multipleItemAdapter.setSpanSizeLookup(new BaseQuickAdapter.SpanSizeLookup() {
             @Override
             public int getSpanSize(GridLayoutManager gridLayoutManager, int position) {
-                return data.get(position).getSpanSize();
+                return multipleItemAdapter.getData().get(position).getSpanSize();
             }
         });
         multipleItemAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -95,7 +98,7 @@ public class FindFragment extends BaseRecycleViewFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 Intent intent = new Intent();
-                MultipleItem multipleItem =    multipleItemAdapter.getData().get(position);
+                MultipleItem multipleItem = multipleItemAdapter.getData().get(position);
                 switch (adapter.getItemViewType(position)) {
                     case MultipleItem.BAN://轮播图
 
@@ -189,7 +192,12 @@ public class FindFragment extends BaseRecycleViewFragment {
     public void loadData() {
         super.loadData();
        // index();
-        getRefreshLayout().autoRefresh();
+        if(!isEableNet()){
+            multipleItemAdapter.replaceData(new ArrayList<MultipleItem>());
+            multipleItemAdapter.setEmptyView(getError(""));
+        }else {
+            getRefreshLayout().autoRefresh();
+        }
     }
 
     @Override

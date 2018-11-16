@@ -47,6 +47,7 @@
                 android:layout_margin="@dimen/margin_5"
                 android:id="@+id/search_et_input"
                 android:imeOptions="actionSearch"
+                android:textCursorDrawable="@drawable/text_cursor_color"
                 android:layout_gravity="center_vertical"
                 android:gravity="left|center"
                 android:layout_width="match_parent"

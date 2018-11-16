@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -121,6 +123,13 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
 
             }
         };
+        View headView = LayoutInflater.from(mFontext).inflate(R.layout.item_head_tbgmjl_layout,null,false);
+
+        TextView textView = headView.findViewById(R.id.tv_tsy);
+        textView.setText("左滑封面可以删除已下载专辑");
+
+        quickAdapter.addHeaderView(headView);
+
         getRvList().setAdapter(quickAdapter);
 
 

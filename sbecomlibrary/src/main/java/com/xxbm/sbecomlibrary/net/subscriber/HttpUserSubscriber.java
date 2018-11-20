@@ -80,9 +80,8 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
 
                         if(null != callback){
                             if(callback.getContext() != null){
-                                Intent intent = new Intent();
-//                                intent.setClass(callback.getContext(), LoginActivity.class);
-//                                intent.putExtra(LoginActivity.LOGIN,THREE);
+                                Intent intent = new Intent("fm.qian.michael.ui.activity.LoginActivity");
+                                intent.putExtra("LOGIN",THREE);
                                 callback.getContext().startActivity(intent);
                             }
                         }

@@ -31,8 +31,8 @@ import com.xxbm.sbecomlibrary.db.TasksManagerModel_Table;
 import com.xxbm.sbecomlibrary.db.UseData;
 
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
-import fm.qian.michael.service.MqService;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MqService;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.ui.activity.dim.SearchActivity;
 import fm.qian.michael.ui.adapter.MainAdapter;
@@ -63,7 +63,7 @@ import butterknife.OnClick;
 import fm.qian.michael.widget.single.PlayGifManger;
 import fm.qian.michael.widget.single.UserInfoManger;
 
-import static fm.qian.michael.service.MqService.CMDNOTIF;
+import static com.xxbm.musiclibrary.MqService.CMDNOTIF;
 
 public class MainActivity extends BaseExitActivity implements BottomBarLayout.BottomCallBack,
         NetworkConnectChangedReceiver.BroadcastCallBack {

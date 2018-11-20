@@ -160,6 +160,10 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             >
+            <intent-filter>
+                <action android:name="fm.qian.michael.ui.activity.LoginActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <!-- 设置 -->
         <activity
@@ -196,7 +200,12 @@
             android:screenOrientation="portrait"
             android:noHistory="true"
             android:taskAffinity="fm.qian.michael.ui.activity.lockscreen"
-            android:theme="@style/LockScreenTheme"/>
+            android:theme="@style/LockScreenTheme">
+            <intent-filter>
+                <action android:name="fm.qian.michael.ui.activity.LockActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -219,7 +228,7 @@
         </activity>
 
         <service
-            android:name=".service.MqService"
+            android:name="com.xxbm.musiclibrary.MqService"
             android:process=":mkmichael"
             />
 
@@ -234,7 +243,7 @@
                 android:resource="@xml/appwidget_info" />
         </receiver>
 
-        <receiver android:name=".receiver.MediaButtonIntentReceiver">
+        <receiver android:name="com.xxbm.musiclibrary.receiver.MediaButtonIntentReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
                 <action android:name="android.media.AUDIO_BECOMING_NOISY" />

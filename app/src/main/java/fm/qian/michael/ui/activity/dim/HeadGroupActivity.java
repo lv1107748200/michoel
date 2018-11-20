@@ -41,7 +41,7 @@ import com.xxbm.sbecomlibrary.net.entry.response.Album;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-import fm.qian.michael.service.MqService;
+import com.xxbm.musiclibrary.MqService;
 import fm.qian.michael.ui.activity.MainActivity;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
@@ -56,7 +56,7 @@ import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static fm.qian.michael.service.MqService.CMDNOTIF;
+import static com.xxbm.musiclibrary.MqService.CMDNOTIF;
 
 
 /*

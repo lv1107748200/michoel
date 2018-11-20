@@ -30,7 +30,7 @@ import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;

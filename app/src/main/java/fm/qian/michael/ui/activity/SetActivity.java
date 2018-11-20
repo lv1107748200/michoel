@@ -26,7 +26,7 @@ import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import com.xxbm.sbecomlibrary.net.entry.response.Ver;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.fragment.MyFragment;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;

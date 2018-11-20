@@ -71,7 +71,7 @@ import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.utils.NToast;
 
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.activity.WebTBSParticularsActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;

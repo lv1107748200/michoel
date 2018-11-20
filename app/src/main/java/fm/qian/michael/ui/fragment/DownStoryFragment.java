@@ -43,7 +43,7 @@ import fm.qian.michael.common.event.Event;
 import com.xxbm.sbecomlibrary.db.AppDatabase;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll_Table;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.DownActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;

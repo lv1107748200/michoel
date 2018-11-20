@@ -117,6 +117,7 @@ dependencies {
     androidTestImplementation externalAndroidTestEspressoCore
     annotationProcessor externalJakewhartonButterknifeCompiler
     api project(':sbecomlibrary')
+    api project(':musiclibrary')
 
     implementation project(':pictureselect2.2.3:picture_library')
     if(isDug){
@@ -136,7 +137,7 @@ dependencies {
     //    implementation 'com.shuyu:gsyVideoPlayer-x86:6.0.0-beta'
     //    implementation 'com.shuyu:gsyVideoPlayer-x64:6.0.0-beta'
     //    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.0-beta'
-    implementation 'com.liulishuo.filedownloader:library:1.7.5'
+    //implementation 'com.liulishuo.filedownloader:library:1.7.5'
 
     implementation "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+"//微信
 

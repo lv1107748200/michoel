@@ -51,7 +51,7 @@ import com.xxbm.sbecomlibrary.net.entry.response.Album;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll_Table;
 import com.xxbm.sbecomlibrary.net.http.HttpUtils;
-import fm.qian.michael.service.MqService;
+import com.xxbm.musiclibrary.MqService;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.ImgDatasUtils;

@@ -45,7 +45,7 @@ import com.xxbm.sbecomlibrary.net.entry.response.YZMOrSID;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
 import com.xxbm.sbecomlibrary.net.http.HttpUtils;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;

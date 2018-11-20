@@ -25,8 +25,8 @@ import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
-import fm.qian.michael.service.MqService;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MqService;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.utils.NLog;
 
 public class SimpleWidgetProvider extends AppWidgetProvider {

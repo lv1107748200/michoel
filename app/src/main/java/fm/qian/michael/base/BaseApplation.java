@@ -22,7 +22,7 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import cn.jpush.android.api.JPushInterface;
 import fm.qian.michael.common.GlobalVariable;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 

@@ -12,7 +12,7 @@ import java.util.Map;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
 

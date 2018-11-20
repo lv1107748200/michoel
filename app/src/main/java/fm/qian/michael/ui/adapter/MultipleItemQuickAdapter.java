@@ -21,7 +21,7 @@ import fm.qian.michael.net.entry.Video;
 import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.entry.response.Rank;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.ComActivity;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;

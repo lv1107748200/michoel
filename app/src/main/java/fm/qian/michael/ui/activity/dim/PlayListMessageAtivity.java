@@ -40,7 +40,7 @@ import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;

@@ -38,8 +38,8 @@ import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-import fm.qian.michael.service.MqService;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MqService;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.MainActivity;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.DisplayUtils;
@@ -75,9 +75,9 @@ import io.reactivex.schedulers.Schedulers;
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static fm.qian.michael.common.UserInforConfig.USERMUSICNAME;
 import static fm.qian.michael.common.UserInforConfig.USERTMEING;
-import static fm.qian.michael.service.MqService.CMDNAME;
-import static fm.qian.michael.service.MqService.CMDNOTIF;
-import static fm.qian.michael.service.MqService.ERROR_UP;
+import static com.xxbm.musiclibrary.MqService.CMDNAME;
+import static com.xxbm.musiclibrary.MqService.CMDNOTIF;
+import static com.xxbm.musiclibrary.MqService.ERROR_UP;
 import static fm.qian.michael.utils.NetStateUtils.isWifi;
 
 /*

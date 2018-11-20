@@ -26,8 +26,8 @@ import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-import fm.qian.michael.service.MqService;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MqService;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
@@ -36,8 +36,8 @@ import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 import fm.qian.michael.widget.custom.SildingFinishLayout;
 import fm.qian.michael.widget.single.DownManger;
 
-import static fm.qian.michael.service.MqService.CMDNAME;
-import static fm.qian.michael.service.MqService.CMDNOTIF;
+import static com.xxbm.musiclibrary.MqService.CMDNAME;
+import static com.xxbm.musiclibrary.MqService.CMDNOTIF;
 
 /*
  * lv   2018/10/12

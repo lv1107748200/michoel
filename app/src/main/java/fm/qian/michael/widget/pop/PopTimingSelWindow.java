@@ -15,7 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.Video;
 import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
-import fm.qian.michael.service.MusicPlayerManger;
+import com.xxbm.musiclibrary.MusicPlayerManger;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 
 import java.util.ArrayList;

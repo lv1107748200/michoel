@@ -35,6 +35,6 @@ public abstract class HttpCallback<T,A> extends CallBack<T,A>{
 
     @Override
     public void onNotNet() {
-       // NToast.shortToastBaseApp(BaseApplation.getBaseApp().getString(R.string.无网络));
+       NToast.shortToastBaseApp("无网络连接，请连接至网络");
     }
 }

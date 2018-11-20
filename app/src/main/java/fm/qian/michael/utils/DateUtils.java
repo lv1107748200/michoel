@@ -1,6 +1,6 @@
 package fm.qian.michael.utils;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

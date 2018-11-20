@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -23,11 +23,11 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.RankMore;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.RankMore;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
@@ -42,7 +42,7 @@ import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 
 import static fm.qian.michael.utils.CommonUtils.getNumberIndex;

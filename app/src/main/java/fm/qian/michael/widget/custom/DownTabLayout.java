@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import java.util.ArrayList;
 import java.util.List;

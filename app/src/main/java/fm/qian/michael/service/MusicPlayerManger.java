@@ -13,11 +13,11 @@ import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
-import fm.qian.michael.MediaAidlInterface;
+import com.xxbm.sbecomlibrary.MediaAidlInterface;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.utils.NLog;
 
 import java.util.ArrayList;

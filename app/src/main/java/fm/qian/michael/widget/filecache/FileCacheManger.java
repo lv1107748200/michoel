@@ -6,9 +6,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.support.v4.util.LruCache;
 
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.NLog;
-import com.hr.bclibrary.utils.SdcardUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.SdcardUtil;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.File;

@@ -1,8 +1,5 @@
-
-def isDug = isDug
-
-
 apply plugin: 'com.android.library'
+def dbflow_version = "4.2.4"
 
 android {
     compileSdkVersion externalCompileSdkVersion
@@ -16,16 +13,6 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
-//    sourceSets {
-//        main {
-//            if (isDug) {
-//                Manifest.srcFile 'debug/AndroidManifest.xml'
-//            } else {
-//                Manifest.srcFile 'src/main/AndroidManifest.xml'
-//            }
-//        }
-//    }
-
         buildTypes {
             release {
                 minifyEnabled false
@@ -46,22 +33,10 @@ android {
         androidTestImplementation externalAndroidTestRunner
         androidTestImplementation externalAndroidTestEspressoCore
 
-        if(isDug){
-
-        }else {
-
-        }
-
         annotationProcessor externalDaggerCompiler
         annotationProcessor externalJakewhartonButterknifeCompiler
         implementation externalDagger
 
-
-//    apt  externalDaggerCompiler
-//    api externalDagger
-        // provided externalJavaxAnnotationJsr250
-
-        //  apt externalJakewhartonButterknifeCompiler
         compileOnly externalGlassfishJavaxAnnotation
         api(externalJakewhartonButterknife) {
             exclude module: 'support-annotations', group: 'com.android.support'
@@ -98,4 +73,11 @@ android {
         api(externalGlide) {
             exclude group: 'com.android.support', module: 'support-annotations'
         }
+
+        annotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+        api "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+        api "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+        implementation 'com.github.Blincheng:EToast2:v2.1.1'
+
+        api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.42'
     }

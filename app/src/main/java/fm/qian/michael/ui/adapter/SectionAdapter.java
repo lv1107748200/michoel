@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.MySection;
-import fm.qian.michael.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;

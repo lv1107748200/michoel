@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -33,19 +33,19 @@ import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.common.BaseDownViewHolder;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.db.UseData;
-import fm.qian.michael.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.db.UseData;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.UserInfo;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 
 import butterknife.BindView;
@@ -151,7 +151,7 @@ public class PlayListMessageAtivity extends BaseRecycleViewActivity implements V
                             .setOutSideTouchable(true)
                             .setFocusable(true)
                             .setAnimation(R.style.popup_hint_anim)
-                            .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this) - com.hr.bclibrary.utils.DisplayUtils.dip2px(this,80)))
+                            .setWith((com.xxbm.sbecomlibrary.utils.DisplayUtils.getScreenWidth(this) - com.xxbm.sbecomlibrary.utils.DisplayUtils.dip2px(this,80)))
                             .build() );
 
                     popInputWindow.setPopInputWindowCallBack(new PopInputWindow.PopInputWindowCallBack() {

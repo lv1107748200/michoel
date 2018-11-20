@@ -25,8 +25,8 @@ ext {
     externalDaggerCompiler = 'com.google.dagger:dagger-compiler:2.7'
     externalJavaxAnnotationJsr250 = 'javax.annotation:jsr250-api:1.0'
     externalGlassfishJavaxAnnotation = 'org.glassfish:javax.annotation:10.0-b28'
-    externalJakewhartonButterknifeCompiler = 'com.jakewharton:butterknife-compiler:8.7.0'
-    externalJakewhartonButterknife = "com.jakewharton:butterknife:8.7.0"
+    externalJakewhartonButterknifeCompiler = 'com.jakewharton:butterknife-compiler:8.8.1'
+    externalJakewhartonButterknife = "com.jakewharton:butterknife:8.8.1"
 
     externalRetrofit2 = "com.squareup.retrofit2:retrofit:2.3.0"
     externalRetrofit2converterJackson = "com.squareup.retrofit2:converter-jackson:2.3.0"

@@ -4,11 +4,12 @@ package com.xxbm.sbecomlibrary.net.http;
 
 
 import com.xxbm.sbecomlibrary.com.GlobalVariable;
+import com.xxbm.sbecomlibrary.net.base.BaseService;
+
 import com.xxbm.sbecomlibrary.net.Service.AppService;
 import com.xxbm.sbecomlibrary.net.Service.ExampleService;
 import com.xxbm.sbecomlibrary.net.Service.UserService;
 import com.xxbm.sbecomlibrary.net.Service.WXUserService;
-import com.xxbm.sbecomlibrary.net.base.BaseService;
 
 import javax.inject.Singleton;
 

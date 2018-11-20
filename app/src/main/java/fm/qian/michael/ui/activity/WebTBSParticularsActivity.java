@@ -21,8 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.CookieSyncManager;
@@ -39,11 +39,11 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.web.JavaScriptInterface;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.WebViewUtil;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopShareWindow;
@@ -97,7 +97,7 @@ public class WebTBSParticularsActivity extends BaseIntensifyActivity {
                             .setFocusable(true)
                             .setTouMing(false)
                             .setAnimation(R.style.popup_hint_anim)
-                            .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)))
+                            .setWith((com.xxbm.sbecomlibrary.utils.DisplayUtils.getScreenWidth(this)))
                             .build());
 
                     popShareWindow.setShareData(new PopShareWindow.ShareData(comAll.getTitle(),comAll.getCover(),comAll.getBrief(),share));

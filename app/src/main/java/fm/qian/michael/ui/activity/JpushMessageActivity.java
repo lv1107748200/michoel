@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,10 +15,10 @@ import java.util.Iterator;
 import cn.jpush.android.api.JPushInterface;
 import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseActivity;
-import fm.qian.michael.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import fm.qian.michael.ui.activity.dim.SearchActivity;
 import fm.qian.michael.utils.CommonUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.jpush.Logger;
 
 /*

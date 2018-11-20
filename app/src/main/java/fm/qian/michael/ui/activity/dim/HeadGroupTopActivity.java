@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.zzhoujay.richtext.RichText;
 
@@ -22,17 +22,17 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
-import fm.qian.michael.net.base.BaseResponse;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.RankMore;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.base.BaseResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.RankMore;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 
 import static fm.qian.michael.utils.DisplayUtils.ImageHight3;

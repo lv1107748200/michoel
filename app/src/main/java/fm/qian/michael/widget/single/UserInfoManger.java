@@ -1,11 +1,11 @@
 package fm.qian.michael.widget.single;
 
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import fm.qian.michael.common.UserInforConfig;
-import fm.qian.michael.db.UseData;
-import fm.qian.michael.net.entry.response.UserInfo;
+import com.xxbm.sbecomlibrary.db.UseData;
+import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
 import fm.qian.michael.utils.SPUtils;
 
 /**

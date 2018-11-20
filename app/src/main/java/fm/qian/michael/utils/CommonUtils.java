@@ -38,7 +38,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -66,9 +66,11 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.db.UseData;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.db.UseData;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.utils.NToast;
+
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.activity.WebTBSParticularsActivity;

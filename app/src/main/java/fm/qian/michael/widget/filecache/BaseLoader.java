@@ -1,7 +1,7 @@
 package fm.qian.michael.widget.filecache;
 
-import com.hr.bclibrary.encode.MD5;
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.encode.MD5;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.jakewharton.disklrucache.DiskLruCache;
 
 import java.io.IOException;

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,18 +24,18 @@ import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.base.activity.BaseRecycleViewActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.UserInfo;
-import fm.qian.michael.net.entry.response.YZMOrSID;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
+import com.xxbm.sbecomlibrary.net.entry.response.YZMOrSID;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.single.UserInfoManger;
 
 import static fm.qian.michael.utils.DisplayUtils.ImageHight3;

@@ -11,7 +11,7 @@ import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
@@ -24,13 +24,13 @@ import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.base.fragment.BaseFragment;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.base.BaseService;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.base.BaseService;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.entry.response.UserInfo;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 
 import butterknife.BindView;
@@ -39,7 +39,7 @@ import butterknife.OnClick;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.ui.fragment.GroupVoiseFragment;
 import fm.qian.michael.utils.CommonUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.single.UserInfoManger;
 import io.reactivex.ObservableTransformer;
 

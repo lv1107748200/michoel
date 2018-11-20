@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -17,14 +17,14 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.DataServer;
 import fm.qian.michael.net.entry.MultipleItem;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.Index;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Index;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupTopActivity;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
@@ -42,7 +42,7 @@ import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.NLog;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
 
 import static fm.qian.michael.common.UserInforConfig.USERFIRSTAUDIO;

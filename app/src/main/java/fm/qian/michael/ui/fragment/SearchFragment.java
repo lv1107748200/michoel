@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.trello.rxlifecycle2.android.ActivityEvent;
@@ -38,10 +38,10 @@ import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.BaseDownViewHolder;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.activity.WebTBSParticularsActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
@@ -51,7 +51,7 @@ import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
 import fm.qian.michael.widget.pop.PopPlayListWindow;
 import fm.qian.michael.widget.single.DownManger;
@@ -537,7 +537,7 @@ public class SearchFragment extends BaseRecycleViewFragment {
                         .setOutSideTouchable(true)
                         .setFocusable(true)
                         .setAnimation(R.style.popup_hint_anim)
-                        .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.hr.bclibrary.utils.DisplayUtils.dip2px(mFontext,80)))
+                        .setWith((com.xxbm.sbecomlibrary.utils.DisplayUtils.getScreenWidth(mFontext) - com.xxbm.sbecomlibrary.utils.DisplayUtils.dip2px(mFontext,80)))
                         .build());
                 popPlayListWindow.setPopPlayListWindowCallBack(new PopPlayListWindow.PopPlayListWindowCallBack() {
                     @Override

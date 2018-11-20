@@ -16,8 +16,8 @@ import java.io.File;
 
 import fm.qian.michael.utils.NLog;
 
-import static com.hr.bclibrary.utils.SdcardUtil.getDiskFileDir;
-import static com.hr.bclibrary.utils.SdcardUtil.getStorageDirectory;
+import static com.xxbm.sbecomlibrary.utils.SdcardUtil.getDiskFileDir;
+import static com.xxbm.sbecomlibrary.utils.SdcardUtil.getStorageDirectory;
 
 /*
  * lv   2018/10/30

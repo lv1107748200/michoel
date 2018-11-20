@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import cn.jpush.android.api.JPushInterface;
-import fm.qian.michael.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import fm.qian.michael.ui.activity.JpushMessageActivity;
 import fm.qian.michael.utils.CommonUtils;
 

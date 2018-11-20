@@ -9,6 +9,7 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.xxbm.sbecomlibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.NToast;
 
 
 /**
@@ -16,6 +17,7 @@ import com.xxbm.sbecomlibrary.utils.NLog;
  */
 
 public class BaseApplation extends Application {
+
     private static BaseApplation baseApp = null;
     private static Activity sActivity = null;
     private AppComponent mAppComponent;
@@ -36,7 +38,47 @@ public class BaseApplation extends Application {
         NLog.setDebug(true);
         baseApp = this;
         mAppComponent = DaggerAppComponent.create();
+        if(!NToast.isNotificationEnabled(this)){
+            this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+                @Override
+                public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+                    Log.d("YWK",activity+"onActivityCreated");
+                    sActivity=activity;
+                }
 
+                @Override
+                public void onActivityStarted(Activity activity) {
+                    Log.d("YWK",activity+"onActivityStarted");
+                    sActivity=activity;
+
+                }
+
+                @Override
+                public void onActivityResumed(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityPaused(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivityStopped(Activity activity) {
+
+                }
+
+                @Override
+                public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+                }
+
+                @Override
+                public void onActivityDestroyed(Activity activity) {
+
+                }
+            });
+        }
     }
 
     public static BaseApplation getBaseApp() {

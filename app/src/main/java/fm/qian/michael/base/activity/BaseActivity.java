@@ -21,21 +21,20 @@ import android.widget.ImageView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import com.hr.bclibrary.utils.CheckUtil;
+
 import com.jaeger.library.StatusBarUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.net.base.BaseService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
 import fm.qian.michael.widget.dialog.LoadingDialog;
@@ -51,40 +50,19 @@ import static fm.qian.michael.utils.StatusBarUtil.setStatusTextColor;
  * Created by 吕 on 2017/10/26.
  */
 
-public class BaseActivity extends AbstractBaseActivity{
-    @Inject
-    public BaseService baseService;
-    Unbinder unbinder;
+public class BaseActivity extends com.xxbm.sbecomlibrary.base.activity.BaseActivity{
     private  NetworkConnectChangedReceiver networkConnectChangedReceiver;
 
     private PopLoginWindow popLoginWindow;
     private LoadingDialog loadingDialog;
-    private View view;
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //setStatusBar();
-        super.onCreate(savedInstanceState);
-        BaseApplation.getBaseApp().getAppComponent().inject(this);
-        setContentView(getLayout());
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-         view = LayoutInflater.from(this).inflate(layoutResID, null);
-        setContentView(view);
-    }
 
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
-        unbinder =  ButterKnife.bind(this);
         if(isStatusBar()){
             //setStatusTextColor(true,this);
             StatusBarUtil.setColor(this, ContextCompat.getColor(this,R.color.white),50);
         }
-        initTitle();
-        initView();
-        initData();
         initView(getIntent());
         initData(getIntent());
     }
@@ -187,8 +165,8 @@ public class BaseActivity extends AbstractBaseActivity{
                     .setOutSideTouchable(false)
                     .setFocusable(true)
                     .setAnimation(R.style.popup_hint_anim)
-                    .setWith((com.hr.bclibrary.utils.DisplayUtils.getScreenWidth(this)
-                            - com.hr.bclibrary.utils.DisplayUtils.dip2px(this,80)))
+                    .setWith((com.xxbm.sbecomlibrary.utils.DisplayUtils.getScreenWidth(this)
+                            - com.xxbm.sbecomlibrary.utils.DisplayUtils.dip2px(this,80)))
                     .build(),this);
             popLoginWindow.show(view);
         }else {
@@ -238,10 +216,6 @@ public class BaseActivity extends AbstractBaseActivity{
         if(isAddGifImage())
         PlayGifManger.remove(this.getLocalClassName());
 
-        EventBus.getDefault().unregister(this);//解除订阅
-        if(null != unbinder){
-            unbinder.unbind();
-        }
         if(null != networkConnectChangedReceiver){
             unregisterReceiver(networkConnectChangedReceiver);
         }

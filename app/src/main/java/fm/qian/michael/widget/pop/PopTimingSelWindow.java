@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 
@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 
 /*
  * lv   2018/9/11

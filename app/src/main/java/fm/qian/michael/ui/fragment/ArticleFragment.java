@@ -21,8 +21,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import fm.qian.michael.R;
@@ -30,12 +30,12 @@ import fm.qian.michael.base.fragment.BaseFragment;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.ui.activity.WebTBSParticularsActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
@@ -57,7 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fm.qian.michael.ui.activity.WebParticularsActivity;
 import fm.qian.michael.utils.DisplayUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.custom.SearchLayout;
 
 /**

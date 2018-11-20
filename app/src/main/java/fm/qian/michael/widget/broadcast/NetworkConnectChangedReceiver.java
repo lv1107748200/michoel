@@ -8,8 +8,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Parcelable;
 
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.NLog;
 
 /**
  * Created by 吕 on 2018/1/12.

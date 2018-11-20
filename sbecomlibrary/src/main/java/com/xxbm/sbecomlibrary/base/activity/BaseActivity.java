@@ -43,7 +43,8 @@ public class BaseActivity extends AbstractBaseActivity{
     Unbinder unbinder;
 
 
-    private View view;
+    public View view;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //setStatusBar();
@@ -151,24 +152,6 @@ public class BaseActivity extends AbstractBaseActivity{
     }
 
     protected void setStatusBar() {
-//
-//            // 设置状态栏底色颜色
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                getWindow().setStatusBarColor(color);
-//            }else {
-//
-//            }
-//
-//        // 如果亮色，设置状态栏文字为黑色
-//            if (isLightColor(color)) {
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//            } else {
-//                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-//            }
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {//5.0及以上
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN

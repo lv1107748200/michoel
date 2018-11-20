@@ -11,17 +11,17 @@ import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import fm.qian.michael.base.activity.BaseIntensifyActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.web.JavaScriptInterface;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.ComAll;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.WebViewUtil;
 
 import butterknife.BindView;

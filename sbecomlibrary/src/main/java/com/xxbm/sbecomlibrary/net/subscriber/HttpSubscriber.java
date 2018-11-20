@@ -1,9 +1,10 @@
 package com.xxbm.sbecomlibrary.net.subscriber;
 
 
+import android.content.Intent;
 
 
-
+import com.xxbm.sbecomlibrary.base.BaseApplation;
 import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import com.xxbm.sbecomlibrary.net.base.BaseResponse;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
@@ -48,7 +49,7 @@ public class HttpSubscriber<T> implements Observer<Response<T>> {
         if(httpResultResponse.code()==200){
             T result = httpResultResponse.body();
 
-            if(result instanceof BaseDataResponse){
+            if(result instanceof  BaseDataResponse){
                 if(((BaseDataResponse) result).getCode() == 1){
                     if (callback != null) {
                         callback.onSuccess(((BaseDataResponse) result).getData());
@@ -60,7 +61,7 @@ public class HttpSubscriber<T> implements Observer<Response<T>> {
                                 ((BaseDataResponse) result).getMsg()));
                     }
                 }
-            }else if(result instanceof BaseResponse) {
+            }else if(result instanceof  BaseResponse) {
                 if(((BaseResponse) result).getCode() == 1){
                     if (callback != null) {
                         callback.onSuccessAll(result);

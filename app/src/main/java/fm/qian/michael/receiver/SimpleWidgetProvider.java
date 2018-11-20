@@ -20,11 +20,11 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.utils.NLog;

@@ -9,7 +9,7 @@ import java.util.List;
 
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.MultipleItem;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 
 /*
  * lv   2018/10/16

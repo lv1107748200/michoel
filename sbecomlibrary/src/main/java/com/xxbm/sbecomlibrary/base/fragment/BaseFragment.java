@@ -40,14 +40,9 @@ public class BaseFragment extends AbstractBaseFragment{
     public View baseFgmView;
     Unbinder unbinder;
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mFontext = (BaseActivity) getActivity();
-
         BaseApplation.getBaseApp().getAppComponent().inject(this);
         baseFgmView = inflater.inflate(getContentViewId(), container, false);
 

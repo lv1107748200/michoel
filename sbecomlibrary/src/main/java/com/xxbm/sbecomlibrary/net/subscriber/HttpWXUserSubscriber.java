@@ -1,10 +1,11 @@
 package com.xxbm.sbecomlibrary.net.subscriber;
 
 
-
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.base.BaseResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
 import com.xxbm.sbecomlibrary.net.http.HttpException;
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.Response;

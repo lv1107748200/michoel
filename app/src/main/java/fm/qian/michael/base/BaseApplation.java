@@ -9,7 +9,8 @@ import android.support.multidex.MultiDex;
 import android.util.Log;
 
 
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.db.UseData;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -21,23 +22,17 @@ import com.tencent.smtt.sdk.QbSdk;
 
 import cn.jpush.android.api.JPushInterface;
 import fm.qian.michael.common.GlobalVariable;
-import fm.qian.michael.db.UseData;
 import fm.qian.michael.service.MusicPlayerManger;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.single.DownManger;
 
 /**
  * Created by 吕 on 2017/10/26.
  */
 
-public class BaseApplation extends Application {
-    private static BaseApplation baseApp = null;
+public class BaseApplation extends com.xxbm.sbecomlibrary.base.BaseApplation {
     private static Activity sActivity = null;
-    private AppComponent mAppComponent;
 
-    static {
-
-    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -48,10 +43,6 @@ public class BaseApplation extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        NLog.setDebug(true);
-        baseApp = this;
-        mAppComponent = DaggerAppComponent.create();
-
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
             //sp
            // SPUtils.init(this);
@@ -98,63 +89,11 @@ public class BaseApplation extends Application {
         };
         //x5内核初始化接口
         QbSdk.initX5Environment(getApplicationContext(),  cb);
-
-        if(!NToast.isNotificationEnabled(this)){
-            this.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
-                @Override
-                public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                    Log.d("YWK",activity+"onActivityCreated");
-                    sActivity=activity;
-                }
-
-                @Override
-                public void onActivityStarted(Activity activity) {
-                    Log.d("YWK",activity+"onActivityStarted");
-                    sActivity=activity;
-
-                }
-
-                @Override
-                public void onActivityResumed(Activity activity) {
-
-                }
-
-                @Override
-                public void onActivityPaused(Activity activity) {
-
-                }
-
-                @Override
-                public void onActivityStopped(Activity activity) {
-
-                }
-
-                @Override
-                public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-                }
-
-                @Override
-                public void onActivityDestroyed(Activity activity) {
-
-                }
-            });
-        }
-
         //push  初始化
        // ExampleApplication.getInstans().setJPush(this);
         JPushInterface.setDebugMode(true); 	// 设置开启日志,发布时请关闭日志
         JPushInterface.init(this);
     }
-
-    public static BaseApplation getBaseApp() {
-        return baseApp;
-    }
-
-    public AppComponent getAppComponent(){
-        return mAppComponent;
-    }
-
     public static String getCurProcessName(Context context) {
         int pid = android.os.Process.myPid();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

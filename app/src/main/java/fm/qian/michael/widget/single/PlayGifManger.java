@@ -4,7 +4,7 @@ package fm.qian.michael.widget.single;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import java.util.HashMap;
 import java.util.Iterator;

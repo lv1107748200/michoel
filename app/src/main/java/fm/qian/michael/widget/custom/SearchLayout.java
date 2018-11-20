@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.NLog;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
@@ -37,14 +37,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import fm.qian.michael.R;
-import fm.qian.michael.db.SearchHistory;
-import fm.qian.michael.db.SearchHistory_Table;
-import fm.qian.michael.db.TasksManagerModel;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.db.SearchHistory;
+import com.xxbm.sbecomlibrary.db.SearchHistory_Table;
+import com.xxbm.sbecomlibrary.db.TasksManagerModel;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.DateUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 
 /*
  * lv   2018/9/18

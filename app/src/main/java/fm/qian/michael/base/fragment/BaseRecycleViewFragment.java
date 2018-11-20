@@ -20,7 +20,7 @@ import java.util.Random;
 
 import butterknife.BindView;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
 
 /*

@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -32,20 +32,20 @@ import java.util.List;
 import fm.qian.michael.R;
 import fm.qian.michael.base.fragment.BaseRecycleViewFragment;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.db.AppDatabase;
-import fm.qian.michael.db.DownTasksModel;
-import fm.qian.michael.db.DownTasksModel_Table;
-import fm.qian.michael.db.TasksManagerModel;
-import fm.qian.michael.db.TasksManagerModel_Table;
-import fm.qian.michael.net.entry.response.Base;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.db.AppDatabase;
+import com.xxbm.sbecomlibrary.db.DownTasksModel;
+import com.xxbm.sbecomlibrary.db.DownTasksModel_Table;
+import com.xxbm.sbecomlibrary.db.TasksManagerModel;
+import com.xxbm.sbecomlibrary.db.TasksManagerModel_Table;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.ui.activity.dim.HeadGroupActivity;
 import fm.qian.michael.ui.activity.dim.HeadGroupTopActivity;
 import fm.qian.michael.ui.adapter.QuickAdapter;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;
 import fm.qian.michael.utils.NLog;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.widget.dialog.LoadingDialog;
 import fm.qian.michael.widget.single.DownManger;
 
@@ -197,7 +197,7 @@ public class DownAlbumFragment extends BaseRecycleViewFragment {
 //
 //            }
 //        }).delete();
-        quickAdapter.remove(point);
+        quickAdapter.remove(point-1);
         if(CheckUtil.isEmpty(quickAdapter.getData())){
            // quickAdapter.setEmptyView(getEmpty("暂无记录"));
         }

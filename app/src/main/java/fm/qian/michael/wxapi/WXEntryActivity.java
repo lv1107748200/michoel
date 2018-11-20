@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 
-import com.hr.bclibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -20,17 +20,17 @@ import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.db.UseData;
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.request.Reg;
-import fm.qian.michael.net.entry.response.UserInfo;
-import fm.qian.michael.net.entry.response.WXAccessData;
-import fm.qian.michael.net.http.HttpCallback;
-import fm.qian.michael.net.http.HttpException;
+import com.xxbm.sbecomlibrary.db.UseData;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.request.Reg;
+import com.xxbm.sbecomlibrary.net.entry.response.UserInfo;
+import com.xxbm.sbecomlibrary.net.entry.response.WXAccessData;
+import com.xxbm.sbecomlibrary.net.http.HttpCallback;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.LoginActivity;
 import fm.qian.michael.utils.NLog;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.SPUtils;
 import fm.qian.michael.widget.single.UserInfoManger;
 

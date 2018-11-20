@@ -4,6 +4,10 @@ package com.xxbm.sbecomlibrary.net.subscriber;
 import android.content.Intent;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+
+import java.io.IOException;
+
+import com.xxbm.sbecomlibrary.base.BaseApplation;
 import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
 import com.xxbm.sbecomlibrary.net.base.BaseResponse;
 import com.xxbm.sbecomlibrary.net.http.HttpCallback;
@@ -11,17 +15,12 @@ import com.xxbm.sbecomlibrary.net.http.HttpException;
 import com.xxbm.sbecomlibrary.net.http.HttpUtils;
 import com.xxbm.sbecomlibrary.utils.NLog;
 import com.xxbm.sbecomlibrary.utils.NToast;
-
-
-import java.io.IOException;
-
-
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-
+import static com.xxbm.sbecomlibrary.com.GlobalVariable.THREE;
 
 
 /**
@@ -65,7 +64,7 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
             if(httpResultResponse.code()==200){
                 T result = httpResultResponse.body();
 
-                if(result instanceof BaseDataResponse){
+                if(result instanceof  BaseDataResponse){
                     BaseDataResponse baseDataResponse = (BaseDataResponse) result;
 
                     int code = baseDataResponse.getCode();
@@ -81,10 +80,10 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
 
                         if(null != callback){
                             if(callback.getContext() != null){
-//                                Intent intent = new Intent();
+                                Intent intent = new Intent();
 //                                intent.setClass(callback.getContext(), LoginActivity.class);
-//                                intent.putExtra(LoginActivity.LOGIN, GlobalVariable.THREE);
-//                                callback.getContext().startActivity(intent);
+//                                intent.putExtra(LoginActivity.LOGIN,THREE);
+                                callback.getContext().startActivity(intent);
                             }
                         }
 
@@ -118,7 +117,7 @@ public class HttpUserSubscriber<T> implements Observer<Response<T>> {
                     }
 
 
-                } else if(result instanceof BaseResponse) {
+                } else if(result instanceof  BaseResponse) {
                     if(((BaseResponse) result).getCode() == 1){
                         if (callback != null) {
                             callback.onSuccessAll(result);

@@ -11,7 +11,7 @@ import java.util.List;
 import fm.qian.michael.R;
 import fm.qian.michael.net.entry.DataServer;
 import fm.qian.michael.net.entry.Video;
-import fm.qian.michael.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import fm.qian.michael.utils.DisplayUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.LayoutParmsUtils;

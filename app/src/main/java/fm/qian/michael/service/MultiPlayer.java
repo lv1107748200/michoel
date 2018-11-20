@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.text.TextUtils;
 
-import com.hr.bclibrary.utils.SdcardUtil;
+import com.xxbm.sbecomlibrary.utils.SdcardUtil;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.io.File;

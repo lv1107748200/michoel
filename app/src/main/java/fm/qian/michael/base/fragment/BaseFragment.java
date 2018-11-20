@@ -10,12 +10,11 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hr.bclibrary.utils.CheckUtil;
-import com.hr.bclibrary.utils.DisplayUtils;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
+import com.xxbm.sbecomlibrary.utils.DisplayUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
-import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,8 +22,7 @@ import butterknife.Unbinder;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.base.activity.BaseActivity;
-import fm.qian.michael.net.base.BaseService;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.dialog.LoadingDialog;
 import fm.qian.michael.widget.pop.CustomPopuWindConfig;
@@ -35,53 +33,21 @@ import fm.qian.michael.widget.single.UserInfoManger;
  * Created by 吕 on 2017/10/26.  通用版
  */
 
-public class BaseFragment extends AbstractBaseFragment{
-    //Fragment的View加载完毕的标记
-    private boolean isViewCreated = false;
-
-    //Fragment对用户可见的标记
-    private boolean isLoad = false;
-
-    public BaseActivity mFontext;
-
-    @Inject
-    public BaseService baseService;
-    public View baseFgmView;
-    Unbinder unbinder;
-
+public class BaseFragment extends com.xxbm.sbecomlibrary.base.fragment.BaseFragment{
     FrameLayout head_layout;
 
     private PopLoginWindow popLoginWindow;
-
     private LoadingDialog loadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mFontext = (BaseActivity) getActivity();
-
-        BaseApplation.getBaseApp().getAppComponent().inject(this);
-        baseFgmView = inflater.inflate(getContentViewId(), container, false);
-
+        super.onCreateView(inflater,container,savedInstanceState);
         if(addHead() != null){
             head_layout = baseFgmView.findViewById(R.id.head_layout);
             head_layout.addView(addHead());
         }
-
-        unbinder =  ButterKnife.bind(this, baseFgmView);
-
-
-        initHeader(inflater);
-        initWidget(baseFgmView);
         return baseFgmView;
     }
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        isViewCreated = true;
-        lazyLoad();
-    }
-
     //为ScrollView 内部添加 布局
     public View addHead(){
 
@@ -98,28 +64,6 @@ public class BaseFragment extends AbstractBaseFragment{
 
     public void init(){
 
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        lazyLoad();
-        everyTime(isVisibleToUser);
-    }
-
-
-    private void lazyLoad() {
-        if(!isViewCreated)
-            return;
-        if (getUserVisibleHint()) {
-            if(!isLoad){
-                loadData();
-                isLoad = true;
-            }
-        } else {
-            if (isLoad) {
-                stopLoad();
-            }
-        }
     }
     public void loadData(){
 
@@ -222,12 +166,6 @@ public class BaseFragment extends AbstractBaseFragment{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(null != unbinder){
-            unbinder.unbind();
-        }
-        EventBus.getDefault().unregister(this);//解除订阅
-        isViewCreated = false;
-        isLoad = false;
     }
 
 }

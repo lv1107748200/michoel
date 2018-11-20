@@ -7,8 +7,8 @@ import android.os.Message;
 
 import java.lang.ref.WeakReference;
 
-import fm.qian.michael.net.base.BaseDataResponse;
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.base.BaseDataResponse;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 
 import static fm.qian.michael.service.MqService.REQDATA;
 import static fm.qian.michael.service.MqService.REQGETSAVE;

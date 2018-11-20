@@ -16,21 +16,21 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.hr.bclibrary.utils.CheckUtil;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.database.transaction.QueryTransaction;
 import com.raizlabs.android.dbflow.structure.database.transaction.Transaction;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 import com.zzhoujay.richtext.RichText;
 
 import fm.qian.michael.R;
 import fm.qian.michael.base.activity.BaseExitActivity;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.common.event.Event;
-import fm.qian.michael.db.TasksManagerModel;
-import fm.qian.michael.db.TasksManagerModel_Table;
-import fm.qian.michael.db.UseData;
+import com.xxbm.sbecomlibrary.db.TasksManagerModel;
+import com.xxbm.sbecomlibrary.db.TasksManagerModel_Table;
+import com.xxbm.sbecomlibrary.db.UseData;
 
-import fm.qian.michael.net.entry.response.ComAll;
+import com.xxbm.sbecomlibrary.net.entry.response.ComAll;
 import fm.qian.michael.service.MqService;
 import fm.qian.michael.service.MusicPlayerManger;
 import fm.qian.michael.ui.activity.dim.PlayActivity;
@@ -43,7 +43,7 @@ import fm.qian.michael.ui.fragment.MyFragment;
 import fm.qian.michael.utils.CommonUtils;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.utils.NLog;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
 import fm.qian.michael.widget.broadcast.NetworkConnectChangedReceiver;
 import fm.qian.michael.widget.custom.BottomBarLayout;

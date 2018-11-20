@@ -16,7 +16,7 @@ import fm.qian.michael.R;
 import fm.qian.michael.common.GlobalVariable;
 import fm.qian.michael.ui.activity.LoginActivity;
 import fm.qian.michael.utils.CommonUtils;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.wxapi.Constants;
 
 import static fm.qian.michael.common.GlobalVariable.THREE;

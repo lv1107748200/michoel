@@ -16,12 +16,10 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.xxbm.sbecomlibrary.base.BaseApplation;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import com.xxbm.sbecomlibrary.base.BaseApplation;
 
 
 public class NToast {
@@ -104,9 +102,9 @@ public class NToast {
                 return;
             }
         }
-//        if (!TextUtils.isEmpty(text) && !"".equals(text.trim())) {
-//             com.mic.etoast2.Toast.makeText(context, text, duration).show();
-//        }
+        if (!TextUtils.isEmpty(text) && !"".equals(text.trim())) {
+             com.mic.etoast2.Toast.makeText(context, text, duration).show();
+        }
     }
 
     //设置土司

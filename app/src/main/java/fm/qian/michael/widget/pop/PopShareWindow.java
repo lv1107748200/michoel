@@ -31,7 +31,7 @@ import butterknife.OnClick;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
 import fm.qian.michael.common.GlobalVariable;
-import fm.qian.michael.net.entry.response.Album;
+import com.xxbm.sbecomlibrary.net.entry.response.Album;
 import fm.qian.michael.utils.NotificationUitls;
 import fm.qian.michael.wxapi.Constants;
 

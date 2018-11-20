@@ -8,9 +8,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.xxbm.sbecomlibrary.utils.CheckUtil;
 
 import java.io.File;
 import java.io.IOException;
+
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
@@ -66,9 +68,16 @@ public class HttpUtils {
     }
 
    // private static ObjectMapper objectMapper = null;
-    private static ObjectMapper objectMapper = new ObjectMapper().setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);;
+    private static ObjectMapper objectMapper =
+           new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                   JsonAutoDetect.Visibility.ANY);
 
     public static String getStringValue(Object obj) {
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
 
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         if(obj==null)
@@ -85,7 +94,13 @@ public class HttpUtils {
     }
 
     public static  <T> T jsonToBeanT(String s,TypeReference<T> type){
-
+        if(CheckUtil.isEmpty(s))
+            return null;
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         try {
@@ -99,6 +114,14 @@ public class HttpUtils {
 
     public static <T> T jsonToBean(String json, Class<T> cls)  {
 
+        if(CheckUtil.isEmpty(json))
+            return null;
+
+        if(null == objectMapper){
+            objectMapper =
+                    new ObjectMapper().setVisibility(PropertyAccessor.FIELD,
+                            JsonAutoDetect.Visibility.ANY);
+        }
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 
         try {

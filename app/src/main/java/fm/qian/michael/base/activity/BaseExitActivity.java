@@ -7,7 +7,7 @@ import android.view.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
 import fm.qian.michael.R;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;

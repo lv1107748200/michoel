@@ -5,7 +5,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import fm.qian.michael.R;
-import fm.qian.michael.net.entry.response.Base;
+import com.xxbm.sbecomlibrary.net.entry.response.Base;
 import fm.qian.michael.utils.GlideUtil;
 import fm.qian.michael.widget.custom.SelectableRoundedImageView;
 import com.youth.banner.loader.ImageLoader;

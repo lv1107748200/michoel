@@ -12,6 +12,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xxbm.sbecomlibrary.net.http.HttpException;
 
 
 import java.text.SimpleDateFormat;
@@ -23,8 +24,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import fm.qian.michael.R;
 import fm.qian.michael.base.BaseApplation;
-import fm.qian.michael.net.http.HttpException;
-import fm.qian.michael.utils.NToast;
+import com.xxbm.sbecomlibrary.utils.NToast;
 import fm.qian.michael.utils.NetStateUtils;
 
 /*

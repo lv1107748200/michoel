@@ -1,6 +1,6 @@
 package fm.qian.michael.widget.filecache;
 
-import com.hr.bclibrary.utils.NLog;
+import com.xxbm.sbecomlibrary.utils.NLog;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
